@@ -47,7 +47,7 @@ class Tarif {
         this.lt = lt
         this.ht_start_monday = null
         this.ht_end_saturday = null
-        this.month = new Month()
+        this.month = month
     }
 }
 
@@ -63,15 +63,10 @@ let januar = new Month("January", 1)
 let februar = new Month("Februar", 2)
 let months = [januar, februar]
 
-let tarif1 = new Tarif(12.3,14)
-tarif1.month = months
+let tarif1 = new Tarif(12.3,14, months)
 
 let operator1 = new Operator("Rhiienergie", 1244)
 
-let product = new Product("sdsdf")
-product.tarif = tarif1
-product.operator = operator1
+let product = new Product("sdsdf", tarif1, operator1)
 
 console.log(product)
-
-JSONSerializer
