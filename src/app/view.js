@@ -31,7 +31,6 @@ function appendData(data) {
     }
 }
 
-
 //Actual Year Dropdown
 
 let actualYear = new Date().getFullYear();
@@ -42,4 +41,14 @@ for (let i = actualYear; i <= maxDate; i++){
     let opt = document.createElement('option');
     opt.innerHTML = i;
     select.appendChild(opt);
+}
+
+//Month Dropdown --> "Sommerbeginn"
+
+let month = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+let monthDropdown = document.getElementById('sommerbeginn')
+for(let i = 0; i < 12; i++){
+    let option = document.createElement('option');
+    option.innerHTML = month[i];
+    monthDropdown.appendChild(option);
 }
