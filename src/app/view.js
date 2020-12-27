@@ -8,6 +8,7 @@ const apiOperator = "lea_settings/api/operators"
 //     .then(json => console.log(json))
 //     .catch(err => console.log(err))
 
+
 // Operator Dropdown
 
 fetch(url+apiOperator)
@@ -29,6 +30,7 @@ function appendData(data) {
         mainContainer.appendChild(option);
     }
 }
+
 
 //Actual Year Dropdown
 
