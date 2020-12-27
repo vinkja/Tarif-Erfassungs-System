@@ -1,19 +1,6 @@
 import fetch from "node-fetch";
 
-// const url = "http://ela-prod-01.eturnity.io/"
-// const apiOperator = "lea_settings/api/operators"
-//
-// let test
-// fetch(url+apiOperator)
-//     .then(response => response.json())
-//     .then(data => {
-//         let test = JSON.parse(data)
-//
-//     })
-//
-// console.log(test)
-
-class Operator {
+export class Operator {
     constructor(id, name) {
         this.id = id
         this.name = name
@@ -34,7 +21,6 @@ class Product {
         this.operator_elcom_number = null
         this.valid_to_kwh = null
     }
-
 }
 
 class Tarif {
@@ -58,15 +44,15 @@ class Month {
     }
 }
 
-
-let januar = new Month("January", 1)
-let februar = new Month("Februar", 2)
-let months = [januar, februar]
-
-let tarif1 = new Tarif(12.3,14, months)
-
-let operator1 = new Operator("Rhiienergie", 1244)
-
-let product = new Product("sdsdf", tarif1, operator1)
-
-console.log(product)
+//
+// let januar = new Month("January", 1)
+// let februar = new Month("Februar", 2)
+// let months = [januar, februar]
+//
+// let tarif1 = new Tarif(12.3,14, months)
+//
+// let operator1 = new Operator("Rhiienergie", 1244)
+//
+// let product = new Product("sdsdf", tarif1, operator1)
+//
+// console.log(product)
