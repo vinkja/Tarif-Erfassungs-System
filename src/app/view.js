@@ -8,14 +8,14 @@ function autoCalculate(){
     let winterEnergyNT = document.getElementById("winterEnergyNT").value;
     let winterNetNT = document.getElementById("winterNetNT").value;
 
-    function myAddition(p1, p2) {
+    function additionEnergyNet(p1, p2) {
         let result = parseFloat(p1) + parseFloat(p2);
         return result
     }
 
-    document.getElementById("totalSummerHT").innerHTML = myAddition(summerEnergyHT,summerNetHT);
-    document.getElementById("totalSummerNT").innerHTML = myAddition(summerEnergyNT,summerNetNT);
-    document.getElementById("totalWinterHT").innerHTML = myAddition(winterEnergyHT,winterNetHT);
-    document.getElementById("totalWinterNT").innerHTML = myAddition(winterEnergyNT,winterNetNT);
+    document.getElementById("totalSummerHT").innerHTML = additionEnergyNet(summerEnergyHT,summerNetHT);
+    document.getElementById("totalSummerNT").innerHTML = additionEnergyNet(summerEnergyNT,summerNetNT);
+    document.getElementById("totalWinterHT").innerHTML = additionEnergyNet(winterEnergyHT,winterNetHT);
+    document.getElementById("totalWinterNT").innerHTML = additionEnergyNet(winterEnergyNT,winterNetNT);
 
 }
