@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Tariferfassung für Verbrauchstarife</title>
     <meta charset="utf-8">
@@ -16,7 +16,6 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
 
 </head>
@@ -43,8 +42,8 @@
 
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="stromprodukt">Stromprodukt:</label>
-                <input type="text" class="form-control" id="stromprodukt" placeholder="Stromprodukt" name="stromprodukt">
+                <label for="name">Stromprodukt:</label>
+                <input type="text" class="form-control" id="name" placeholder="Stromprodukt" name="stromprodukt">
             </div>
             <div class="form-group col-md-4">
                 <label for="operator_elcom_number">Elcom Nr.:</label>
@@ -97,15 +96,15 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="abgaben_gemeinde">Abgaben an Gemeinde: (Rp./kWh, leer lassen falls unbekannt)</label>
-                <input type="text" class="form-control" id="abgaben_gemeinde" placeholder="" name="abgaben_gemeinde">
+                <label for="municipality_fee">Abgaben an Gemeinde: (Rp./kWh, leer lassen falls unbekannt)</label>
+                <input type="text" class="form-control" id="municipality_fee" placeholder="" name="abgaben_gemeinde">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="standardtarif">Standardtarif:</label>
-                <select class="custom-select" id="standardtarif" name="Bitte auswählen.." >
+                <label for="is_default">Standardtarif:</label>
+                <select class="custom-select" id="is_default" name="Bitte auswählen.." >
                     <option selected="Bitte wählen..">Bitte wählen..</option>
                     <option value="Ja">Ja</option>
                     <option value="Nein">Nein</option>
@@ -169,6 +168,7 @@
                     </tr>
                     </thead>
                 </table>
+
             </div>
         </div>
 
@@ -261,22 +261,24 @@
                     <tbody>
                     <tr>
                         <th scope="row">Energie</th>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="8.4" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="7.4" name="sommerbeginn"></td>
+
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Netz</th>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="11.7" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="6.5" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
-                        <td>20.10</td>
-                        <td>13.90</td>
+                        <td id="totalSummerHT">...</td>
+                        <td id="totalSummerNT">...</td>
                     </tr>
 
                     </tbody>
                 </table>
+
 
                 <h4>Sommer</h4>
                 <table class="table table-striped">
@@ -598,18 +600,18 @@
                     <tbody>
                     <tr>
                         <th scope="row">Energie</th>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="8.4" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="7.4" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Netz</th>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="11.7" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" id="sommerbeginn" placeholder="6.5" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
-                        <td>20.10</td>
-                        <td>13.90</td>
+                        <td id="totalWinterHT">...</td>
+                        <td id="totalWinterNT">...</td>
                     </tr>
 
                     </tbody>
@@ -933,6 +935,8 @@
 
 </div>
 
+// TODO: Move to Head
 <script src="view.js"></script>
+
 </body>
 </html>
