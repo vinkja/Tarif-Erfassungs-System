@@ -1,10 +1,965 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tariferfassung für Verbrauchstarife</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="view.js"></script>
 </head>
+
+
 <body>
+
+<div class="container">
+
+    <h2>Tariferfassung für Verbrauchstarife</h2>
+
+    <form action="/">
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="energieversoger">Energieversoger:</label>
+                <input type="text" class="form-control" id="energieversoger" placeholder="Energieversorger" name="energieversorger">
+            </div>
+            <div class="form-group col-md-8">
+                <label for="vse-id">VSE-ID:</label>
+                <div class="col-1" id="vse-id">123123123</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="name">Stromprodukt:</label>
+                <input type="text" class="form-control" id="name" placeholder="Stromprodukt" name="stromprodukt">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="operator_elcom_number">Elcom Nr.:</label>
+                <div class="col-1" id="operator_elcom_number">723</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="year">Jahr:</label>
+                <input type="text" class="form-control" id="year" placeholder="Jahr" name="year">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="basic_fee_monthly">Grundgebühren/Zähler: (CHF/Monat, exkl. MWST)</label>
+                <input type="text" class="form-control" id="basic_fee_monthly" placeholder="" name="basic_fee_monthly">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="load_counter_fee_monthly">Leistungstarif: (CHF/kW, exkl. MWST)</label>
+                <input type="text" class="form-control" id="load_counter_fee_monthly" placeholder="" name="load_counter_fee_monthly">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="valid_from_kwp">Gültigkeit von kWh:</label>
+                <input type="text" class="form-control" id="valid_from_kwp" placeholder="von" name="valid_from_kwp">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="valid_to_kwp">bis kWh:</label>
+                <input type="text" class="form-control" id="valid_to_kwp" placeholder="bis" name="valid_to_kwp">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="verbrauchertyp">Verbrauchertyp:</label>
+                <select class="custom-select" id="verbrauchertyp" name="Bitte auswählen.." >
+                    <option selected="Bitte wählen..">Bitte wählen..</option>
+                    <option value="Privat">Privat</option>
+                    <option value="Gewerbe">Gewerbe</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="municipality_fee">Abgaben an Gemeinde: (Rp./kWh, leer lassen falls unbekannt)</label>
+                <input type="text" class="form-control" id="municipality_fee" placeholder="" name="abgaben_gemeinde">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="is_default">Standardtarif:</label>
+                <select class="custom-select" id="is_default" name="Bitte auswählen.." >
+                    <option selected="Bitte wählen..">Bitte wählen..</option>
+                    <option value="Ja">Ja</option>
+                    <option value="Nein">Nein</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="kev">KEV-Abgabe / SDL: (Rp./kWh)</label>
+                <input type="text" class="form-control" id="kev" placeholder="" name="kev">
+            </div>
+        </div>
+
+        <h3>Jahresspezifikation</h3>
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="summerStart">Sommerbeginn:</label>
+                <select name="month" id="summerStart" class="custom-select">
+                    <option selected>Bitte wählen..</option>
+                    <option value="1">Januar</option>
+                    <option value="2">Februar</option>
+                    <option value="3">März</option>
+                    <option value="4">April</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Dezember</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="summerEnd">Sommerende:</label>
+                <select name="month" id="summerEnd" class="custom-select">
+                    <option selected>Bitte wählen..</option>
+                    <option value="1">Januar</option>
+                    <option value="2">Februar</option>
+                    <option value="3">März</option>
+                    <option value="4">April</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Dezember</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                        <th>Mai</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Aug</th>
+                        <th>Sept</th>
+                        <th>Okt</th>
+                        <th>Nov</th>
+                        <th>Dez</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    </tbody>
+                </table>
+                Winter = 0, Sommer = 1
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="comment">Bemerkung: </label>
+                <textarea class="form-control" rows="5" id="comment" placeholder="HKN? / KEV Überprückung?"></textarea>
+            </div>
+        </div>
+
+
+        <h3>Tarifspezifikation</h3>
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <h4>Sommer</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Mo-Fr</th>
+                        <th scope="col">Sa</th>
+                        <th scope="col">So</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">HT Start</th>
+                        <td> <input type="text" class="form-control" id="ht_start_monday" placeholder="7" name="ht_start_monday"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_saturday" placeholder="8" name="ht_start_saturday"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_sunday" placeholder="24" name="ht_start_sunday"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">HT Ende</th>
+                        <td> <input type="text" class="form-control" id="ht_end_monday" placeholder="20" name="ht_end_monday"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_saturday" placeholder="24" name="ht_end_saturday"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_sunday" placeholder="24" name="ht_end_sunday"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-group col-sm-6">
+                <h4>Winter</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Mo-Fr</th>
+                        <th scope="col">Sa</th>
+                        <th scope="col">So</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">HT Start</th>
+                        <td> <input type="text" class="form-control" id="ht_start_monday" placeholder="7" name="ht_start_monday"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_saturday" placeholder="8" name="ht_start_saturday"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_sunday" placeholder="24" name="ht_start_sunday"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">HT Ende</th>
+                        <td> <input type="text" class="form-control" id="ht_end_monday" placeholder="20" name="ht_end_monday"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_saturday" placeholder="24" name="ht_end_saturday"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_sunday" placeholder="24" name="ht_end_sunday"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <h3>Verbrauchstarif</h3>
+
+        <div class="row">
+
+            <div class="form-group col-sm-6">
+                <h4>Sommer</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">HT</th>
+                        <th scope="col">NT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Energie</th>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Netz</th>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td id="totalSummerHT">...</td>
+                        <td id="totalSummerNT">...</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+
+                <h4>Sommer</h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mo</th>
+                        <th>Di</th>
+                        <th>Mi</th>
+                        <th>Do</th>
+                        <th>Fr</th>
+                        <th>Sa</th>
+                        <th>So</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">0</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">11</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">13</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">14</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">15</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">16</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">17</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">18</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">19</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">20</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">21</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">22</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">23</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="form-group col-sm-6">
+                <h4>Winter</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">HT</th>
+                        <th scope="col">NT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Energie</th>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Netz</th>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td id="totalWinterHT">...</td>
+                        <td id="totalWinterNT">...</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <h4>Winter</h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mo</th>
+                        <th>Di</th>
+                        <th>Mi</th>
+                        <th>Do</th>
+                        <th>Fr</th>
+                        <th>Sa</th>
+                        <th>So</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">0</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">11</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">13</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">14</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">15</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">16</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">17</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">18</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">19</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">20</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">21</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">22</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <th scope="row">23</th>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                        <td>13.9</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <button type="submit" class="btn btn-info">Submit</button>
+            </div>
+        </div>
+
+</div>
+</form>
+
+</div>
 
 </body>
 </html>
