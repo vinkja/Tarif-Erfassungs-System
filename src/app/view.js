@@ -22,6 +22,7 @@ fetch(url+apiOperator)
         console.log(err);
     });
 
+
 function appendData(data) {
     let mainContainer = document.getElementById("energieversoger");
     for (let i = 1; i < data.length; i++) {
