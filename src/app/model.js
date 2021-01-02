@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export class Operator {
     constructor(id, name) {
         this.id = id
@@ -7,7 +5,7 @@ export class Operator {
     }
 }
 
-class Product {
+export class Product {
     constructor(name, tarif, operator) {
         this.basicFeeMonthly = null
         this.validFromKwh = null

@@ -1,20 +1,30 @@
 import fetch from "node-fetch";
-import {Operator} from './model.js'
+import {Operator, Product} from './model.js'
 
-const url = "http://ela-prod- 01.eturnity.io/"
-const apiOperator = "lea_settings/api/operators"
+export class LEASettingsAPI {
+    constructor() {
+        this.url = "http://ela-prod-01.eturnity.io/"
+        this.apiOperators = "lea_settings/api/operators"
+        this.apiProduct = "lea_settings/api/feed-in-variation-structure/"
+        this.operators = null
+    }
 
-async function getOperators() {
-    let operators =[]
-    fetch(url+apiOperator)
-        .then(res => res.json())
-        .then(data => {
-            for (let entry of data) {
-                let op = new Operator(entry.id, entry.name)
-                operators.push(op)
-            }
-        })
-    return operators
+    async getOperators() {
+        if (this.operators === null) {
+            this.operators = []
+            await fetch(this.url + this.apiOperators)
+                .then(res => res.json())
+                .then(data => {
+                    for (let entry of data) {
+                        let op = new Operator(entry.id, entry.name)
+                        this.operators.push(op)
+                    }
+                })
+            return this.operators
+        } else {
+            return this.operators
+        }
+    }
 }
 
-console.log(await getOperators())
+//console.log(await getProduct(1024))

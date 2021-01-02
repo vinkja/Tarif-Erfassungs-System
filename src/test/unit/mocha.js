@@ -1,5 +1,7 @@
 import assert from 'assert'
 import {describe, it, beforeEach, after} from 'mocha'
+import {LEASettingsAPI} from "../../app/LEASettingsAPI.js";
+import {Operator} from "../../app/model.js";
 
 describe('Array', function() {
     describe('#indexOf()', function() {
