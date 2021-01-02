@@ -1,5 +1,7 @@
 //import fetch from "node-fetch";
 
+//import {Operator} from "./model";
+
 const url = "http://ela-prod-01.eturnity.io/"
 const apiOperator = "lea_settings/api/operators"
 
@@ -7,7 +9,6 @@ const apiOperator = "lea_settings/api/operators"
 //     .then(response => response.json())
 //     .then(json => console.log(json))
 //     .catch(err => console.log(err))
-
 
 // Operator Dropdown
 
@@ -28,7 +29,15 @@ function appendData(data) {
         let option = document.createElement("option");
         option.innerHTML = data[i].name;
         mainContainer.appendChild(option);
+        option.addEventListener('click', function (e) {
+            e.valueOf()
+            console.log(e);
+        })
     }
+    mainContainer.addEventListener('change', function () {
+        let containerSelection = this.options[this.selectedIndex].value;
+        console.log(containerSelection)
+    })
 }
 
 //Actual Year Dropdown
@@ -41,17 +50,41 @@ for (let i = actualYear; i <= maxDate; i++){
     let opt = document.createElement('option');
     opt.innerHTML = i;
     select.appendChild(opt);
+    select.addEventListener('change', function () {
+        let yearSelection = this.options[this.selectedIndex].value;
+        console.log(yearSelection)
+    })
 }
 
 //Month Dropdown --> "Sommerbeginn"
 
 let month = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 let monthDropdown = document.getElementById('sommerbeginn')
+
 for(let i = 0; i < 12; i++){
     let option = document.createElement('option');
     option.innerHTML = month[i];
     monthDropdown.appendChild(option);
+    monthDropdown.addEventListener('change', function () {
+        let sommerbeginnSelection = this.options[this.selectedIndex].value;
+        console.log(sommerbeginnSelection)
+    })
 }
+
+//Month Dropdown with JQuery
+
+// $(document).ready(function () {
+//     for( i = 0; i < month.length; i++){
+//         $('#sommerbeginn').append('<option>'+month[i]+'</option>').change(function () {
+//             let sommerbeginnSelection = ($(this).val());
+//             console.log(sommerbeginnSelection)
+//         });
+//         $('#sommerende').append('<option>'+month[i]+'</option>').change(function () {
+//             let sommerendeSelection =  ($(this).val());
+//             console.log(sommerendeSelection)
+//         })
+//     }
+// });
 
 function autoCalculate(){
     let summerEnergyHT = document.getElementById("summerEnergyHT").value;
