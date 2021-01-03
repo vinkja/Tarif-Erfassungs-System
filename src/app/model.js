@@ -6,31 +6,38 @@ export class Operator {
 }
 
 export class Product {
-    constructor(name, tarif, operator) {
-        this.basicFeeMonthly = null
-        this.validFromKwh = null
-        this.operator = operator
+    constructor(id, operatorId, name, tariff, isDefault) {
+        this.id = id
+        this.operatorId = operatorId
         this.name = name
-        this.tarif = tarif
-        this.municipality_fee = null
-        this.is_default = null
-        this.grid_peak_power_tariff = null
-        this.year = null
-        this.operator_elcom_number = null
-        this.valid_to_kwh = null
+        this.tarif = tariff
+        this.isDefault = isDefault
     }
 }
 
-class Tarif {
-    constructor(ht, lt, month) {
-        this.ht_end_monday = null
-        this.ht_end_sunday = null
-        this.ht_start_sunday = null
-        this.ht_start_saturday = null
+export class Tariff {
+    constructor(year, validFromKwh, validToKwh, gridPeakPowerTarif, municipalityFee, basicFeeMonthly) {
+        this.year = year
+        this.validFromKwh = validFromKwh
+        this.validToKwh = validToKwh
+        this.gridPeakPowerTariff = gridPeakPowerTarif
+        this.municipalityFee = municipalityFee
+        this.basicFeeMonthly = basicFeeMonthly
+        this.winter = null
+        this.sumemr = null
+    }
+}
+
+export class SeasonalTariff {
+    constructor() {
         this.ht = ht
         this.lt = lt
         this.ht_start_monday = null
+        this.ht_end_monday = null
         this.ht_end_saturday = null
+        this.ht_start_saturday = null
+        this.ht_start_sunday = null
+        this.ht_end_sunday = null
         this.month = month
     }
 }
@@ -42,7 +49,7 @@ class Month {
     }
 }
 
-//
+
 // let januar = new Month("January", 1)
 // let februar = new Month("Februar", 2)
 // let months = [januar, februar]
