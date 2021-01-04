@@ -6,12 +6,10 @@
   "scripts": {
     "dev": "rm -rf .cache && npx parcel src/app/index.html",
     "start": "npm run build && ./node_modules/.bin/http-server dist --port 1234",
-    "start-parcel": "rm -rf .cache && npx parcel src/app/index.html",
-    "build": "rimraf COMPILED_CODE_HERE/ && babel ./src/app --out-dir COMPILED_CODE_HERE/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "build": "NODE_ENV=production rm -rf dist && rm -rf .cache && ./node_modules/.bin/parcel build src/app/index.html",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "mocha src/test/unit/**.js",
-    "test:e2e": "mocha src/test/e2e/**.js",
-    "dist": "NODE_ENV=production rm -rf dist && rm -rf .cache && ./node_modules/.bin/parcel build src/app/index.html"
+    "test:e2e": "mocha src/test/e2e/**.js"
   },
   "browserslist": [
     "last 2 chrome versions"
