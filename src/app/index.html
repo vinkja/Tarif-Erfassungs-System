@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -253,13 +254,13 @@
                     <tr>
                         <th scope="row">Energie</th>
 
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Netz</th>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
@@ -927,7 +928,7 @@
 </div>
 
 // TODO: Move to Head
-<script src="view.js"></script>
+<script src="./app.js"></script>
 
 </body>
 </html>
