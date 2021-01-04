@@ -19,8 +19,8 @@ describe('LEA Settings API', function() {
             it('first element should be type Operator', function() {
                 assert.strictEqual(typeof operators[0], typeof new Operator)
             })
-            it('first Operator should have a id as nummber', function() {
-                assert.strictEqual(typeof(operators[0].id), typeof(1))
+            it('first Operator should have a elcomNumber as nummber', function() {
+                assert.strictEqual(typeof(operators[0].elcomNumber), typeof(1))
             })
             it('first Operator should have a name as string', function() {
                 assert.strictEqual(typeof(operators[0].name), typeof(" "))
@@ -45,11 +45,11 @@ describe('LEA Settings API', function() {
             it('first product should have a name as string', function() {
                 assert.strictEqual(typeof(products[0].name), typeof(" "))
             })
-            it('first product should have a operatorId as int', function() {
-                assert.strictEqual(typeof(products[0].operatorId), typeof (1))
+            it('first product should have a operator of type Operator', function() {
+                assert.strictEqual(typeof(products[0].operator), typeof new Operator())
             })
             it('first product should have a isDefault as int', function() {
-                assert.strictEqual(typeof(products[0].operatorId), typeof (1))
+                assert.strictEqual(typeof(products[0].isDefault), typeof (1))
             })
             it('should return a list with 3 objects', async function() {
                 assert.strictEqual(products.length, 3)
