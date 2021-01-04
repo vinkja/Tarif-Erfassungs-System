@@ -2,22 +2,24 @@
   "name": "tarif-erfassungs-system",
   "version": "1.0.0",
   "description": "TES Tarif Erfassungs System",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "http-server src/app --port 1234",
-    "start:ci": "npm run dist && ./node_modules/.bin/http-server dist --port 1234",
-    "start-parcel": "rm -rf .cache && npx parcel src/app/index.html",
+    "dev": "rm -rf .cache && npx parcel src/app/index.html",
+    "start": "npm run build && ./node_modules/.bin/http-server dist --port 1234",
+    "build": "NODE_ENV=production rm -rf dist && rm -rf .cache && ./node_modules/.bin/parcel build src/app/index.html",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "mocha src/test/unit/**.js",
-    "test:e2e": "mocha src/test/e2e/**.js",
-    "dist": "NODE_ENV=production rm -rf dist && ./node_modules/.bin/parcel build src/app/index.html"
+    "test:e2e": "mocha src/test/e2e/**.js"
   },
+  "browserslist": [
+    "last 2 chrome versions"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "assert": "^2.0.0",
+    "express": "^4.17.1",
     "http-server": "^0.12.3",
     "mocha": "^8.2.1",
     "node-fetch": "^2.6.1",
@@ -31,5 +33,21 @@
   "bugs": {
     "url": "https://github.com/ibwgr/Tarif-Erfassungs-System/issues"
   },
-  "homepage": "https://github.com/ibwgr/Tarif-Erfassungs-System#readme"
+  "homepage": "https://github.com/ibwgr/Tarif-Erfassungs-System#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
+    "nodemon": "^2.0.6",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  }
 }

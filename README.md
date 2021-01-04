@@ -10,7 +10,10 @@ Install:
 2. install all dependencies: npm install
 
 Test:
-npm run test:unit
+npm run test
 
-first start frontend npm run start:ci
-then run e2e test: npm run test:e2e (not yet implemented)
+Run Productive:
+npm run start
+
+Run development:
+npm run dev
