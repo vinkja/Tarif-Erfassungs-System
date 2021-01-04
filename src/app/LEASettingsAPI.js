@@ -31,11 +31,11 @@ export class LEASettingsAPI {
 
     async getProductsFromOperator(operator) {
         let products = []
-        await fetch(this.url + this.apiProducts + operator.id)
+        await fetch(this.url + this.apiProducts + operator.elcomNumber)
             .then(res => res.json())
             .then(data => {
                 for (let entry of data) {
-                    let product = new Product(entry.id, operator.id, entry.name, null,  entry.standard)
+                    let product = new Product(entry.id, operator, entry.name, null,  entry.standard)
                     products.push(product)
                 }
             })
