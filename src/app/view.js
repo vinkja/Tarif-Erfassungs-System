@@ -65,25 +65,41 @@ export class View {
         }
     }
 
+
     autoCalculate() {
-        let summerEnergyHT = document.getElementById("summerEnergyHT").value;
-        let summerNetHT = document.getElementById("summerNetHT").value;
-        let summerEnergyNT = document.getElementById("summerEnergyNT").value;
-        let summerNetNT = document.getElementById("summerNetNT").value;
-        let winterEnergyHT = document.getElementById("winterEnergyHT").value;
-        let winterNetHT = document.getElementById("winterNetHT").value;
-        let winterEnergyNT = document.getElementById("winterEnergyNT").value;
-        let winterNetNT = document.getElementById("winterNetNT").value;
+        let x = document.getElementsByClassName('consumptionRateInput');
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].addEventListener('change', () => {
 
-        function additionEnergyNet(p1, p2) {
-            let result = parseFloat(p1) + parseFloat(p2);
-            return result
+                let summerEnergyHT = document.getElementById("summerEnergyHT").value;
+                let summerNetHT = document.getElementById("summerNetHT").value;
+                let summerEnergyNT = document.getElementById("summerEnergyNT").value;
+                let summerNetNT = document.getElementById("summerNetNT").value;
+                let winterEnergyHT = document.getElementById("winterEnergyHT").value;
+                let winterNetHT = document.getElementById("winterNetHT").value;
+                let winterEnergyNT = document.getElementById("winterEnergyNT").value;
+                let winterNetNT = document.getElementById("winterNetNT").value;
+
+                function additionEnergyNet(p1, p2) {
+                    let result = parseFloat(p1) + parseFloat(p2);
+                    return result
+                }
+                let additionEnergyNetSummerHTResult = additionEnergyNet(summerEnergyHT,summerNetHT)
+                let additionEnergyNetSummerNTResult = additionEnergyNet(summerEnergyNT,summerNetNT)
+                let additionEnergyNetWinterHTResult = additionEnergyNet(winterEnergyHT,winterNetHT)
+                let additionEnergyNetWinterNTResult = additionEnergyNet(winterEnergyNT,winterNetNT)
+
+                document.getElementById("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
+                document.getElementById("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
+                document.getElementById("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
+                document.getElementById("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
+
+            })
         }
-
-        document.getElementById("totalSummerHT").innerHTML = additionEnergyNet(summerEnergyHT, summerNetHT);
-        document.getElementById("totalSummerNT").innerHTML = additionEnergyNet(summerEnergyNT, summerNetNT);
-        document.getElementById("totalWinterHT").innerHTML = additionEnergyNet(winterEnergyHT, winterNetHT);
-        document.getElementById("totalWinterNT").innerHTML = additionEnergyNet(winterEnergyNT, winterNetNT);
-
     }
+
+
+
+
 }

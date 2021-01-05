@@ -9,5 +9,6 @@ export class Controller {
         this.view.addYearstoList()
         this.view.addMonthsToList('sommerbeginn')
         this.view.addMonthsToList('sommerende')
+        this.view.autoCalculate();
     }
 }
