@@ -19,8 +19,8 @@ describe('LEA Settings API', function() {
             it('first element should be type Operator', function() {
                 assert.strictEqual(typeof operators[0], typeof new Operator)
             })
-            it('first Operator should have a elcomNumber as nummber', function() {
-                assert.strictEqual(typeof(operators[0].elcomNumber), typeof(1))
+            it('first Operator should have a id as nummber', function() {
+                assert.strictEqual(typeof(operators[0].id), typeof(1))
             })
             it('first Operator should have a name as string', function() {
                 assert.strictEqual(typeof(operators[0].name), typeof(" "))

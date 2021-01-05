@@ -1,3 +1,13 @@
+import {Months, Operator, Product, SeasonalTariff, Tariff} from "./model";
+
+let op = new Operator(123, "test")
+let summerMonths = new Months().createMonthsList(3, 9)
+let summerTariff = new SeasonalTariff(17.1, 13.3, 7, 19, 0, 0, 0, 0, summerMonths)
+let winterMonths = new Months().createMonthsList(10, 2)
+let winterTariff = new SeasonalTariff(27.1, 23.3, 8, 17, 0, 0, 0, 0, winterMonths)
+let tariff = new Tariff(2020, 0, 10000, 0.0, 0.3, 5.00, winterTariff, summerTariff)
+let pro = new Product(1, op, "tet1212", tariff, 0)
+
 export class View {
     constructor() {
     }
@@ -8,14 +18,19 @@ export class View {
             let option = document.createElement("option");
             option.innerHTML = operators[i].name;
             mainContainer.appendChild(option);
-            option.addEventListener('click', function (e) {
-                e.valueOf()
-                console.log(e);
-            })
+            // option.addEventListener('click', function (e) {
+            //     e.valueOf()
+            //     console.log(e);
+            //     console.log("halloiw")
+            //     op.id = e
+            // })
         }
         mainContainer.addEventListener('change', function () {
             let containerSelection = this.options[this.selectedIndex].value;
             console.log(containerSelection)
+            console.log("ooskafj")
+            op.id = containerSelection
+            console.log(pro)
         })
     }
 

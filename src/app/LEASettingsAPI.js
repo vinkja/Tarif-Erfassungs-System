@@ -31,7 +31,7 @@ export class LEASettingsAPI {
 
     async getProductsFromOperator(operator) {
         let products = []
-        await fetch(this.url + this.apiProducts + operator.elcomNumber)
+        await fetch(this.url + this.apiProducts + operator.id)
             .then(res => res.json())
             .then(data => {
                 for (let entry of data) {
