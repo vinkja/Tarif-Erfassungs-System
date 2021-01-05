@@ -5,3 +5,5 @@ import {Controller} from "./controller";
 let api = new LEASettingsAPI()
 let view = new View()
 new Controller(view, api).start()
+
+console.log("hello")

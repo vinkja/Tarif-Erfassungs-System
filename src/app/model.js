@@ -1,6 +1,6 @@
 export class Operator {
-    constructor(elcomNumber, name) {
-        this.elcomNumber = elcomNumber
+    constructor(id, name) {
+        this.id = id
         this.name = name
     }
 }
@@ -13,40 +13,40 @@ export class Product {
         this.tariff = tariff
         this.isDefault = isDefault
     }
+    //TODO: Vollende diese Sache
     toJSON() {
         let JSON = {
-            operator_elcom_number: this.operator.elcomNumber,
-            basic_fee_monthly: "test",
-            valid_from_kwh: "test",
+            operator_elcom_number: this.operator.id, //TODO: this is not correct, id != elcomNumber
+            basic_fee_monthly: this.tariff.basicFeeMonthly,
+            valid_from_kwh: this.tariff.validFromKwh,
+            valid_to_kwh: this.tariff.validToKwh,
             name: this.name,
-            municipality_fee: "test",
+            municipality_fee: this.tariff.municipalityFee,
             is_default: this.isDefault,
-            grid_peak_power_tariff: "test",
-            year: "test",
-            valid_to_kwh: "test"
+            grid_peak_power_tariff: this.tariff.gridPeakPowerTariff,
+            year: this.tariff.year,
         }
-
         let summer = {
-            ht_end_monday: 19, // summer_high_tariff_time_mfr
-            ht_start_monday: 7, //summer_high_tariff_time_mfr
-            ht_start_saturday: 0, //summer_high_tariff_time_sa
-            ht_end_saturday: 0, //summer_high_tariff_time_sa
-            ht_start_sunday: 0, // summer_high_tariff_time_su
-            ht_end_sunday: 0, //summer_high_tariff_time_su
-            ht: 17.1, // summer_high_tariff
-            lt: 13.3, // summer_low_tariff
-            months: [{name: "Jan", number: 1},{name: "Feb", number: 2},],
+            ht_end_monday: this.tariff.summer.htMondayStart,
+            ht_start_monday: this.tariff.summer.htMondayEnd,
+            ht_start_saturday: this.tariff.summer.htSaturdayStart,
+            ht_end_saturday: this.tariff.summer.htSaturdayEnd,
+            ht_start_sunday: this.tariff.summer.htSundayStart,
+            ht_end_sunday: this.tariff.summer.htSundayEnd,
+            ht: this.tariff.summer.highTariff,
+            lt: this.tariff.summer.lowTariff,
+            months: this.tariff.summer.months
         }
-
         let winter = {
-            ht_end_monday: 19, // summer_high_tariff_time_mfr
-            ht_start_monday: 7, //summer_high_tariff_time_mfr
-            ht_start_saturday: 0, //summer_high_tariff_time_sa
-            ht_end_saturday: 0, //summer_high_tariff_time_sa
-            ht_start_sunday: 0, // summer_high_tariff_time_su
-            ht_end_sunday: 0, //summer_high_tariff_time_su
-            ht: 17.1, // summer_high_tariff
-            lt: 13.3, // summer_low_tariff
+            ht_end_monday: this.tariff.winter.htMondayStart,
+            ht_start_monday: this.tariff.winter.htMondayEnd,
+            ht_start_saturday: this.tariff.winter.htSaturdayStart,
+            ht_end_saturday: this.tariff.winter.htSaturdayEnd,
+            ht_start_sunday: this.tariff.winter.htSundayStart,
+            ht_end_sunday: this.tariff.winter.htSundayEnd,
+            ht: this.tariff.winter.highTariff,
+            lt: this.tariff.winter.lowTariff,
+            months: this.tariff.winter.months
         }
         JSON.summer = summer
         JSON.winter = winter
@@ -81,7 +81,7 @@ export class SeasonalTariff {
     }
 }
 
-class Months {
+export class Months {
     months = []
     createMonthsList(start, end) {
         if (start < end) {
@@ -98,8 +98,8 @@ class Months {
         return this.months
     }
     pushMonth(number){
-        let monthName = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
-        this.months.push({"name": monthName[number-1], "number": number})
+        let monthsList = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+        this.months.push({"name": monthsList[number-1], "number": number})
     }
 }
 
@@ -110,8 +110,7 @@ class Months {
 // let winterMonths = new Months().createMonthsList(10, 2)
 // let winterTariff = new SeasonalTariff(27.1, 23.3, 8, 17, 0, 0, 0, 0, winterMonths)
 // let tariff = new Tariff(2020, 0, 10000, 0.0, 0.3, 5.00, winterTariff, summerTariff)
-// let pro = new Product(op, "tet1212", tariff, 0)
+// let pro = new Product(1, op, "tet1212", tariff, 0)
 //
 // console.log(pro)
 // console.log(JSON.stringify(pro))
-//
