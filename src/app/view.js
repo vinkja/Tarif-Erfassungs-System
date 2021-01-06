@@ -5,8 +5,8 @@ let summerMonths = new Months().createMonthsList(3, 9)
 let summerTariff = new SeasonalTariff(17.1, 13.3, 7, 19, 0, 0, 0, 0, summerMonths)
 let winterMonths = new Months().createMonthsList(10, 2)
 let winterTariff = new SeasonalTariff(27.1, 23.3, 8, 17, 0, 0, 0, 0, winterMonths)
-let tariff = new Tariff(2020, 0, 10000, 0.0, 0.3, 5.00, winterTariff, summerTariff)
-let pro = new Product(1, op, "tet1212", tariff, 0)
+let tariff = new Tariff(2020, 0, 10000, 0.0, 0.3, 5.00, winterTariff, summerTariff, 'Privat', 'Ja', '123')
+let pro = new Product(1, op, "test1212", tariff, 0)
 
 export class View {
     constructor() {
@@ -18,18 +18,20 @@ export class View {
             let option = document.createElement("option");
             option.innerHTML = operators[i].name;
             mainContainer.appendChild(option);
-            // option.addEventListener('click', function (e) {
-            //     e.valueOf()
-            //     console.log(e);
-            //     console.log("halloiw")
-            //     op.id = e
-            // })
+
         }
         mainContainer.addEventListener('change', function () {
             let containerSelection = this.options[this.selectedIndex].value;
-            console.log(containerSelection)
-            console.log("ooskafj")
             op.id = containerSelection
+            console.log(pro)
+        })
+    }
+
+    addNameToList(){
+        let stromProdukt = document.getElementById('name')
+        stromProdukt.addEventListener('change', function (e) {
+            let input = document.getElementById('name').value;
+            op.name = input;
             console.log(pro)
         })
     }
@@ -43,11 +45,70 @@ export class View {
             let opt = document.createElement('option');
             opt.innerHTML = i;
             select.appendChild(opt);
+            }
             select.addEventListener('change', function () {
                 let yearSelection = this.options[this.selectedIndex].value;
-                console.log(yearSelection)
-            })
-        }
+                tariff.year = yearSelection
+                console.log(pro)
+        })
+    }
+
+    addBasicFeeMonthlyToList(){
+        let basicFeeMonthly = document.getElementById('basic_fee_monthly')
+        basicFeeMonthly.addEventListener('change', function (e) {
+            tariff.basicFeeMonthly = document.getElementById('basic_fee_monthly').value;
+            console.log(pro)
+        })
+    }
+
+    addGridPeakPowerTariffToList(){
+        let GridPeakPowerTariff = document.getElementById('load_counter_fee_monthly')
+        GridPeakPowerTariff.addEventListener('change', function (e) {
+            tariff.gridPeakPowerTariff = document.getElementById('load_counter_fee_monthly').value;
+            console.log(pro)
+        })
+    }
+
+    addValidFromKwhToList(){
+        document.getElementById('valid_from_kwp').addEventListener('change',function (e) {
+            tariff.validFromKwh = document.getElementById('valid_from_kwp').value;
+            console.log(pro)
+        });
+    }
+
+    addValidToKwhToList(){
+        document.getElementById('valid_to_kwp').addEventListener('change',function (e) {
+            tariff.validtoKwh = document.getElementById('valid_to_kwp').value;
+            console.log(pro)
+        });
+    }
+
+    addConsumerTypeToList(){
+        document.getElementById('verbrauchertyp').addEventListener('change',function (e) {
+            tariff.consumerType = this.options[this.selectedIndex].value
+            console.log(pro)
+        })
+    }
+
+    addMunicipalityFeeToList(){
+        document.getElementById('municipality_fee').addEventListener('change',function (e) {
+            tariff.municipalityFee = document.getElementById('municipality_fee').value;
+            console.log(pro)
+        });
+    }
+
+    addStandardTariffToList(){
+        document.getElementById('is_default').addEventListener('change',function (e) {
+            tariff.standardTariff = this.options[this.selectedIndex].value
+            console.log(pro)
+        })
+    }
+
+    addKevTaxToList(){
+        document.getElementById('kev').addEventListener('change',function (e) {
+            tariff.kevTax = document.getElementById('kev').value;
+            console.log(pro)
+        });
     }
 
     addMonthsToList(element) {

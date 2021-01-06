@@ -55,7 +55,7 @@ export class Product {
 }
 
 export class Tariff {
-    constructor(year, validFromKwh, validToKwh, gridPeakPowerTariff, municipalityFee, basicFeeMonthly, winter, summer) {
+    constructor(year, validFromKwh, validToKwh, gridPeakPowerTariff, municipalityFee, basicFeeMonthly, winter, summer, consumerType, standardTariff, kevTax) {
         this.year = year
         this.validFromKwh = validFromKwh
         this.validToKwh = validToKwh
@@ -64,6 +64,9 @@ export class Tariff {
         this.basicFeeMonthly = basicFeeMonthly //Grundgebühr
         this.winter = winter
         this.summer = summer
+        this.consumerType = consumerType
+        this.standardTariff = standardTariff
+        this.kevTax = kevTax
     }
 }
 
