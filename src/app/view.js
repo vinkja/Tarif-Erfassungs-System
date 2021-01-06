@@ -1,4 +1,5 @@
 import {Months, Operator, Product, SeasonalTariff, Tariff} from "./model";
+const { add } = require('mathjs')
 
 let op = new Operator(123, "test")
 let summerMonths = new Months().createMonthsList(3, 9)
@@ -126,25 +127,40 @@ export class View {
         }
     }
 
+
     autoCalculate() {
-        let summerEnergyHT = document.getElementById("summerEnergyHT").value;
-        let summerNetHT = document.getElementById("summerNetHT").value;
-        let summerEnergyNT = document.getElementById("summerEnergyNT").value;
-        let summerNetNT = document.getElementById("summerNetNT").value;
-        let winterEnergyHT = document.getElementById("winterEnergyHT").value;
-        let winterNetHT = document.getElementById("winterNetHT").value;
-        let winterEnergyNT = document.getElementById("winterEnergyNT").value;
-        let winterNetNT = document.getElementById("winterNetNT").value;
+        let consumptionRateInputElements = document.getElementsByClassName('consumptionRateInput');
 
-        function additionEnergyNet(p1, p2) {
-            let result = parseFloat(p1) + parseFloat(p2);
-            return result
+        for (let consumptionRateInputElement = 0; consumptionRateInputElement < consumptionRateInputElements.length; consumptionRateInputElement++) {
+            consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
+
+        // for (var consumptionRateInputElement in consumptionRateInputElements) {
+        //     consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
+
+                let summerEnergyHT = document.getElementById("summerEnergyHT").value;
+                let summerNetHT = document.getElementById("summerNetHT").value;
+                let summerEnergyNT = document.getElementById("summerEnergyNT").value;
+                let summerNetNT = document.getElementById("summerNetNT").value;
+                let winterEnergyHT = document.getElementById("winterEnergyHT").value;
+                let winterNetHT = document.getElementById("winterNetHT").value;
+                let winterEnergyNT = document.getElementById("winterEnergyNT").value;
+                let winterNetNT = document.getElementById("winterNetNT").value;
+
+                let additionEnergyNetSummerHTResult = add(summerEnergyHT,summerNetHT)
+                let additionEnergyNetSummerNTResult = add(summerEnergyNT,summerNetNT)
+                let additionEnergyNetWinterHTResult = add(winterEnergyHT,winterNetHT)
+                let additionEnergyNetWinterNTResult = add(winterEnergyNT,winterNetNT)
+
+                document.getElementById("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
+                document.getElementById("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
+                document.getElementById("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
+                document.getElementById("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
+
+            })
         }
-
-        document.getElementById("totalSummerHT").innerHTML = additionEnergyNet(summerEnergyHT, summerNetHT);
-        document.getElementById("totalSummerNT").innerHTML = additionEnergyNet(summerEnergyNT, summerNetNT);
-        document.getElementById("totalWinterHT").innerHTML = additionEnergyNet(winterEnergyHT, winterNetHT);
-        document.getElementById("totalWinterNT").innerHTML = additionEnergyNet(winterEnergyNT, winterNetNT);
-
     }
+
+
+
+
 }

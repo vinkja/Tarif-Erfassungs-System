@@ -18,6 +18,6 @@ export class Controller {
         this.view.addMunicipalityFeeToList()
         this.view.addStandardTariffToList()
         this.view.addKevTaxToList()
-
+        this.view.autoCalculate();
     }
 }

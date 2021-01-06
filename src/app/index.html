@@ -189,15 +189,15 @@
                     <tbody>
                     <tr>
                         <th scope="row">HT Start</th>
-                        <td> <input type="text" class="form-control" id="ht_start_monday" placeholder="7" name="ht_start_monday"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_saturday" placeholder="8" name="ht_start_saturday"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_sunday" placeholder="24" name="ht_start_sunday"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_monday_summer" placeholder="Wert eingeben" name="ht_start_monday_summer"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_saturday_summer" placeholder="Wert eingeben" name="ht_start_saturday_summer"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_sunday_summer" placeholder="Wert eingeben" name="ht_start_sunday_summer"></td>
                     </tr>
                     <tr>
                         <th scope="row">HT Ende</th>
-                        <td> <input type="text" class="form-control" id="ht_end_monday" placeholder="20" name="ht_end_monday"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_saturday" placeholder="24" name="ht_end_saturday"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_sunday" placeholder="24" name="ht_end_sunday"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_monday_summer" placeholder="Wert eingeben" name="ht_end_monday_summer"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_saturday_summer" placeholder="Wert eingeben" name="ht_end_saturday_summer"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_sunday_summer" placeholder="Wert eingeben" name="ht_end_sunday_summer"></td>
                     </tr>
 
                     </tbody>
@@ -218,15 +218,15 @@
                     <tbody>
                     <tr>
                         <th scope="row">HT Start</th>
-                        <td> <input type="text" class="form-control" id="ht_start_monday" placeholder="7" name="ht_start_monday"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_saturday" placeholder="8" name="ht_start_saturday"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_sunday" placeholder="24" name="ht_start_sunday"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_monday_winter" placeholder="Wert eingeben" name="ht_start_monday_winter"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_saturday_winter" placeholder="Wert eingeben" name="ht_start_saturday_winter"></td>
+                        <td> <input type="text" class="form-control" id="ht_start_sunday_winter" placeholder="Wert eingeben" name="ht_start_sunday_winter"></td>
                     </tr>
                     <tr>
                         <th scope="row">HT Ende</th>
-                        <td> <input type="text" class="form-control" id="ht_end_monday" placeholder="20" name="ht_end_monday"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_saturday" placeholder="24" name="ht_end_saturday"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_sunday" placeholder="24" name="ht_end_sunday"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_monday_winter" placeholder="Wert eingeben" name="ht_end_monday_winter"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_saturday_winter" placeholder="Wert eingeben" name="ht_end_saturday_winter"></td>
+                        <td> <input type="text" class="form-control" id="ht_end_sunday_winter" placeholder="Wert eingeben" name="ht_end_sunday_winter"></td>
                     </tr>
 
                     </tbody>
@@ -254,13 +254,13 @@
                     <tr>
                         <th scope="row">Energie</th>
 
-                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Netz</th>
-                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" onkeyup="view.autoCalculate()" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
@@ -592,13 +592,13 @@
                     <tbody>
                     <tr>
                         <th scope="row">Energie</th>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="winterEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="winterEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Netz</th>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control" onkeyup="autoCalculate()" id="winterNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="winterNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="text" class="form-control consumptionRateInput" id="winterNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
@@ -922,12 +922,12 @@
             </div>
         </div>
 
-</div>
+
 </form>
 
 </div>
 
-// TODO: Move to Head
+<!-- TODO: Move to Head -->
 <script src="./app.js"></script>
 
 </body>
