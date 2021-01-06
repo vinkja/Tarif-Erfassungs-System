@@ -5,6 +5,7 @@ export class Controller {
     }
     async start() {
         await this.api.loadOperators()
+        this.view.stopEnterKey()
         this.view.addOperatorsToList(this.api.getOperators())
         this.view.addBasicFeeMonthlyToList()
         this.view.addMonthsToList('sommerbeginn')
