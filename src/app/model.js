@@ -1,7 +1,11 @@
+import {LEASettingsAPI} from "./LEASettingsAPI";
+
 export class Operator {
-    constructor(id, name) {
+    constructor(id, name, vseId, elcomNumber) {
         this.id = id
         this.name = name
+        this.vseId = vseId
+        this.elcomNumber = elcomNumber
     }
 }
 
@@ -16,7 +20,7 @@ export class Product {
     //TODO: Vollende diese Sache
     toJSON() {
         let JSON = {
-            operator_elcom_number: this.operator.id, //TODO: this is not correct, id != elcomNumber
+            operator_elcom_number: this.operator.elcomNumber, //TODO: this is not correct, id != elcomNumber
             basic_fee_monthly: this.tariff.basicFeeMonthly,
             valid_from_kwh: this.tariff.validFromKwh,
             valid_to_kwh: this.tariff.validToKwh,
