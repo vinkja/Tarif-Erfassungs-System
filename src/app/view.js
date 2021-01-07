@@ -9,8 +9,19 @@ let winterTariff = new SeasonalTariff(null, null, null, null, null, null, null, 
 let tariff = new Tariff(null, null, null, null, null, null, winterTariff, summerTariff, null, null, null)
 let product = new Product(null, operator, null, tariff, null)
 
+
 export class View {
     constructor() {
+    }
+
+    stopEnterKey(){
+        document.getElementById('myForm').addEventListener('keydown',function (event) {
+
+            let key = event.keyCode;
+            if (key === 13){
+                event.preventDefault();
+            }
+        })
     }
 
     addOperatorsToList(operators) {
@@ -138,8 +149,10 @@ export class View {
             option.innerHTML = month[i];
             monthDropdown.appendChild(option);
             monthDropdown.addEventListener('change', function () {
+
                 let sommerbeginnSelection = this.options[this.selectedIndex].value;
                 console.log(sommerbeginnSelection)
+
             })
         }
     }
