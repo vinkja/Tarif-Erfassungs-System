@@ -1,4 +1,3 @@
-import {LEASettingsAPI} from "./LEASettingsAPI";
 
 export class Operator {
     constructor(id, name, vseId, elcomNumber) {
