@@ -25,6 +25,12 @@ describe('LEA Settings API', function() {
             it('first Operator should have a name as string', function() {
                 assert.strictEqual(typeof(operators[0].name), typeof(" "))
             })
+            it('first Operator should have a elcomNumber as nummber', function() {
+                assert.strictEqual(typeof(operators[0].elcomNumber), typeof(1))
+            })
+            it('first Operator should have a vseId as nummber', function() {
+                assert.strictEqual(typeof(operators[0].vseId), typeof(1))
+            })
         })
     })
     describe('getProductsFromOperator', function () {

@@ -2,13 +2,13 @@ import {Months, Operator, Product, SeasonalTariff, Tariff} from "./model";
 
 const { add } = require('mathjs')
 
-let op = new Operator(123, "test")
-let summerMonths = new Months().createMonthsList(3, 9)
-let summerTariff = new SeasonalTariff(17.1, 13.3, 7, 19, 0, 0, 0, 0, summerMonths)
-let winterMonths = new Months().createMonthsList(10, 2)
-let winterTariff = new SeasonalTariff(27.1, 23.3, 8, 17, 0, 0, 0, 0, winterMonths)
-let tariff = new Tariff(2020, 0, 10000, 0.0, 0.3, 5.00, winterTariff, summerTariff, 'Privat', 'Ja', '123')
-let pro = new Product(1, op, "test1212", tariff, 0)
+let operator = new Operator
+let summerMonths = new Months().createMonthsList(null, null)
+let summerTariff = new SeasonalTariff(null, null, null, null, null, null, null, null, summerMonths)
+let winterMonths = new Months().createMonthsList(null, null)
+let winterTariff = new SeasonalTariff(null, null, null, null, null, null, null, null, winterMonths)
+let tariff = new Tariff(null, null, null, null, null, null, winterTariff, summerTariff, null, null, null)
+let product = new Product(null, operator, null, tariff, null)
 
 
 export class View {
@@ -25,13 +25,33 @@ export class View {
 
     addOperatorsToList(operators) {
         let mainContainer = document.getElementById("energieversoger");
-        for (let i = 1; i < operators.length; i++) {
+        let elcomNumber = document.getElementById("operator_elcom_number");
+        let vseId = document.getElementById("vse-id")
+        operators.forEach(operator => {
             let option = document.createElement("option");
-            option.innerHTML = operators[i].name;
+            option.innerHTML = operator.name;
+            option.id = operator.id;
             mainContainer.appendChild(option);
-        }
+          
+        elcomNumber.innerHTML = operators[0].elcomNumber
+        vseId.innerHTML = operators[0].vseId
         mainContainer.addEventListener('change', function () {
-            op.id = this.options[this.selectedIndex].value
+            let operatorSelection = this.options[this.selectedIndex];
+            operator.name = operatorSelection.value
+            operator.id = operatorSelection.id
+            // operators = this.api.getOperators()
+            // let operatorSelection = this.options[this.selectedIndex];
+            // operators.forEach(op => {
+            //     if (op.id === operatorSelection.id) {
+            //         operator.id = op.id
+            //         operator.name = op.name
+            //         operator.vseId = op.vseId
+            //         operator.elcomNumber = op.elcomNumber
+            //     }
+            // })
+            // elcomNumber.innerHTML = operator.elcomNumber
+            // vseId.innerHTML = operator.vseId
+            console.log(product)
         })
     }
 
