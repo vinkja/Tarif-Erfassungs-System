@@ -1,9 +1,9 @@
 import {LEASettingsAPI} from "./LEASettingsAPI";
-import {View} from './view.js'
+import {events as viewEvents, View} from './view.js'
 import {Controller} from "./controller";
+import {Store} from "./Store";
 
-let api = new LEASettingsAPI()
+let serverUrl = "https://ep-dev-03.eturnity.ch"
+let store = new Store(serverUrl)
 let view = new View()
-new Controller(view, api).start()
-
-console.log("hello")
+new Controller(view, viewEvents, store).start()

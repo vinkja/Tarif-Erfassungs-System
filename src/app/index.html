@@ -70,8 +70,8 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="load_counter_fee_monthly">Leistungstarif: (CHF/kW, exkl. MWST)</label>
-                <input type="text" class="form-control" id="load_counter_fee_monthly" placeholder="" name="load_counter_fee_monthly">
+                <label for="gridPeakPowerTariff">Leistungstarif: (CHF/kW, exkl. MWST)</label>
+                <input type="text" class="form-control" id="gridPeakPowerTariff" placeholder="" name="load_counter_fee_monthly">
             </div>
         </div>
 
@@ -91,8 +91,8 @@
                 <label for="verbrauchertyp">Verbrauchertyp:</label>
                 <select class="custom-select" id="verbrauchertyp" name="Bitte auswählen.." >
                     <option selected="Bitte wählen..">Bitte wählen..</option>
-                    <option value="Privat">Privat</option>
-                    <option value="Gewerbe">Gewerbe</option>
+                    <option value=1>Privat</option>
+                    <option value=2>Gewerbe</option>
                 </select>
             </div>
         </div>
@@ -109,8 +109,8 @@
                 <label for="is_default">Standardtarif:</label>
                 <select class="custom-select" id="is_default" name="Bitte auswählen.." >
                     <option selected="Bitte wählen..">Bitte wählen..</option>
-                    <option value="Ja">Ja</option>
-                    <option value="Nein">Nein</option>
+                    <option value=1>Ja</option>
+                    <option value=0>Nein</option>
                 </select>
             </div>
         </div>
