@@ -16,10 +16,11 @@ export class Product {
         this.tariff = tariff
         this.isDefault = isDefault
     }
+
     //TODO: Vollende diese Sache
     toJSON() {
         let JSON = {
-            operator_elcom_number: this.operator.elcomNumber, //TODO: this is not correct, id != elcomNumber
+            operator_elcom_number: this.operator.elcomNumber,
             basic_fee_monthly: this.tariff.basicFeeMonthly,
             valid_from_kwh: this.tariff.validFromKwh,
             valid_to_kwh: this.tariff.validToKwh,
@@ -74,7 +75,7 @@ export class Tariff {
 }
 
 export class SeasonalTariff {
-    constructor(highTariff, lowTariff, htMondayStart, htMondayEnd, htSaturdayStart, htSaturdayEnd, htSundayStart, htSundayEnd, monthsList) {
+    constructor(highTariff, lowTariff, htMondayStart, htMondayEnd, htSaturdayStart, htSaturdayEnd, htSundayStart, htSundayEnd) {
         this.highTariff = highTariff
         this.lowTariff = lowTariff
         this.htMondayStart = htMondayStart
@@ -83,24 +84,38 @@ export class SeasonalTariff {
         this.htSaturdayEnd = htSaturdayEnd
         this.htSundayStart = htSundayStart
         this.htSundayEnd = htSundayEnd
-        this.months = monthsList
+        this.start = null
+        this.end = null
+    }
+    setSummerMonths() {
+        if (this.start !== null && this.end !== null) {
+            this.months = new Months().createMonthsList(this.start, this.end)
+        }
+    }
+    setWinterMonths() {
+        if (this.start !== null && this.end !== null) {
+            this.months = new Months().createMonthsList(this.start, this.end)
+        }
     }
 }
 
-export class Months {
+class Months {
     months = []
     createMonthsList(start, end) {
-        if (start < end) {
-            for (let i = start; i <= end; i++) {
-                this.pushMonth(i)
-            }
-        } else {
-            for (let i = 1; i <= end; i++) {
-                this.pushMonth(i)          }
-            for (let i = start; i <=12; i++) {
-                this.pushMonth(i)
+        if (start != null && end != null) {
+            if (start < end) {
+                for (let i = start; i <= end; i++) {
+                    this.pushMonth(i)
+                }
+            } else {
+                for (let i = 1; i <= end; i++) {
+                    this.pushMonth(i)          }
+                for (let i = start; i <=12; i++) {
+                    this.pushMonth(i)
+                }
             }
         }
+
         return this.months
     }
     pushMonth(number){
@@ -108,15 +123,3 @@ export class Months {
         this.months.push({"name": monthsList[number-1], "number": number})
     }
 }
-
-// example of product creation
-// let op = new Operator(123, "test")
-// let summerMonths = new Months().createMonthsList(3, 9)
-// let summerTariff = new SeasonalTariff(17.1, 13.3, 7, 19, 0, 0, 0, 0, summerMonths)
-// let winterMonths = new Months().createMonthsList(10, 2)
-// let winterTariff = new SeasonalTariff(27.1, 23.3, 8, 17, 0, 0, 0, 0, winterMonths)
-// let tariff = new Tariff(2020, 0, 10000, 0.0, 0.3, 5.00, winterTariff, summerTariff)
-// let pro = new Product(1, op, "tet1212", tariff, 0)
-//
-// console.log(pro)
-// console.log(JSON.stringify(pro))
