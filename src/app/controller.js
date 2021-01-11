@@ -20,14 +20,22 @@ export class Controller {
             [viewEvents.onAddKevTax]: kevTax => this.addKevTax(kevTax),
             [viewEvents.onAddSummerStart]: summerStart => this.addSummerStart(summerStart),
             [viewEvents.onAddSummerEnd]: summerEnd => this.addSummerEnd(summerEnd),
-            [viewEvents.onAddSummerhtMondayStart]: summerMondayStart => this.addSummerMondayStart(summerMondayStart),
-            [viewEvents.onAddSummerhtMondayEnd]: summerMondayEnd => this.addSummerMondayEnd(summerMondayEnd),
-            [viewEvents.onAddSummerhtSaturdayStart]: summerSaturdayStart => this.addSummerSaturdayStart(summerSaturdayStart),
-            [viewEvents.onAddSummerhtSaturdayEnd]: summerSaturdayEnd => this.addSummerSaturdayEnd(summerSaturdayEnd),
-            [viewEvents.onAddSummerhtSundayStart]: summerSundayStart => this.addSummerSundayStart(summerSundayStart),
-            [viewEvents.onAddSummerhtSundayEnd]: summerSundayEnd => this.addSummerSundayEnd(summerSundayEnd),
+            [viewEvents.onAddSummerMondayStart]: summerMondayStart => this.addSummerMondayStart(summerMondayStart),
+            [viewEvents.onAddSummerMondayEnd]: summerMondayEnd => this.addSummerMondayEnd(summerMondayEnd),
+            [viewEvents.onAddSummerSaturdayStart]: summerSaturdayStart => this.addSummerSaturdayStart(summerSaturdayStart),
+            [viewEvents.onAddSummerSaturdayEnd]: summerSaturdayEnd => this.addSummerSaturdayEnd(summerSaturdayEnd),
+            [viewEvents.onAddSummerSundayStart]: summerSundayStart => this.addSummerSundayStart(summerSundayStart),
+            [viewEvents.onAddSummerSundayEnd]: summerSundayEnd => this.addSummerSundayEnd(summerSundayEnd),
             [viewEvents.onAddSummerHighTariff]: summerHighTariff => this.addSummerHighTariff(summerHighTariff),
             [viewEvents.onAddSummerLowTariff]: summerLowTariff => this.addSummerLowTariff(summerLowTariff),
+            [viewEvents.onAddWinterMondayStart]: winterMondayStart => this.addWinterMondayStart(winterMondayStart),
+            [viewEvents.onAddWinterMondayEnd]: winterMondayEnd => this.addWinterMondayEnd(winterMondayEnd),
+            [viewEvents.onAddWinterSaturdayStart]: winterSaturdayStart => this.addWinterSaturdayStart(winterSaturdayStart),
+            [viewEvents.onAddWinterSaturdayEnd]: winterSaturdayEnd => this.addWinterSaturdayEnd(winterSaturdayEnd),
+            [viewEvents.onAddWinterSundayStart]: winterSundayStart => this.addWinterSundayStart(winterSundayStart),
+            [viewEvents.onAddWinterSundayEnd]: winterSundayEnd => this.addWinterSundayEnd(winterSundayEnd),
+            [viewEvents.onAddWinterHighTariff]: winterHighTariff => this.addWinterHighTariff(winterHighTariff),
+            [viewEvents.onAddWinterLowTariff]: winterLowTariff => this.addWinterLowTariff(winterLowTariff),
         })
     }
     async start() {
@@ -123,5 +131,37 @@ export class Controller {
 
     addSummerLowTariff(summerLowTariff) {
         this.store.setSummerLowTariff(summerLowTariff)
+    }
+
+    addWinterMondayStart(winterMondayStart) {
+        this.store.setWinterMondayStart(winterMondayStart)
+    }
+
+    addWinterMondayEnd(winterMondayEnd) {
+        this.store.setWinterMondayEnd(winterMondayEnd)
+    }
+
+    addWinterSaturdayStart(winterSaturdayStart) {
+        this.store.setWinterSaturdayStart(winterSaturdayStart)
+    }
+
+    addWinterSaturdayEnd(winterSaturdayEnd) {
+        this.store.setWinterSaturdayEnd(winterSaturdayEnd)
+    }
+
+    addWinterSundayStart(winterSundayStart) {
+        this.store.setWinterSundayStart(winterSundayStart)
+    }
+
+    addWinterSundayEnd(winterSundayEnd) {
+        this.store.setWinterSundayEnd(winterSundayEnd)
+    }
+
+    addWinterHighTariff(winterHighTariff) {
+        this.store.setWinterHighTariff(winterHighTariff)
+    }
+
+    addWinterLowTariff(winterLowTariff) {
+        this.store.setWinterLowTariff(winterLowTariff)
     }
 }

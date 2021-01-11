@@ -14,14 +14,22 @@ const onAddStandardTariff = Symbol()
 const onAddKevTax = Symbol()
 const onAddSummerStart = Symbol()
 const onAddSummerEnd = Symbol()
-const onAddSummerhtMondayStart = Symbol()
-const onAddSummerhtMondayEnd = Symbol()
-const onAddSummerhtSaturdayStart = Symbol()
-const onAddSummerhtSaturdayEnd= Symbol()
-const onAddSummerhtSundayStart = Symbol()
-const onAddSummerhtSundayEnd = Symbol()
+const onAddSummerMondayStart = Symbol()
+const onAddSummerMondayEnd = Symbol()
+const onAddSummerSaturdayStart = Symbol()
+const onAddSummerSaturdayEnd= Symbol()
+const onAddSummerSundayStart = Symbol()
+const onAddSummerSundayEnd = Symbol()
 const onAddSummerHighTariff = Symbol()
 const onAddSummerLowTariff = Symbol()
+const onAddWinterMondayStart = Symbol()
+const onAddWinterMondayEnd = Symbol()
+const onAddWinterSaturdayStart = Symbol()
+const onAddWinterSaturdayEnd= Symbol()
+const onAddWinterSundayStart = Symbol()
+const onAddWinterSundayEnd = Symbol()
+const onAddWinterHighTariff = Symbol()
+const onAddWinterLowTariff = Symbol()
 
 
 export const events = {
@@ -38,14 +46,22 @@ export const events = {
     onAddKevTax: "called when KEVis set",
     onAddSummerStart: "TODO 1",
     onAddSummerEnd: "TODO 2",
-    onAddSummerhtMondayStart: "TODO 3",
-    onAddSummerhtMondayEnd: "TODO 5",
-    onAddSummerhtSaturdayStart: "TODO 4",
-    onAddSummerhtSaturdayEnd: "Todo",
-    onAddSummerhtSundayStart: "TODO 6",
-    onAddSummerhtSundayEnd: "TODO 7",
+    onAddSummerMondayStart: "TODO 3",
+    onAddSummerMondayEnd: "TODO 5",
+    onAddSummerSaturdayStart: "TODO 4",
+    onAddSummerSaturdayEnd: "Todo",
+    onAddSummerSundayStart: "TODO 6",
+    onAddSummerSundayEnd: "TODO 7",
     onAddSummerHighTariff: "TODO 8 ",
     onAddSummerLowTariff: "TODO 9",
+    onAddWinterMondayStart: "todo1",
+    onAddWinterMondayEnd: "todo2",
+    onAddWinterSaturdayStart: "todo3",
+    onAddWinterSaturdayEnd: "todo4",
+    onAddWinterSundayStart: "todo5",
+    onAddWinterSundayEnd: "todo6",
+    onAddWinterHighTariff: "todo7",
+    onAddWinterLowTariff: "todo8",
 }
 
 export class View {
@@ -65,14 +81,22 @@ export class View {
             [events.onAddKevTax]: noop,
             [events.onAddSummerStart]: noop,
             [events.onAddSummerEnd]: noop,
-            [events.onAddSummerhtMondayStart]: noop,
-            [events.onAddSummerhtMondayEnd]: noop,
-            [events.onAddSummerhtSaturdayStart]: noop,
-            [events.onAddSummerhtSaturdayEnd]: noop,
-            [events.onAddSummerhtSundayStart]: noop,
-            [events.onAddSummerhtSundayEnd]: noop,
+            [events.onAddSummerMondayStart]: noop,
+            [events.onAddSummerMondayEnd]: noop,
+            [events.onAddSummerSaturdayStart]: noop,
+            [events.onAddSummerSaturdayEnd]: noop,
+            [events.onAddSummerSundayStart]: noop,
+            [events.onAddSummerSundayEnd]: noop,
             [events.onAddSummerHighTariff]: noop,
             [events.onAddSummerLowTariff]: noop,
+            [events.onAddWinterMondayStart]: noop,
+            [events.onAddWinterMondayEnd]: noop,
+            [events.onAddWinterSaturdayStart]: noop,
+            [events.onAddWinterSaturdayEnd]: noop,
+            [events.onAddWinterSundayStart]: noop,
+            [events.onAddWinterSundayEnd]: noop,
+            [events.onAddWinterHighTariff]: noop,
+            [events.onAddWinterLowTariff]: noop,
         }
 
         this.bindEvents()
@@ -85,7 +109,7 @@ export class View {
             }
         }
     }
-
+    //TODO: make Enter go to next field
     stopEnterKey() {
         document.getElementById('myForm').addEventListener('keydown', function (event) {
             let key = event.keyCode;
@@ -167,7 +191,9 @@ export class View {
                 document.getElementById("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
                 this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
                 document.getElementById("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
+                this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
                 document.getElementById("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
+                this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
             })
         }
     }
@@ -211,29 +237,53 @@ export class View {
     [onAddSummerEnd](summerEnd){
         return this.eventHandlers[events.onAddSummerEnd](summerEnd)
     }
-    [onAddSummerhtMondayStart](SummerMondayStart){
-        return this.eventHandlers[events.onAddSummerhtMondayStart](SummerMondayStart)
+    [onAddSummerMondayStart](SummerMondayStart){
+        return this.eventHandlers[events.onAddSummerMondayStart](SummerMondayStart)
     }
-    [onAddSummerhtMondayEnd](SummerMondayEnd){
-        return this.eventHandlers[events.onAddSummerhtMondayEnd](SummerMondayEnd)
+    [onAddSummerMondayEnd](SummerMondayEnd){
+        return this.eventHandlers[events.onAddSummerMondayEnd](SummerMondayEnd)
     }
-    [onAddSummerhtSaturdayStart](SummerSaturdayStart){
-        return this.eventHandlers[events.onAddSummerhtSaturdayStart](SummerSaturdayStart)
+    [onAddSummerSaturdayStart](SummerSaturdayStart){
+        return this.eventHandlers[events.onAddSummerSaturdayStart](SummerSaturdayStart)
     }
-    [onAddSummerhtSaturdayEnd](SummerSaturdayEnd){
-        return this.eventHandlers[events.onAddSummerhtSaturdayEnd](SummerSaturdayEnd)
+    [onAddSummerSaturdayEnd](SummerSaturdayEnd){
+        return this.eventHandlers[events.onAddSummerSaturdayEnd](SummerSaturdayEnd)
     }
-    [onAddSummerhtSundayStart](SummerSundayStart){
-        return this.eventHandlers[events.onAddSummerhtSundayStart](SummerSundayStart)
+    [onAddSummerSundayStart](SummerSundayStart){
+        return this.eventHandlers[events.onAddSummerSundayStart](SummerSundayStart)
     }
-    [onAddSummerhtSundayEnd](SummerSundayEnd){
-        return this.eventHandlers[events.onAddSummerhtSundayEnd](SummerSundayEnd)
+    [onAddSummerSundayEnd](SummerSundayEnd){
+        return this.eventHandlers[events.onAddSummerSundayEnd](SummerSundayEnd)
     }
     [onAddSummerHighTariff](summerHighTariff){
         return this.eventHandlers[events.onAddSummerHighTariff](summerHighTariff)
     }
     [onAddSummerLowTariff](summerLowTariff){
         return this.eventHandlers[events.onAddSummerLowTariff](summerLowTariff)
+    }
+    [onAddWinterMondayStart](WinterMondayStart){
+        return this.eventHandlers[events.onAddWinterMondayStart](WinterMondayStart)
+    }
+    [onAddWinterMondayEnd](WinterMondayEnd){
+        return this.eventHandlers[events.onAddWinterMondayEnd](WinterMondayEnd)
+    }
+    [onAddWinterSaturdayStart](WinterSaturdayStart){
+        return this.eventHandlers[events.onAddWinterSaturdayStart](WinterSaturdayStart)
+    }
+    [onAddWinterSaturdayEnd](WinterSaturdayEnd){
+        return this.eventHandlers[events.onAddWinterSaturdayEnd](WinterSaturdayEnd)
+    }
+    [onAddWinterSundayStart](WinterSundayStart){
+        return this.eventHandlers[events.onAddWinterSundayStart](WinterSundayStart)
+    }
+    [onAddWinterSundayEnd](WinterSundayEnd){
+        return this.eventHandlers[events.onAddWinterSundayEnd](WinterSundayEnd)
+    }
+    [onAddWinterHighTariff](WinterHighTariff){
+        return this.eventHandlers[events.onAddWinterHighTariff](WinterHighTariff)
+    }
+    [onAddWinterLowTariff](WinterLowTariff){
+        return this.eventHandlers[events.onAddWinterLowTariff](WinterLowTariff)
     }
 
     bindEvents() {
@@ -297,31 +347,44 @@ export class View {
         })
 
         document.getElementById('ht_start_monday_summer').addEventListener('change', ({target}) => {
-            this[onAddSummerhtMondayStart](Number(target.value))
+            this[onAddSummerMondayStart](Number(target.value))
         })
 
         document.getElementById('ht_end_monday_summer').addEventListener('change', ({target}) => {
-            this[onAddSummerhtMondayEnd](Number(target.value))
+            this[onAddSummerMondayEnd](Number(target.value))
         })
 
         document.getElementById('ht_start_saturday_summer').addEventListener('change', ({target}) => {
-            this[onAddSummerhtSaturdayStart](Number(target.value))
+            this[onAddSummerSaturdayStart](Number(target.value))
         })
         document.getElementById('ht_end_saturday_summer').addEventListener('change', ({target}) => {
-            this[onAddSummerhtSaturdayEnd](Number(target.value))
+            this[onAddSummerSaturdayEnd](Number(target.value))
         })
         document.getElementById('ht_start_sunday_summer').addEventListener('change', ({target}) => {
-            this[onAddSummerhtSundayStart](Number(target.value))
+            this[onAddSummerSundayStart](Number(target.value))
         })
         document.getElementById('ht_end_sunday_summer').addEventListener('change', ({target}) => {
-            this[onAddSummerhtSundayEnd](Number(target.value))
+            this[onAddSummerSundayEnd](Number(target.value))
         })
-        // document.getElementById('totalSummerHT').addEventListener('change', ({target}) => {
-        //     this[onAddSummerHighTariff](Number(target.value))
-        // })
-        // document.getElementById('totalSummerNT').addEventListener('change', ({target}) => {
-        //     this[onAddSummerLowTariff](Number(target.value))
-        // })
-        //TODO Same for all WinterTariff
+        document.getElementById('ht_start_monday_winter').addEventListener('change', ({target}) => {
+            this[onAddWinterMondayStart](Number(target.value))
+        })
+
+        document.getElementById('ht_end_monday_winter').addEventListener('change', ({target}) => {
+            this[onAddWinterMondayEnd](Number(target.value))
+        })
+
+        document.getElementById('ht_start_saturday_winter').addEventListener('change', ({target}) => {
+            this[onAddWinterSaturdayStart](Number(target.value))
+        })
+        document.getElementById('ht_end_saturday_winter').addEventListener('change', ({target}) => {
+            this[onAddWinterSaturdayEnd](Number(target.value))
+        })
+        document.getElementById('ht_start_sunday_winter').addEventListener('change', ({target}) => {
+            this[onAddWinterSundayStart](Number(target.value))
+        })
+        document.getElementById('ht_end_sunday_winter').addEventListener('change', ({target}) => {
+            this[onAddWinterSundayEnd](Number(target.value))
+        })
     }
 }

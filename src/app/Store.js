@@ -2,16 +2,12 @@ import {Months, Operator, Product, SeasonalTariff, Tariff} from "./model";
 import {LEASettingsAPI} from "./LEASettingsAPI";
 
 export class Store {
-    summerStart
-    summerEnd
     constructor(serverUrl) {
         this.operators = []
         this.api = new LEASettingsAPI(serverUrl)
         this.operator = new Operator
-        this.summerMonths = new Months().createMonthsList(null, null)
-        this.summerTariff = new SeasonalTariff(null, null, null, null, null, null, null, null, this.summerMonths)
-        this.winterMonths = new Months().createMonthsList(null, null)
-        this.winterTariff = new SeasonalTariff(null, null, null, null, null, null, null, null, this.winterMonths)
+        this.summerTariff = new SeasonalTariff(null, null, null, null, null, null, null, null)
+        this.winterTariff = new SeasonalTariff(null, null, null, null, null, null, null, null)
         this.tariff = new Tariff(null, null, null, null, null, null, this.winterTariff, this.summerTariff, null, null, null)
         this.product = new Product(null, this.operator, null, this.tariff, null)
     }
@@ -87,16 +83,20 @@ export class Store {
         console.log(this.product)
     }
 
-    setSummerStart(summerStart) {
-        this.summerStart = summerStart
-        this.summerMonths.createMonthsList(this.summerStart, this.summerEnd)
+    setSummerStart(start) {
+        this.summerTariff.start = start
+        this.winterTariff.end = start -1
+        this.summerTariff.setSummerMonths()
+        this.winterTariff.setWinterMonths()
         console.log(this.summerTariff)
     }
 
-    setSummerEnd(summerEnd) {
-        this.summerEnd = summerEnd
-        this.summerMonths.createMonthsList(this.summerStart, this.summerEnd)
-        console.log(this.summerTariff)
+    setSummerEnd(end) {
+        this.summerTariff.end = end
+        this.winterTariff.start = end +1
+        this.summerTariff.setSummerMonths()
+        this.winterTariff.setWinterMonths()
+    console.log(this.summerTariff)
     }
 
     setSummerMondayStart(summerMondayStart) {
@@ -137,5 +137,45 @@ export class Store {
     setSummerLowTariff(summerLowTariff) {
         this.summerTariff.lowTariff = summerLowTariff
         console.log(this.summerTariff)
+    }
+
+    setWinterMondayStart(winterMondayStart) {
+        this.winterTariff.htMondayStart = winterMondayStart
+        console.log(this.winterTariff)
+    }
+
+    setWinterMondayEnd(winterMondayEnd) {
+        this.winterTariff.htMondayEnd = winterMondayEnd
+        console.log(this.winterTariff)
+    }
+
+    setWinterSaturdayStart(winterSaturdayStart) {
+        this.winterTariff.htSaturdayStart = winterSaturdayStart
+        console.log(this.winterTariff)
+    }
+
+    setWinterSaturdayEnd(winterSaturdayEnd) {
+        this.winterTariff.htSaturdayEnd = winterSaturdayEnd
+        console.log(this.winterTariff)
+    }
+
+    setWinterSundayStart(winterSundayStart) {
+        this.winterTariff.htSundayStart = winterSundayStart
+        console.log(this.winterTariff)
+    }
+
+    setWinterSundayEnd(winterSundayEnd) {
+        this.winterTariff.htSundayEnd = winterSundayEnd
+        console.log(this.winterTariff)
+    }
+
+    setWinterHighTariff(winterHighTariff) {
+        this.winterTariff.highTariff = winterHighTariff
+        console.log(this.winterTariff)
+    }
+
+    setWinterLowTariff(winterLowTariff) {
+        this.winterTariff.lowTariff = winterLowTariff
+        console.log(this.winterTariff)
     }
 }
