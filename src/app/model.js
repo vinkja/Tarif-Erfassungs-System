@@ -1,4 +1,3 @@
-
 export class Operator {
     constructor(id, name, vseId, elcomNumber) {
         this.id = id
@@ -17,40 +16,39 @@ export class Product {
         this.isDefault = isDefault
     }
 
-    //TODO: Vollende diese Sache
     toJSON() {
         let JSON = {
-            operator_elcom_number: this.operator.elcomNumber,
-            basic_fee_monthly: this.tariff.basicFeeMonthly,
-            valid_from_kwh: this.tariff.validFromKwh,
-            valid_to_kwh: this.tariff.validToKwh,
-            name: this.name,
-            municipality_fee: this.tariff.municipalityFee,
-            is_default: this.isDefault,
-            grid_peak_power_tariff: this.tariff.gridPeakPowerTariff,
-            year: this.tariff.year,
+            "operator_elcom_number": this.operator.elcomNumber,
+            "basic_fee_monthly": this.tariff.basicFeeMonthly,
+            "valid_from_kwh": this.tariff.validFromKwh,
+            "valid_to_kwh": this.tariff.validToKwh,
+            "name": this.name,
+            "municipality_fee": this.tariff.municipalityFee,
+            "is_default": this.isDefault,
+            "grid_peak_power_tariff": this.tariff.gridPeakPowerTariff,
+            "year": this.tariff.year,
         }
         let summer = {
-            ht_end_monday: this.tariff.summer.htMondayStart,
-            ht_start_monday: this.tariff.summer.htMondayEnd,
-            ht_start_saturday: this.tariff.summer.htSaturdayStart,
-            ht_end_saturday: this.tariff.summer.htSaturdayEnd,
-            ht_start_sunday: this.tariff.summer.htSundayStart,
-            ht_end_sunday: this.tariff.summer.htSundayEnd,
-            ht: this.tariff.summer.highTariff,
-            lt: this.tariff.summer.lowTariff,
-            months: this.tariff.summer.months
+            "ht_end_monday": this.tariff.summer.htMondayStart,
+            "ht_start_monday": this.tariff.summer.htMondayEnd,
+            "ht_start_saturday": this.tariff.summer.htSaturdayStart,
+            "ht_end_saturday": this.tariff.summer.htSaturdayEnd,
+            "ht_start_sunday": this.tariff.summer.htSundayStart,
+            "ht_end_sunday": this.tariff.summer.htSundayEnd,
+            "ht": this.tariff.summer.highTariff,
+            "lt": this.tariff.summer.lowTariff,
+            "months": this.tariff.summer.months
         }
         let winter = {
-            ht_end_monday: this.tariff.winter.htMondayStart,
-            ht_start_monday: this.tariff.winter.htMondayEnd,
-            ht_start_saturday: this.tariff.winter.htSaturdayStart,
-            ht_end_saturday: this.tariff.winter.htSaturdayEnd,
-            ht_start_sunday: this.tariff.winter.htSundayStart,
-            ht_end_sunday: this.tariff.winter.htSundayEnd,
-            ht: this.tariff.winter.highTariff,
-            lt: this.tariff.winter.lowTariff,
-            months: this.tariff.winter.months
+            "ht_end_monday": this.tariff.winter.htMondayStart,
+            "ht_start_monday": this.tariff.winter.htMondayEnd,
+            "ht_start_saturday": this.tariff.winter.htSaturdayStart,
+            "ht_end_saturday": this.tariff.winter.htSaturdayEnd,
+            "ht_start_sunday": this.tariff.winter.htSundayStart,
+            "ht_end_sunday": this.tariff.winter.htSundayEnd,
+            "ht": this.tariff.winter.highTariff,
+            "lt": this.tariff.winter.lowTariff,
+            "months": this.tariff.winter.months
         }
         JSON.summer = summer
         JSON.winter = winter
@@ -63,9 +61,9 @@ export class Tariff {
         this.year = year
         this.validFromKwh = validFromKwh
         this.validToKwh = validToKwh
-        this.gridPeakPowerTariff = gridPeakPowerTariff //Leistungstariff
-        this.municipalityFee = municipalityFee //Abgabe an Gemeinde
-        this.basicFeeMonthly = basicFeeMonthly //Grundgebühr
+        this.gridPeakPowerTariff = gridPeakPowerTariff
+        this.municipalityFee = municipalityFee
+        this.basicFeeMonthly = basicFeeMonthly
         this.winter = winter
         this.summer = summer
         this.consumerType = consumerType
@@ -86,40 +84,40 @@ export class SeasonalTariff {
         this.htSundayEnd = htSundayEnd
         this.start = null
         this.end = null
+        this.months = []
     }
     setSummerMonths() {
         if (this.start !== null && this.end !== null) {
-            this.months = new Months().createMonthsList(this.start, this.end)
+            this.months = this.createMonthsList(this.start, this.end)
         }
     }
     setWinterMonths() {
         if (this.start !== null && this.end !== null) {
-            this.months = new Months().createMonthsList(this.start, this.end)
+            this.months = this.createMonthsList(this.start, this.end)
         }
     }
-}
 
-class Months {
-    months = []
     createMonthsList(start, end) {
+        let months = []
+
+        function pushMonth(number) {
+            let monthsList = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+            months.push({"name": monthsList[number-1], "number": number})
+        }
         if (start != null && end != null) {
             if (start < end) {
                 for (let i = start; i <= end; i++) {
-                    this.pushMonth(i)
+                    pushMonth(i)
                 }
             } else {
                 for (let i = 1; i <= end; i++) {
-                    this.pushMonth(i)          }
+                    pushMonth(i)
+                }
                 for (let i = start; i <=12; i++) {
-                    this.pushMonth(i)
+                    pushMonth(i)
                 }
             }
         }
-
-        return this.months
-    }
-    pushMonth(number){
-        let monthsList = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
-        this.months.push({"name": monthsList[number-1], "number": number})
+        return months
     }
 }
