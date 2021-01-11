@@ -44,7 +44,7 @@
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="name">Stromprodukt:</label>
-                <input type="text" class="form-control" id="name" placeholder="Stromprodukt" name="stromprodukt">
+                <input type="text" class="form-control" id="name" placeholder="Produktname" name="stromprodukt">
             </div>
             <div class="form-group col-md-4">
                 <label for="operator_elcom_number">Elcom Nr.:</label>
@@ -55,8 +55,7 @@
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="year">Jahr:</label>
-                <select type="text" class="form-control" id="year" placeholder="Jahr" name="year">
-                    <option selected>Bitte wählen..</option>
+                <select type="number" class="form-control" id="year" placeholder="Jahr" name="year">
                 </select>
             </div>
         </div>
@@ -64,25 +63,25 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="basic_fee_monthly">Grundgebühren/Zähler: (CHF/Monat, exkl. MWST)</label>
-                <input type="text" class="form-control" id="basic_fee_monthly" placeholder="" name="basic_fee_monthly">
+                <input type="number" class="form-control" id="basic_fee_monthly" placeholder="0.00" name="basic_fee_monthly">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="gridPeakPowerTariff">Leistungstarif: (CHF/kW, exkl. MWST)</label>
-                <input type="text" class="form-control" id="gridPeakPowerTariff" placeholder="" name="load_counter_fee_monthly">
+                <input type="number" class="form-control" id="gridPeakPowerTariff" placeholder="0.00" name="load_counter_fee_monthly">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="valid_from_kwp">Gültigkeit von kWh:</label>
-                <input type="text" class="form-control" id="valid_from_kwp" placeholder="von" name="valid_from_kwp">
+                <input type="number" class="form-control" id="valid_from_kwp" value=0 name="valid_from_kwp">
             </div>
             <div class="form-group col-md-6">
                 <label for="valid_to_kwp">bis kWh:</label>
-                <input type="text" class="form-control" id="valid_to_kwp" placeholder="bis" name="valid_to_kwp">
+                <input type="number" class="form-control" id="valid_to_kwp" value=10000 name="valid_to_kwp">
             </div>
         </div>
 
@@ -90,8 +89,7 @@
             <div class="form-group col-md-6">
                 <label for="verbrauchertyp">Verbrauchertyp:</label>
                 <select class="custom-select" id="verbrauchertyp" name="Bitte auswählen.." >
-                    <option selected="Bitte wählen..">Bitte wählen..</option>
-                    <option value=1>Privat</option>
+                    <option selected value=1>Privat</option>
                     <option value=2>Gewerbe</option>
                 </select>
             </div>
@@ -100,7 +98,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="municipality_fee">Abgaben an Gemeinde: (Rp./kWh, leer lassen falls unbekannt)</label>
-                <input type="text" class="form-control" id="municipality_fee" placeholder="" name="abgaben_gemeinde">
+                <input type="number" class="form-control" id="municipality_fee" placeholder="0.00" name="abgaben_gemeinde">
             </div>
         </div>
 
@@ -108,8 +106,7 @@
             <div class="form-group col-md-6">
                 <label for="is_default">Standardtarif:</label>
                 <select class="custom-select" id="is_default" name="Bitte auswählen.." >
-                    <option selected="Bitte wählen..">Bitte wählen..</option>
-                    <option value=1>Ja</option>
+                    <option selected value=1>Ja</option>
                     <option value=0>Nein</option>
                 </select>
             </div>
@@ -118,7 +115,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="kev">KEV-Abgabe / SDL: (Rp./kWh)</label>
-                <input type="text" class="form-control" id="kev" placeholder="" name="kev">
+                <input type="number" class="form-control" id="kev" placeholder="0.00" name="kev">
             </div>
         </div>
 
@@ -164,14 +161,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group col-sm-12">
-                <label for="comment">Bemerkung: </label>
-                <textarea class="form-control" rows="5" id="comment" placeholder="HKN? / KEV Überprückung?"></textarea>
-            </div>
-        </div>
-
-
         <h3>Tarifspezifikation</h3>
 
         <div class="row">
@@ -189,15 +178,15 @@
                     <tbody>
                     <tr>
                         <th scope="row">HT Start</th>
-                        <td> <input type="text" class="form-control" id="ht_start_monday_summer" placeholder="Wert eingeben" name="ht_start_monday_summer"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_saturday_summer" placeholder="Wert eingeben" name="ht_start_saturday_summer"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_sunday_summer" placeholder="Wert eingeben" name="ht_start_sunday_summer"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="ht_start_monday_summer" name="ht_start_monday_summer"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="ht_start_saturday_summer" name="ht_start_saturday_summer"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="ht_start_sunday_summer" name="ht_start_sunday_summer"></td>
                     </tr>
                     <tr>
                         <th scope="row">HT Ende</th>
-                        <td> <input type="text" class="form-control" id="ht_end_monday_summer" placeholder="Wert eingeben" name="ht_end_monday_summer"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_saturday_summer" placeholder="Wert eingeben" name="ht_end_saturday_summer"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_sunday_summer" placeholder="Wert eingeben" name="ht_end_sunday_summer"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="ht_end_monday_summer" name="ht_end_monday_summer"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="ht_end_saturday_summer" name="ht_end_saturday_summer"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="ht_end_sunday_summer" name="ht_end_sunday_summer"></td>
                     </tr>
 
                     </tbody>
@@ -218,15 +207,15 @@
                     <tbody>
                     <tr>
                         <th scope="row">HT Start</th>
-                        <td> <input type="text" class="form-control" id="ht_start_monday_winter" placeholder="Wert eingeben" name="ht_start_monday_winter"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_saturday_winter" placeholder="Wert eingeben" name="ht_start_saturday_winter"></td>
-                        <td> <input type="text" class="form-control" id="ht_start_sunday_winter" placeholder="Wert eingeben" name="ht_start_sunday_winter"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57"  class="form-control" id="ht_start_monday_winter" name="ht_start_monday_winter"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57"  class="form-control" id="ht_start_saturday_winter" name="ht_start_saturday_winter"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57"  class="form-control" id="ht_start_sunday_winter" name="ht_start_sunday_winter"></td>
                     </tr>
                     <tr>
                         <th scope="row">HT Ende</th>
-                        <td> <input type="text" class="form-control" id="ht_end_monday_winter" placeholder="Wert eingeben" name="ht_end_monday_winter"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_saturday_winter" placeholder="Wert eingeben" name="ht_end_saturday_winter"></td>
-                        <td> <input type="text" class="form-control" id="ht_end_sunday_winter" placeholder="Wert eingeben" name="ht_end_sunday_winter"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57"  class="form-control" id="ht_end_monday_winter" name="ht_end_monday_winter"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57"  class="form-control" id="ht_end_saturday_winter" name="ht_end_saturday_winter"></td>
+                        <td> <input type="number" min=0 max=24 onkeypress="return event.charCode >= 48 && event.charCode <= 57"  class="form-control" id="ht_end_sunday_winter" name="ht_end_sunday_winter"></td>
                     </tr>
 
                     </tbody>
@@ -254,13 +243,13 @@
                     <tr>
                         <th scope="row">Energie</th>
 
-                        <td> <input type="text" class="form-control consumptionRateInput" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control consumptionRateInput" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="number" class="form-control consumptionRateInput" id="summerEnergyHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="number" class="form-control consumptionRateInput" id="summerEnergyNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Netz</th>
-                        <td> <input type="text" class="form-control consumptionRateInput" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
-                        <td> <input type="text" class="form-control consumptionRateInput" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="number" class="form-control consumptionRateInput" id="summerNetHT" placeholder="Wert eingeben" name="sommerbeginn"></td>
+                        <td> <input type="number" class="form-control consumptionRateInput" id="summerNetNT" placeholder="Wert eingeben" name="sommerbeginn"></td>
                     </tr>
                     <tr>
                         <th scope="row">Total</th>
