@@ -8,7 +8,7 @@ export class Store {
         this.operator = new Operator
         this.summerTariff = new SeasonalTariff(null, null, null, null, null, null, null, null)
         this.winterTariff = new SeasonalTariff(null, null, null, null, null, null, null, null)
-        this.tariff = new Tariff(null, null, null, null, null, null, this.winterTariff, this.summerTariff, null, null, null)
+        this.tariff = new Tariff(new Date().getFullYear(), 0, 10000, null, null, null, this.winterTariff, this.summerTariff, 1, 1, null)
         this.product = new Product(null, this.operator, null, this.tariff, null)
     }
 
