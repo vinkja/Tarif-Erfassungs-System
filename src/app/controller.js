@@ -16,7 +16,7 @@ export class Controller {
             [viewEvents.onAddValidToKwh]: validToKwh => this.addValidToKwh(validToKwh),
             [viewEvents.onAddConsumerType]: consumerType => this.addConsumerType(consumerType),
             [viewEvents.onAddMunicipalityFee]: municipalityFee => this.addMunicipalityFee(municipalityFee),
-            [viewEvents.onAddStandardTariff]: standardTariff => this.addStandardTariff(standardTariff),
+            [viewEvents.onAddIsDefault]: isDefault => this.addIsDefault(isDefault),
             [viewEvents.onAddKevTax]: kevTax => this.addKevTax(kevTax),
             [viewEvents.onAddSummerStart]: summerStart => this.addSummerStart(summerStart),
             [viewEvents.onAddSummerEnd]: summerEnd => this.addSummerEnd(summerEnd),
@@ -85,8 +85,8 @@ export class Controller {
         this.store.setMunicipalityFee(municipalityFee)
     }
 
-    addStandardTariff(standardTariff) {
-        this.store.setStandardTariff(standardTariff)
+    addIsDefault(isDefault) {
+        this.store.setIsDefault(isDefault)
     }
 
     addKevTax(kevTax) {
