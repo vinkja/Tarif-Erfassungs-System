@@ -1,19 +1,20 @@
-import {Months, Operator, Product, SeasonalTariff, Tariff} from "./model";
-import {LEASettingsAPI} from "./LEASettingsAPI";
+import {Operator, Product, SeasonalTariff, Tariff} from "./model.js";
+import {LEASettingsAPI} from "./LEASettingsAPI.js";
 
 export class Store {
     constructor(serverUrl) {
         this.operators = []
         this.api = new LEASettingsAPI(serverUrl)
-        this.operator = new Operator
-        this.summerTariff = new SeasonalTariff(null, null, null, null, null, null, null, null)
-        this.winterTariff = new SeasonalTariff(null, null, null, null, null, null, null, null)
+        this.operator = new Operator()
+        this.summerTariff = new SeasonalTariff(null, null, 1, 1, 1, 1, 1, 1)
+        this.winterTariff = new SeasonalTariff(null, null, 1, 1, 1, 1, 1, 1)
         this.tariff = new Tariff(new Date().getFullYear(), 0, 10000, null, null, null, this.winterTariff, this.summerTariff, 1, 1, null)
         this.product = new Product(null, this.operator, null, this.tariff, null)
     }
 
     async loadOperators() {
-        this.operators = await this.api.loadOperators()
+        this.operators = await this.api.getOperators()
+        this.operator = this.operators[0]
     }
 
     getOperators() {
@@ -86,16 +87,16 @@ export class Store {
     setSummerStart(start) {
         this.summerTariff.start = start
         this.winterTariff.end = start -1
-        this.summerTariff.setSummerMonths()
-        this.winterTariff.setWinterMonths()
+        this.summerTariff.setMonths()
+        this.winterTariff.setMonths()
         console.log(this.product)
     }
 
     setSummerEnd(end) {
         this.summerTariff.end = end
         this.winterTariff.start = end +1
-        this.summerTariff.setSummerMonths()
-        this.winterTariff.setWinterMonths()
+        this.summerTariff.setMonths()
+        this.winterTariff.setMonths()
         console.log(this.product)
     }
 

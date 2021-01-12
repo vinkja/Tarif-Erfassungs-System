@@ -8,7 +8,7 @@ export class Operator {
 }
 
 export class Product {
-    constructor(id, operator, name, tariff, isDefault) {
+    constructor(id, operator, name, tariff) {
         this.id = id
         this.operator = operator
         this.name = name
@@ -23,7 +23,7 @@ export class Product {
             "valid_to_kwh": this.tariff.validToKwh,
             "name": this.name,
             "municipality_fee": this.tariff.municipalityFee,
-            "is_default": this.tariff.isStandard,
+            "is_default": this.tariff.isDefault,
             "grid_peak_power_tariff": this.tariff.gridPeakPowerTariff,
             "year": this.tariff.year,
         }
@@ -85,12 +85,7 @@ export class SeasonalTariff {
         this.end = null
         this.months = []
     }
-    setSummerMonths() {
-        if (this.start !== null && this.end !== null) {
-            this.months = this.createMonthsList(this.start, this.end)
-        }
-    }
-    setWinterMonths() {
+    setMonths() {
         if (this.start !== null && this.end !== null) {
             this.months = this.createMonthsList(this.start, this.end)
         }
@@ -98,11 +93,6 @@ export class SeasonalTariff {
 
     createMonthsList(start, end) {
         let months = []
-
-        function pushMonth(number) {
-            let monthsList = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
-            months.push({"name": monthsList[number-1], "number": number})
-        }
         if (start != null && end != null) {
             if (start < end) {
                 for (let i = start; i <= end; i++) {
@@ -118,5 +108,11 @@ export class SeasonalTariff {
             }
         }
         return months
+
+        function pushMonth(number) {
+            let monthsList = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+            months.push({"name": monthsList[number-1], "number": number})
+        }
+
     }
 }
