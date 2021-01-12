@@ -10,7 +10,7 @@ const onAddValidFromKwh = Symbol()
 const onAddValidToKwh = Symbol()
 const onAddConsumerType = Symbol()
 const onAddMunicipalityFee = Symbol()
-const onAddStandardTariff = Symbol()
+const onAddIsDefault = Symbol()
 const onAddKevTax = Symbol()
 const onAddSummerStart = Symbol()
 const onAddSummerEnd = Symbol()
@@ -42,7 +42,7 @@ export const events = {
     onAddValidToKwh: "called when Gültigkeit bis kwH is set",
     onAddConsumerType: "called when Verbrauchertypis set",
     onAddMunicipalityFee: "called when Gemeindeabgaben is set",
-    onAddStandardTariff: "called when Standardtarif is set",
+    onAddIsDefault: "called when Standardtarif is set",
     onAddKevTax: "called when KEVis set",
     onAddSummerStart: "TODO 1",
     onAddSummerEnd: "TODO 2",
@@ -77,7 +77,7 @@ export class View {
             [events.onAddValidToKwh]: noop,
             [events.onAddConsumerType]: noop,
             [events.onAddMunicipalityFee]: noop,
-            [events.onAddStandardTariff]: noop,
+            [events.onAddIsDefault]: noop,
             [events.onAddKevTax]: noop,
             [events.onAddSummerStart]: noop,
             [events.onAddSummerEnd]: noop,
@@ -225,8 +225,8 @@ export class View {
     [onAddMunicipalityFee](municipalityFee) {
         return this.eventHandlers[events.onAddMunicipalityFee](municipalityFee)
     }
-    [onAddStandardTariff](standardTariff) {
-        return this.eventHandlers[events.onAddStandardTariff](standardTariff)
+    [onAddIsDefault](isDefault) {
+        return this.eventHandlers[events.onAddIsDefault](isDefault)
     }
     [onAddKevTax](kevTax) {
         return this.eventHandlers[events.onAddKevTax](kevTax)
@@ -331,7 +331,7 @@ export class View {
         })
 
         document.getElementById('is_default').addEventListener('change', ({target}) => {
-            this[onAddStandardTariff](Number(target.options[target.selectedIndex].value))
+            this[onAddIsDefault](Number(target.options[target.selectedIndex].value))
         })
 
         document.getElementById('kev').addEventListener('change', ({target}) => {
