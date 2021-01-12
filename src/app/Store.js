@@ -73,8 +73,8 @@ export class Store {
         console.log(this.product)
     }
 
-    setStandardTariff(standardTariff) {
-        this.tariff.standardTariff = standardTariff
+    setIsDefault(isDefault) {
+        this.tariff.isDefault= isDefault
         console.log(this.product)
     }
 
@@ -88,7 +88,7 @@ export class Store {
         this.winterTariff.end = start -1
         this.summerTariff.setSummerMonths()
         this.winterTariff.setWinterMonths()
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerEnd(end) {
@@ -96,86 +96,86 @@ export class Store {
         this.winterTariff.start = end +1
         this.summerTariff.setSummerMonths()
         this.winterTariff.setWinterMonths()
-    console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerMondayStart(summerMondayStart) {
         this.summerTariff.htMondayStart = summerMondayStart
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerMondayEnd(summerMondayEnd) {
         this.summerTariff.htMondayEnd = summerMondayEnd
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerSaturdayStart(summerSaturdayStart) {
         this.summerTariff.htSaturdayStart = summerSaturdayStart
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerSaturdayEnd(summerSaturdayEnd) {
         this.summerTariff.htSaturdayEnd = summerSaturdayEnd
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerSundayStart(summerSundayStart) {
         this.summerTariff.htSundayStart = summerSundayStart
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerSundayEnd(summerSundayEnd) {
         this.summerTariff.htSundayEnd = summerSundayEnd
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerHighTariff(summerHighTariff) {
         this.summerTariff.highTariff = summerHighTariff
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setSummerLowTariff(summerLowTariff) {
         this.summerTariff.lowTariff = summerLowTariff
-        console.log(this.summerTariff)
+        console.log(this.product)
     }
 
     setWinterMondayStart(winterMondayStart) {
         this.winterTariff.htMondayStart = winterMondayStart
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterMondayEnd(winterMondayEnd) {
         this.winterTariff.htMondayEnd = winterMondayEnd
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterSaturdayStart(winterSaturdayStart) {
         this.winterTariff.htSaturdayStart = winterSaturdayStart
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterSaturdayEnd(winterSaturdayEnd) {
         this.winterTariff.htSaturdayEnd = winterSaturdayEnd
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterSundayStart(winterSundayStart) {
         this.winterTariff.htSundayStart = winterSundayStart
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterSundayEnd(winterSundayEnd) {
         this.winterTariff.htSundayEnd = winterSundayEnd
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterHighTariff(winterHighTariff) {
         this.winterTariff.highTariff = winterHighTariff
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 
     setWinterLowTariff(winterLowTariff) {
         this.winterTariff.lowTariff = winterLowTariff
-        console.log(this.winterTariff)
+        console.log(this.product)
     }
 }

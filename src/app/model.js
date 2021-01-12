@@ -13,7 +13,6 @@ export class Product {
         this.operator = operator
         this.name = name
         this.tariff = tariff
-        this.isDefault = isDefault
     }
 
     toJSON() {
@@ -24,7 +23,7 @@ export class Product {
             "valid_to_kwh": this.tariff.validToKwh,
             "name": this.name,
             "municipality_fee": this.tariff.municipalityFee,
-            "is_default": this.isDefault,
+            "is_default": this.tariff.isStandard,
             "grid_peak_power_tariff": this.tariff.gridPeakPowerTariff,
             "year": this.tariff.year,
         }
@@ -57,7 +56,7 @@ export class Product {
 }
 
 export class Tariff {
-    constructor(year, validFromKwh, validToKwh, gridPeakPowerTariff, municipalityFee, basicFeeMonthly, winter, summer, consumerType, standardTariff, kevTax) {
+    constructor(year, validFromKwh, validToKwh, gridPeakPowerTariff, municipalityFee, basicFeeMonthly, winter, summer, consumerType, isDefault, kevTax) {
         this.year = year
         this.validFromKwh = validFromKwh
         this.validToKwh = validToKwh
@@ -67,7 +66,7 @@ export class Tariff {
         this.winter = winter
         this.summer = summer
         this.consumerType = consumerType
-        this.standardTariff = standardTariff
+        this.isDefault = isDefault
         this.kevTax = kevTax
     }
 }
