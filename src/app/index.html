@@ -116,7 +116,7 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="kev">KEV-Abgabe / SDL: (Rp./kWh)</label>
+                <label for="kev">KEV-Abgabe / SDL: (Rp./kWh exkl. MWST)</label>
                 <input type="number" class="form-control" id="kev" placeholder="0.00" name="kev">
             </div>
         </div>
@@ -182,27 +182,27 @@
                     <tbody>
                     <tr>
                         <th scope="row">Hochtarif Start</th>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_start_monday_summer" name="ht_start_monday_summer"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_start_saturday_summer" name="ht_start_saturday_summer"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_start_sunday_summer" name="ht_start_sunday_summer"></td>
+                        <td>
+                            <select class="hours_select" id="ht_start_monday_summer"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_start_saturday_summer"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_start_sunday_summer"></select>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Hochtarif Ende</th>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_end_monday_summer" name="ht_end_monday_summer"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_end_saturday_summer" name="ht_end_saturday_summer"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_end_sunday_summer" name="ht_end_sunday_summer"></td>
+                        <td>
+                            <select class="hours_select" id="ht_end_monday_summer"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_end_saturday_summer"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_end_sunday_summer"></select>
+                        </td>
                     </tr>
 
                     </tbody>
@@ -223,27 +223,27 @@
                     <tbody>
                     <tr>
                         <th scope="row">Hochtarif Start</th>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_start_monday_winter" name="ht_start_monday_winter"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_start_saturday_winter" name="ht_start_saturday_winter"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_start_sunday_winter" name="ht_start_sunday_winter"></td>
+                        <td>
+                            <select class="hours_select" id="ht_start_monday_winter"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_start_saturday_winter"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_start_sunday_winter"></select>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Hochtarif Ende</th>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_end_monday_winter" name="ht_end_monday_winter"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_end_saturday_winter" name="ht_end_saturday_winter"></td>
-                        <td><input type="number" min=0 max=24
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control"
-                                   id="ht_end_sunday_winter" name="ht_end_sunday_winter"></td>
+                        <td>
+                            <select class="hours_select" id="ht_end_monday_winter"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_end_saturday_winter"></select>
+                        </td>
+                        <td>
+                            <select class="hours_select" id="ht_end_sunday_winter"></select>
+                        </td>
                     </tr>
 
                     </tbody>
@@ -261,7 +261,7 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th scope="col"></th>
+                        <th scope="col">Rp./kWh</th>
                         <th scope="col">Hochtarif</th>
                         <th scope="col">Niedertarif</th>
                     </tr>
@@ -604,7 +604,7 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col">Rp./kWh</th>
                             <th scope="col">Hochtarif</th>
                             <th scope="col">Niedertarif</th>
                         </tr>

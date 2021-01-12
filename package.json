@@ -32,12 +32,13 @@
   },
   "homepage": "https://github.com/ibwgr/Tarif-Erfassungs-System#readme",
   "devDependencies": {
-    "mocha": "^8.2.1",
-    "assert": "^2.0.0",
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
-    "@babel/register": "^7.12.10"
+    "@babel/register": "^7.12.10",
+    "assert": "^2.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
   }
 }

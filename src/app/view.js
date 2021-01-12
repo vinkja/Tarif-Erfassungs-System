@@ -30,6 +30,7 @@ const onAddWinterSundayStart = Symbol()
 const onAddWinterSundayEnd = Symbol()
 const onAddWinterHighTariff = Symbol()
 const onAddWinterLowTariff = Symbol()
+function $(field) {return document.getElementById(field)}
 
 
 export const events = {
@@ -111,7 +112,7 @@ export class View {
     }
     //TODO: make Enter go to next field
     stopEnterKey() {
-        document.getElementById('myForm').addEventListener('keydown', function (event) {
+        $('myForm').addEventListener('keydown', function (event) {
             let key = event.keyCode;
             if (key === 13) {
                 event.preventDefault();
@@ -120,14 +121,14 @@ export class View {
     }
 
     renderOperator(operator) {
-        let elcomNumber = document.getElementById("operator_elcom_number");
-        let vseId = document.getElementById("vse-id")
+        let elcomNumber = $("operator_elcom_number");
+        let vseId = $("vse-id")
         elcomNumber.innerHTML = operator.elcomNumber
         vseId.innerHTML = operator.vseId
     }
 
     addOperatorsToList(operators) {
-        let mainContainer = document.getElementById("energieversoger");
+        let mainContainer = $("energieversoger");
         operators.forEach(operator => {
             let option = document.createElement("option");
             option.innerHTML = operator.name;
@@ -139,7 +140,7 @@ export class View {
     addYearstoList() {
         let actualYear = new Date().getFullYear();
         let maxDate = actualYear + 1;
-        let select = document.getElementById('year');
+        let select = $('year');
         for (let i = actualYear; i <= maxDate; i++) {
             let opt = document.createElement('option');
             opt.innerHTML = i;
@@ -150,16 +151,24 @@ export class View {
 
     addMonthsToList(element) {
         let month = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-        let monthDropdown = document.getElementById(element)
+        let monthDropdown = $(element)
         for (let i = 0; i < 12; i++) {
             let option = document.createElement('option');
             option.innerHTML = month[i];
             option.value = String((i + 1))
             monthDropdown.appendChild(option);
-            monthDropdown.addEventListener('change', function () {
-                let sommerbeginnSelection = this.options[this.selectedIndex].value;
-                console.log(sommerbeginnSelection)
-            })
+        }
+    }
+
+    addHoursToList() {
+        let hourElements = document.getElementsByClassName("hours_select")
+        for (let hourElement of hourElements) {
+            for (let hour = 1; hour < 25; hour++) {
+                let option = document.createElement('option')
+                option.innerHTML = String(hour + ":00")
+                option.value = String(hour)
+                hourElement.appendChild(option)
+            }
         }
     }
 
@@ -172,27 +181,27 @@ export class View {
                 // for (var consumptionRateInputElement in consumptionRateInputElements) {
                 //     consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
 
-                let summerEnergyHT = document.getElementById("summerEnergyHT").value;
-                let summerNetHT = document.getElementById("summerNetHT").value;
-                let summerEnergyNT = document.getElementById("summerEnergyNT").value;
-                let summerNetNT = document.getElementById("summerNetNT").value;
-                let winterEnergyHT = document.getElementById("winterEnergyHT").value;
-                let winterNetHT = document.getElementById("winterNetHT").value;
-                let winterEnergyNT = document.getElementById("winterEnergyNT").value;
-                let winterNetNT = document.getElementById("winterNetNT").value;
+                let summerEnergyHT = $("summerEnergyHT").value;
+                let summerNetHT = $("summerNetHT").value;
+                let summerEnergyNT = $("summerEnergyNT").value;
+                let summerNetNT = $("summerNetNT").value;
+                let winterEnergyHT = $("winterEnergyHT").value;
+                let winterNetHT = $("winterNetHT").value;
+                let winterEnergyNT = $("winterEnergyNT").value;
+                let winterNetNT = $("winterNetNT").value;
 
                 let additionEnergyNetSummerHTResult = add(summerEnergyHT, summerNetHT)
                 let additionEnergyNetSummerNTResult = add(summerEnergyNT, summerNetNT)
                 let additionEnergyNetWinterHTResult = add(winterEnergyHT, winterNetHT)
                 let additionEnergyNetWinterNTResult = add(winterEnergyNT, winterNetNT)
 
-                document.getElementById("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
+                $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
                 this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
-                document.getElementById("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
+                $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
                 this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
-                document.getElementById("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
+                $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
                 this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
-                document.getElementById("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
+                $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
                 this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
             })
         }
@@ -287,103 +296,103 @@ export class View {
     }
 
     bindEvents() {
-        document.getElementById("energieversoger").addEventListener('change', ({target}) => {
+        $("energieversoger").addEventListener('change', ({target}) => {
             let operatorId = Number(target.options[target.selectedIndex].value)
             this[onAddOperator](operatorId)
         })
 
-        document.getElementById('name').addEventListener('change', ({target}) => {
+        $('name').addEventListener('change', ({target}) => {
             let productName = target.value
             this[onAddProductName](productName)
         })
 
-        document.getElementById('year').addEventListener('change', ({target}) => {
+        $('year').addEventListener('change', ({target}) => {
             let tariffYear = Number(target.options[target.selectedIndex].value)
             this[onAddTariffYear](tariffYear)
         })
 
-        document.getElementById('basic_fee_monthly').addEventListener('change', ({target}) => {
+        $('basic_fee_monthly').addEventListener('change', ({target}) => {
             let basicFeeMonthly = Number(target.value)
             this[onAddBasicFeeMonthly](basicFeeMonthly)
         })
 
-        document.getElementById('gridPeakPowerTariff').addEventListener('change', ({target}) => {
+        $('gridPeakPowerTariff').addEventListener('change', ({target}) => {
             let gridPeakPowerTariff = Number(target.value)
             this[onAddGridPeakPowerTariff](gridPeakPowerTariff)
         })
 
-        document.getElementById('valid_from_kwp').addEventListener('change', ({target}) => {
+        $('valid_from_kwp').addEventListener('change', ({target}) => {
             let validFromKwh = Number(target.value)
             this[onAddValidFromKwh](validFromKwh)
         })
 
-        document.getElementById('valid_to_kwp').addEventListener('change', ({target}) => {
+        $('valid_to_kwp').addEventListener('change', ({target}) => {
             let validToKwh = Number(target.value)
             this[onAddValidToKwh](validToKwh)
         })
 
-        document.getElementById('verbrauchertyp').addEventListener('change', ({target}) => {
+        $('verbrauchertyp').addEventListener('change', ({target}) => {
             this[onAddConsumerType](Number(target.options[target.selectedIndex].value))
         })
 
-        document.getElementById('municipality_fee').addEventListener('change', ({target}) => {
+        $('municipality_fee').addEventListener('change', ({target}) => {
             this[onAddMunicipalityFee](Number(target.value))
         })
 
-        document.getElementById('is_default').addEventListener('change', ({target}) => {
+        $('is_default').addEventListener('change', ({target}) => {
             this[onAddIsDefault](Number(target.options[target.selectedIndex].value))
         })
 
-        document.getElementById('kev').addEventListener('change', ({target}) => {
+        $('kev').addEventListener('change', ({target}) => {
             this[onAddKevTax](Number(target.value))
         })
 
-        document.getElementById('sommerbeginn').addEventListener('change', ({target}) => {
+        $('sommerbeginn').addEventListener('change', ({target}) => {
             this[onAddSummerStart](Number(target.options[target.selectedIndex].value))
         })
 
-        document.getElementById('sommerende').addEventListener('change', ({target}) => {
+        $('sommerende').addEventListener('change', ({target}) => {
             this[onAddSummerEnd](Number(target.options[target.selectedIndex].value))
         })
 
-        document.getElementById('ht_start_monday_summer').addEventListener('change', ({target}) => {
+        $('ht_start_monday_summer').addEventListener('change', ({target}) => {
             this[onAddSummerMondayStart](Number(target.value))
         })
 
-        document.getElementById('ht_end_monday_summer').addEventListener('change', ({target}) => {
+        $('ht_end_monday_summer').addEventListener('change', ({target}) => {
             this[onAddSummerMondayEnd](Number(target.value))
         })
 
-        document.getElementById('ht_start_saturday_summer').addEventListener('change', ({target}) => {
+        $('ht_start_saturday_summer').addEventListener('change', ({target}) => {
             this[onAddSummerSaturdayStart](Number(target.value))
         })
-        document.getElementById('ht_end_saturday_summer').addEventListener('change', ({target}) => {
+        $('ht_end_saturday_summer').addEventListener('change', ({target}) => {
             this[onAddSummerSaturdayEnd](Number(target.value))
         })
-        document.getElementById('ht_start_sunday_summer').addEventListener('change', ({target}) => {
+        $('ht_start_sunday_summer').addEventListener('change', ({target}) => {
             this[onAddSummerSundayStart](Number(target.value))
         })
-        document.getElementById('ht_end_sunday_summer').addEventListener('change', ({target}) => {
+        $('ht_end_sunday_summer').addEventListener('change', ({target}) => {
             this[onAddSummerSundayEnd](Number(target.value))
         })
-        document.getElementById('ht_start_monday_winter').addEventListener('change', ({target}) => {
+        $('ht_start_monday_winter').addEventListener('change', ({target}) => {
             this[onAddWinterMondayStart](Number(target.value))
         })
 
-        document.getElementById('ht_end_monday_winter').addEventListener('change', ({target}) => {
+        $('ht_end_monday_winter').addEventListener('change', ({target}) => {
             this[onAddWinterMondayEnd](Number(target.value))
         })
 
-        document.getElementById('ht_start_saturday_winter').addEventListener('change', ({target}) => {
+        $('ht_start_saturday_winter').addEventListener('change', ({target}) => {
             this[onAddWinterSaturdayStart](Number(target.value))
         })
-        document.getElementById('ht_end_saturday_winter').addEventListener('change', ({target}) => {
+        $('ht_end_saturday_winter').addEventListener('change', ({target}) => {
             this[onAddWinterSaturdayEnd](Number(target.value))
         })
-        document.getElementById('ht_start_sunday_winter').addEventListener('change', ({target}) => {
+        $('ht_start_sunday_winter').addEventListener('change', ({target}) => {
             this[onAddWinterSundayStart](Number(target.value))
         })
-        document.getElementById('ht_end_sunday_winter').addEventListener('change', ({target}) => {
+        $('ht_end_sunday_winter').addEventListener('change', ({target}) => {
             this[onAddWinterSundayEnd](Number(target.value))
         })
     }

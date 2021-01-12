@@ -44,6 +44,7 @@ export class Controller {
         this.view.addOperatorsToList(this.store.getOperators())
         this.view.addMonthsToList('sommerbeginn')
         this.view.addMonthsToList('sommerende')
+        this.view.addHoursToList()
         this.view.addYearstoList()
         this.view.autoCalculate()
     }
