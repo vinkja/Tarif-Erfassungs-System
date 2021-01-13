@@ -40,7 +40,8 @@ export class Controller {
     }
     async start() {
         await this.store.loadOperators()
-        this.view.stopEnterKey()
+//        this.view.stopEnterKey()
+        this.view.EnterKeyToNextField();
         this.view.addOperatorsToList(this.store.getOperators())
         this.view.addMonthsToList('sommerbeginn')
         this.view.addMonthsToList('sommerende')
