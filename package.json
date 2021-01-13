@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "rm -rf .cache && npx parcel src/app/index.html",
     "start": "npm run build && ./node_modules/.bin/http-server dist --port 1234",
-    "build": "NODE_ENV=production rm -rf dist && rm -rf .cache && ./node_modules/.bin/parcel build src/app/index.html",
+    "build": "NODE_ENV=production rm -rf dist && rm -rf .cache && ./node_modules/.bin/parcel --no-source-maps build src/app/index.html",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "mocha src/test/unit/**.js",
     "test:e2e": "mocha src/test/e2e/**.js"
@@ -19,7 +19,6 @@
   "license": "ISC",
   "dependencies": {
     "http-server": "^0.12.3",
-    "mathjs": "^8.1.1",
     "node-fetch": "^2.6.1",
     "parcel": "^1.12.4"
   },

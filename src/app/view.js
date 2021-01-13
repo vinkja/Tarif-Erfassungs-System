@@ -1,4 +1,3 @@
-import {add} from 'mathjs'
 
 const noop = () => {}
 const onAddOperator = Symbol()
@@ -189,6 +188,11 @@ export class View {
                 let winterNetHT = $("winterNetHT").value;
                 let winterEnergyNT = $("winterEnergyNT").value;
                 let winterNetNT = $("winterNetNT").value;
+
+                function add(p1, p2){
+                    let result = parseFloat(p1) + parseFloat(p2);
+                    return result
+                }
 
                 let additionEnergyNetSummerHTResult = add(summerEnergyHT, summerNetHT)
                 let additionEnergyNetSummerNTResult = add(summerEnergyNT, summerNetNT)
