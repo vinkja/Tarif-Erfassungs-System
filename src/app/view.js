@@ -122,7 +122,8 @@ export class View {
     //TODO: make Enter go to next field
     EnterKeyToNextField() {
         document.addEventListener('keydown', function (event){
-            if (event.keyCode === 13 && event.target.nodeName === 'input' || 'select' || 'button') {
+            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
+            if (event.code === "Enter" && isFormField) {
                 let form = event.target.form;
                 let index = Array.prototype.indexOf.call(form, event.target);
                 form.elements[index + 1].focus();
