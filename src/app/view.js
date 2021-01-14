@@ -109,12 +109,25 @@ export class View {
             }
         }
     }
+
+    // stopEnterKey() {
+    //     $('myForm').addEventListener('keydown', function (event) {
+    //         let key = event.keyCode;
+    //         if (key === 13) {
+    //             event.preventDefault();
+    //         }
+    //     })
+    // }
+
     //TODO: make Enter go to next field
-    stopEnterKey() {
-        $('myForm').addEventListener('keydown', function (event) {
-            let key = event.keyCode;
-            if (key === 13) {
+    EnterKeyToNextField() {
+        document.addEventListener('keydown', function (event){
+            if (event.keyCode === 13 && event.target.nodeName === 'input' || 'select' || 'button') {
+                let form = event.target.form;
+                let index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
                 event.preventDefault();
+                return false;
             }
         })
     }
