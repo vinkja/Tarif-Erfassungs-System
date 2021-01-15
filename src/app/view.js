@@ -1,5 +1,6 @@
 
 const noop = () => {}
+function $(field) {return document.getElementById(field)}
 const onAddOperator = Symbol()
 const onAddProductName = Symbol()
 const onAddTariffYear = Symbol()
@@ -29,8 +30,6 @@ const onAddWinterSundayStart = Symbol()
 const onAddWinterSundayEnd = Symbol()
 const onAddWinterHighTariff = Symbol()
 const onAddWinterLowTariff = Symbol()
-function $(field) {return document.getElementById(field)}
-
 
 export const events = {
     onAddOperator: "called when Energieversorger is chosen",
@@ -65,7 +64,6 @@ export const events = {
 }
 
 export class View {
-
     constructor() {
         this.eventHandlers = {
             [events.onAddOperator]: noop,
@@ -110,16 +108,6 @@ export class View {
         }
     }
 
-    // stopEnterKey() {
-    //     $('myForm').addEventListener('keydown', function (event) {
-    //         let key = event.keyCode;
-    //         if (key === 13) {
-    //             event.preventDefault();
-    //         }
-    //     })
-    // }
-
-    //TODO: make Enter go to next field
     EnterKeyToNextField() {
         document.addEventListener('keydown', function (event){
             let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
