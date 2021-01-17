@@ -61,7 +61,7 @@ describe('LEA Settings API', function() {
         })
         describe('get for non-existing operator', function () {
             it('should return a empty list', async function () {
-                let api = new LEASettingsAPI()
+                let api = new LEASettingsAPI('https://ep-dev-03.eturnity.ch')
                 let operator = new Operator(11233434234213, "Standard")
                 let products = await api.getProductsFromOperator(operator)
                 assert.strictEqual(products.length, 0)

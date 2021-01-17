@@ -53,7 +53,35 @@ export class Product {
         JSON.winter = winter
         return JSON
     }
+
+    getTariff(season, day, hour) {
+        let seasonTariff
+        if (season == "summer") {
+            seasonTariff = this.tariff.summer
+        } else if (season == "winter") {
+            seasonTariff = this.tariff.winter
+        }
+
+        let start, end
+        if (day === 6) {
+            start = seasonTariff.htSaturdayStart
+            end = seasonTariff.htSaturdayEnd
+        } else if (day === 7) {
+            start = seasonTariff.htSundayStart
+            end = seasonTariff.htSundayEnd
+        } else {
+            start = seasonTariff.htMondayStart
+            end = seasonTariff.htMondayEnd
+        }
+        if (hour >=start && hour < end) {
+            return seasonTariff.highTariff
+        } else if (hour < start || hour >= end) {
+            return seasonTariff.lowTariff
+        }
+    }
 }
+
+
 
 export class Tariff {
     constructor(year, validFromKwh, validToKwh, gridPeakPowerTariff, municipalityFee, basicFeeMonthly, winter, summer, consumerType, isDefault, kevTax) {
