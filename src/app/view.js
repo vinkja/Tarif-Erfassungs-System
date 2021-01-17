@@ -1,5 +1,6 @@
 
 const noop = () => {}
+function $(field) {return document.getElementById(field)}
 const onAddOperator = Symbol()
 const onAddProductName = Symbol()
 const onAddTariffYear = Symbol()
@@ -29,8 +30,6 @@ const onAddWinterSundayStart = Symbol()
 const onAddWinterSundayEnd = Symbol()
 const onAddWinterHighTariff = Symbol()
 const onAddWinterLowTariff = Symbol()
-function $(field) {return document.getElementById(field)}
-
 
 export const events = {
     onAddOperator: "called when Energieversorger is chosen",
@@ -44,28 +43,27 @@ export const events = {
     onAddMunicipalityFee: "called when Gemeindeabgaben is set",
     onAddIsDefault: "called when Standardtarif is set",
     onAddKevTax: "called when KEVis set",
-    onAddSummerStart: "TODO 1",
-    onAddSummerEnd: "TODO 2",
-    onAddSummerMondayStart: "TODO 3",
-    onAddSummerMondayEnd: "TODO 5",
-    onAddSummerSaturdayStart: "TODO 4",
-    onAddSummerSaturdayEnd: "Todo",
-    onAddSummerSundayStart: "TODO 6",
-    onAddSummerSundayEnd: "TODO 7",
-    onAddSummerHighTariff: "TODO 8 ",
-    onAddSummerLowTariff: "TODO 9",
-    onAddWinterMondayStart: "todo1",
-    onAddWinterMondayEnd: "todo2",
-    onAddWinterSaturdayStart: "todo3",
-    onAddWinterSaturdayEnd: "todo4",
-    onAddWinterSundayStart: "todo5",
-    onAddWinterSundayEnd: "todo6",
-    onAddWinterHighTariff: "todo7",
-    onAddWinterLowTariff: "todo8",
+    onAddSummerStart: "called when Sommerbeginn is chosen",
+    onAddSummerEnd: "called when Sommerende is chosen",
+    onAddSummerMondayStart: "called when Sommer Montag Hochtarif Start is chosen",
+    onAddSummerMondayEnd: "called when Sommer Montag Hochtarif Ende is chosen",
+    onAddSummerSaturdayStart: "called when Sommer Samstag Hochtarif Start is chosen",
+    onAddSummerSaturdayEnd: "called when Sommer Samstag Hochtarif Ende is chosen",
+    onAddSummerSundayStart: "called when Sommer Sonntag Hochtarif Start is chosen",
+    onAddSummerSundayEnd: "called when Sommer Sonntag Hochtarif Ende is chosen",
+    onAddSummerHighTariff: "called when Sommer Hochtarif is set",
+    onAddSummerLowTariff: "called when Sommer Niedertarif is set",
+    onAddWinterMondayStart: "called when Winter Montag Hochtarif Start is chosen",
+    onAddWinterMondayEnd: "called when Winter Montag Hochtarif Ende is chosen",
+    onAddWinterSaturdayStart: "called when Winter Samstag Hochtarif Start is chosen",
+    onAddWinterSaturdayEnd: "called when Winter Samstag Hochtarif Ende is chosen",
+    onAddWinterSundayStart: "called when Winter Sonntag Hochtarif Start is chosen",
+    onAddWinterSundayEnd: "called when Winter Sonntag Hochtarif Ende is chosen",
+    onAddWinterHighTariff: "called when Winter Hochtarif is set",
+    onAddWinterLowTariff: "called when Winter Niedertarif is set",
 }
 
 export class View {
-
     constructor() {
         this.eventHandlers = {
             [events.onAddOperator]: noop,
@@ -102,6 +100,80 @@ export class View {
         this.bindEvents()
     }
 
+    renderTables(product) {
+        let summerTable = $("summerTable")
+        let winterTable = $("winterTable")
+        this.removeAllChildren(summerTable)
+        this.removeAllChildren(winterTable)
+        summerTable.appendChild(tableHead())
+        winterTable.appendChild(tableHead())
+
+        for (let hour = 0; hour < 24; hour ++) {
+            summerTable.appendChild(tableBody("summer", hour))
+            winterTable.appendChild(tableBody("winter", hour))
+        }
+        this.colorTableFields()
+
+        function tableBody(season, hour) {
+            let tbody = document.createElement("tbody")
+            let tr = document.createElement("tr")
+            let time = document.createElement("th")
+            time.scope = "row"
+            time.innerHTML = hour + ":00"
+            tr.appendChild(time)
+            for (let day = 1; day <= 7; day++) {
+                let td = document.createElement("td")
+                td.innerHTML = product.getTariff(season, day, hour)
+                tr.appendChild(td)
+            }
+            tbody.appendChild(tr)
+            return tbody
+        }
+        function tableHead() {
+            let thead = document.createElement("thead")
+            let trTitle = document.createElement("tr")
+            let thEmpty = document.createElement("th")
+            trTitle.appendChild(thEmpty)
+            let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+            weekDays.forEach(day => {
+                let th = document.createElement("th")
+                th.innerHTML = day
+                trTitle.appendChild(th)
+            })
+            thead.appendChild(trTitle)
+            return thead
+        }
+    }
+
+    colorTableFields() {
+        let summerTable = document.querySelector('#summerTable')
+        let tdSummerElements = summerTable.getElementsByTagName("td")
+        let winterTable = document.querySelector('#winterTable')
+        let tdWinterElements = winterTable.getElementsByTagName("td")
+        colorFields(tdSummerElements)
+        colorFields(tdWinterElements)
+
+        function colorFields(tdElements) {
+            let highTariff = 0
+            for (let tdElement of tdElements) {
+                if (Number(tdElement.innerHTML) > highTariff) {
+                    highTariff = Number(tdElement.innerHTML)
+                }
+            }
+            for (let tdElement of tdElements) {
+                if (Number(tdElement.innerHTML) === highTariff) {
+                    tdElement.style.backgroundColor = "white"
+                }
+            }
+        }
+    }
+
+    removeAllChildren(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
     registerEventHandlers(handlers) {
         for (let event in handlers){
             if(this.eventHandlers[event]){
@@ -109,12 +181,16 @@ export class View {
             }
         }
     }
-    //TODO: make Enter go to next field
-    stopEnterKey() {
-        $('myForm').addEventListener('keydown', function (event) {
-            let key = event.keyCode;
-            if (key === 13) {
+
+    EnterKeyToNextField() {
+        document.addEventListener('keydown', function (event){
+            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
+            if (event.code === "Enter" && isFormField) {
+                let form = event.target.form;
+                let index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
                 event.preventDefault();
+                return false;
             }
         })
     }
@@ -160,13 +236,18 @@ export class View {
     }
 
     addHoursToList() {
+        let endTimes = ["ht_end_monday_summer", "ht_end_saturday_summer", "ht_end_sunday_summer",
+        "ht_end_monday_winter", "ht_end_saturday_winter", "ht_end_sunday_winter"]
         let hourElements = document.getElementsByClassName("hours_select")
         for (let hourElement of hourElements) {
-            for (let hour = 1; hour < 25; hour++) {
+            for (let hour = 0; hour < 25; hour++) {
                 let option = document.createElement('option')
                 option.innerHTML = String(hour + ":00")
                 option.value = String(hour)
                 hourElement.appendChild(option)
+            }
+            if (endTimes.includes(hourElement.id )) {
+                hourElement.value = 24
             }
         }
     }
