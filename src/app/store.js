@@ -6,8 +6,8 @@ export class Store {
         this.operators = []
         this.api = new LEASettingsAPI(serverUrl)
         this.operator = new Operator()
-        this.summerTariff = new SeasonalTariff(null, null, 1, 1, 1, 1, 1, 1)
-        this.winterTariff = new SeasonalTariff(null, null, 1, 1, 1, 1, 1, 1)
+        this.summerTariff = new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24)
+        this.winterTariff = new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24)
         this.tariff = new Tariff(new Date().getFullYear(), 0, 10000, null, null, null, this.winterTariff, this.summerTariff, 1, 1, null)
         this.product = new Product(null, this.operator, null, this.tariff, null)
     }
