@@ -58,4 +58,16 @@ export class LEASettingsAPI {
             .then(json => console.log(json))
             .catch(err => console.log(err))
     }
+
+    sendSwissProducts(product) {
+        fetch(this.url + this.apiPostUrl, {
+            method: "post",
+            body: JSON.stringify(product),
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(res => res.json())
+            .then(json => console.log(json))
+            .catch(err => console.log(err));
+        return res.json();
+    }
 }
