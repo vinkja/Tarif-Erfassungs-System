@@ -7,6 +7,7 @@ export class LEASettingsAPI {
         this.apiOperators = "/lea_settings/api/operators"
         this.apiProducts = "/lea_settings/api/electricity-products-egt/"
         this.apiProduct = "/lea_settings/api/electricity-product-structure-view/"
+        this.apiPostUrl = "/lea_settings/api/electricity-product/"
     }
 
     async getOperators() {
@@ -60,6 +61,7 @@ export class LEASettingsAPI {
     }
 
     sendSwissProducts(product) {
+        console.log("sending the product to api")
         fetch(this.url + this.apiPostUrl, {
             method: "post",
             body: JSON.stringify(product),

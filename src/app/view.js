@@ -30,6 +30,7 @@ const onAddWinterSundayStart = Symbol()
 const onAddWinterSundayEnd = Symbol()
 const onAddWinterHighTariff = Symbol()
 const onAddWinterLowTariff = Symbol()
+const onClickSubmitButton = Symbol()
 
 export const events = {
     onAddOperator: "called when Energieversorger is chosen",
@@ -61,6 +62,7 @@ export const events = {
     onAddWinterSundayEnd: "called when Winter Sonntag Hochtarif Ende is chosen",
     onAddWinterHighTariff: "called when Winter Hochtarif is set",
     onAddWinterLowTariff: "called when Winter Niedertarif is set",
+    onClickSubmitButton: "called when Submit is clicked",
 }
 
 export class View {
@@ -95,6 +97,7 @@ export class View {
             [events.onAddWinterSundayEnd]: noop,
             [events.onAddWinterHighTariff]: noop,
             [events.onAddWinterLowTariff]: noop,
+            [events.onClickSubmitButton]: noop,
         }
 
         this.bindEvents()
@@ -379,8 +382,14 @@ export class View {
     [onAddWinterLowTariff](WinterLowTariff){
         return this.eventHandlers[events.onAddWinterLowTariff](WinterLowTariff)
     }
+    [onClickSubmitButton](){
+        return this.eventHandlers[events.onClickSubmitButton]()
+    }
 
     bindEvents() {
+        $("submitButton").addEventListener('click', ({tagert}) => {
+            this[onClickSubmitButton]()
+        })
         $("energieversoger").addEventListener('change', ({target}) => {
             let operatorId = Number(target.options[target.selectedIndex].value)
             this[onAddOperator](operatorId)
