@@ -32,43 +32,43 @@ describe('Store', function () {
     })
     describe('setOperators with operatorId 2', function () {
         it('operator.id should be 2', function () {
-            assert.strictEqual(store2.operator.id, 2);
+            assert.strictEqual(store2.product.operator.id, 2);
         })
         it('operator.vseId should be 10153012345', function () {
-            assert.strictEqual(store2.operator.vseId, 10153012345);
+            assert.strictEqual(store2.product.operator.vseId, 10153012345);
         })
         it('operator.elcomNumber should be 486', function () {
-            assert.strictEqual(store2.operator.elcomNumber, 486);
+            assert.strictEqual(store2.product.operator.elcomNumber, 486);
         })
     })
     describe('setSummerStart with start month 3', function () {
-        it('should set summerTariff.start on 3', function () {
+        it('should set summer.start on 3', function () {
             store2.setSummerStart(3)
-            assert.strictEqual(store2.summerTariff.start, 3)
+            assert.strictEqual(store2.product.tariff.summer.start, 3)
         })
-        it('should set winterTariff.end on 2', function () {
+        it('should set winter.end on 2', function () {
             store2.setSummerStart(3)
-            assert.strictEqual(store2.winterTariff.end, 2)
+            assert.strictEqual(store2.product.tariff.winter.end, 2)
         })
-        it('should leave months of summerTariff empty', function () {
+        it('should leave months of winter empty', function () {
             store2.setSummerStart(3)
-            assert.strictEqual(store2.summerTariff.months.length, 0)
+            assert.strictEqual(store2.product.tariff.winter.months.length, 0)
         })
-        it('should leave months of winterTariff empty', function () {
+        it('should leave months of winter empty', function () {
             store2.setSummerStart(3)
-            assert.strictEqual(store2.summerTariff.months.length, 0)
+            assert.strictEqual(store2.product.tariff.winter.months.length, 0)
         })
     })
     describe('setSummerStart to 2 and setSummerEnd to 6', function () {
-        it('should fill summerTariff.month with 5 entries', function () {
+        it('should fill summer.month with 5 entries', function () {
             store2.setSummerStart(2)
             store2.setSummerEnd(6)
-            assert.strictEqual(store2.summerTariff.months.length, 5)
+            assert.strictEqual(store2.product.tariff.summer.months.length, 5)
         })
-        it('should fill winterTariff.month with 7 entries', function () {
+        it('should fill winter.month with 7 entries', function () {
             store2.setSummerStart(2)
             store2.setSummerEnd(6)
-            assert.strictEqual(store2.winterTariff.months.length, 7)
+            assert.strictEqual(store2.product.tariff.winter.months.length, 7)
         })
     })
 })

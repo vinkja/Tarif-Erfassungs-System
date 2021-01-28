@@ -100,7 +100,7 @@ export class Tariff {
 }
 
 export class SeasonalTariff {
-    constructor(highTariff, lowTariff, htMondayStart, htMondayEnd, htSaturdayStart, htSaturdayEnd, htSundayStart, htSundayEnd) {
+    constructor(highTariff, lowTariff, htMondayStart, htMondayEnd, htSaturdayStart, htSaturdayEnd, htSundayStart, htSundayEnd, start, end) {
         this.highTariff = highTariff
         this.lowTariff = lowTariff
         this.htMondayStart = htMondayStart
@@ -109,8 +109,8 @@ export class SeasonalTariff {
         this.htSaturdayEnd = htSaturdayEnd
         this.htSundayStart = htSundayStart
         this.htSundayEnd = htSundayEnd
-        this.start = null
-        this.end = null
+        this.start = start
+        this.end = end
         this.months = []
     }
     setMonths() {

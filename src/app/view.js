@@ -255,6 +255,11 @@ export class View {
         }
     }
 
+    add(p1, p2){
+        let result = parseFloat(p1) + parseFloat(p2);
+        return result
+    }
+
     autoCalculate() {
         let consumptionRateInputElements = document.getElementsByClassName('consumptionRateInput');
 
@@ -273,15 +278,10 @@ export class View {
                 let winterEnergyNT = $("winterEnergyNT").value;
                 let winterNetNT = $("winterNetNT").value;
 
-                function add(p1, p2){
-                    let result = parseFloat(p1) + parseFloat(p2);
-                    return result
-                }
-
-                let additionEnergyNetSummerHTResult = add(summerEnergyHT, summerNetHT)
-                let additionEnergyNetSummerNTResult = add(summerEnergyNT, summerNetNT)
-                let additionEnergyNetWinterHTResult = add(winterEnergyHT, winterNetHT)
-                let additionEnergyNetWinterNTResult = add(winterEnergyNT, winterNetNT)
+                let additionEnergyNetSummerHTResult = this.add(summerEnergyHT, summerNetHT)
+                let additionEnergyNetSummerNTResult = this.add(summerEnergyNT, summerNetNT)
+                let additionEnergyNetWinterHTResult = this.add(winterEnergyHT, winterNetHT)
+                let additionEnergyNetWinterNTResult = this.add(winterEnergyNT, winterNetNT)
 
                 $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
                 this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
@@ -304,6 +304,7 @@ export class View {
     [onAddTariffYear](tariffYear) {
         return this.eventHandlers[events.onAddTariffYear](tariffYear)
     }
+
     [onAddBasicFeeMonthly](basicFeeMonthly) {
         return this.eventHandlers[events.onAddBasicFeeMonthly](basicFeeMonthly)
     }
