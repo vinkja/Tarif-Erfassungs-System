@@ -84,6 +84,10 @@ export class Controller {
                 this.addWinterLowTariff(winterLowTariff)
                 this.view.renderTables(this.store.product)
             },
+            [viewEvents.onClickSubmitButton]: () => {
+                this.store.api.sendSwissProducts(this.store.product)
+            }
+
         })
     }
     async start() {
