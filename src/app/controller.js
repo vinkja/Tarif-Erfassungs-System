@@ -89,6 +89,7 @@ export class Controller {
             }
         })
     }
+  
     async start() {
         await this.store.loadOperators()
         this.view.EnterKeyToNextField();

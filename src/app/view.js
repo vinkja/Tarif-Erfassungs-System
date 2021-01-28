@@ -390,6 +390,7 @@ export class View {
         $("submitButton").addEventListener('click', ({tagert}) => {
             this[onClickSubmitButton]()
         })
+      
         $("energieversoger").addEventListener('change', ({target}) => {
             let operatorId = Number(target.options[target.selectedIndex].value)
             this[onAddOperator](operatorId)

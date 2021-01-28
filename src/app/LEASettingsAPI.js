@@ -61,7 +61,7 @@ export class LEASettingsAPI {
     }
 
     sendSwissProducts(product) {
-        console.log("sending the product to api")
+        console.log("sending the swissproduct to api")
         fetch(this.url + this.apiPostUrl, {
             method: "post",
             body: JSON.stringify(product),
@@ -70,6 +70,5 @@ export class LEASettingsAPI {
             .then(res => res.json())
             .then(json => console.log(json))
             .catch(err => console.log(err));
-        return res.json();
     }
 }
