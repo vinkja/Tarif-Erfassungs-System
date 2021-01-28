@@ -87,9 +87,9 @@ export class Controller {
             [viewEvents.onClickSubmitButton]: () => {
                 this.store.api.sendSwissProducts(this.store.product)
             }
-
         })
     }
+  
     async start() {
         await this.store.loadOperators()
         this.view.EnterKeyToNextField();
