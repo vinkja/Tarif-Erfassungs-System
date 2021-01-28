@@ -18,7 +18,7 @@ describe('Index', () => {
         await driver.quit()
     })
 
-    it('should show operator dropdown', async () => {
+    xit('should show operator dropdown', async () => {
         await driver.wait(until.elementLocated(page.operatorSelector()))
     })
 
@@ -26,10 +26,15 @@ describe('Index', () => {
 
         it('should render elcom number on elcom field', async () => {
             await driver.wait(until.elementLocated(page.specificOperatorSelector(301)))
-            await driver.wait(until.elementLocated(page.specificOperatorSelector(301)))
 
             await page.specificOperatorField(301).click()
             assert.strictEqual(await page.operatorElcomField().getText(), '7')
+        })
+        it('should render VSE Id number on vse field', async () => {
+            await driver.wait(until.elementLocated(page.specificOperatorSelector(301)))
+
+            await page.specificOperatorField(301).click()
+            assert.strictEqual(await page.operatorVSEField().getText(), '10751012345')
         })
     })
 })

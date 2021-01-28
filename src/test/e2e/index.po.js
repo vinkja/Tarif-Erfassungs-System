@@ -21,11 +21,10 @@ export default class Index{
 
     specificOperatorSelector(value){
         return By.xpath(`//*[@value="${value}"]`)
-
     }
 
     specificOperatorField(value){
-        return this.driver.findElement(this.specificOperatorSelector(value))
+        return this.driver.findElement(By.xpath(`//*[@value="${value}"]`))
     }
 
     operatorElcomSelector(){

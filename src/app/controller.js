@@ -1,6 +1,3 @@
-import {events} from "./view";
-import * as http from "http";
-
 export class Controller {
     constructor(view, viewEvents, store) {
         this.store = store

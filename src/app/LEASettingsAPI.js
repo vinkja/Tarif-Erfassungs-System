@@ -7,7 +7,7 @@ export class LEASettingsAPI {
         this.apiOperators = "/lea_settings/api/operators"
         this.apiProducts = "/lea_settings/api/electricity-products-egt/"
         this.apiProduct = "/lea_settings/api/electricity-product-structure-view/"
-        this.apiPostUrl = "/lea_settings/api/electricity-product/"
+        this.apiPostUrl = "/lea_settings/api/electricity-product"
     }
 
     async getOperators() {
@@ -46,18 +46,6 @@ export class LEASettingsAPI {
             })
             .catch(err => console.log(err))
         return product
-    }
-
-    //TODO: implement as soon as API is ready
-    sendProduct(product) {
-        fetch(this.url + this.apiPostProduct, {
-            method: "post",
-            body: JSON.stringify(product), // new function, should be serialized first
-            headers: { "Content-Type": "application/json" }
-        })
-            .then(res => res.json())
-            .then(json => console.log(json))
-            .catch(err => console.log(err))
     }
 
     sendSwissProducts(product) {
