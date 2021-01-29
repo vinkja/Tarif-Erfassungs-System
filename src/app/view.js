@@ -1,6 +1,6 @@
 
 const noop = () => {}
-function $(field) {return document.getElementById(field)}
+const $ = (field) => document.getElementById(field)
 const onAddOperator = Symbol()
 const onAddProductName = Symbol()
 const onAddTariffYear = Symbol()
@@ -31,6 +31,7 @@ const onAddWinterSundayEnd = Symbol()
 const onAddWinterHighTariff = Symbol()
 const onAddWinterLowTariff = Symbol()
 const onClickSubmitButton = Symbol()
+const onSelectWinterTimes = Symbol()
 
 export const events = {
     onAddOperator: "called when Energieversorger is chosen",
@@ -63,6 +64,7 @@ export const events = {
     onAddWinterHighTariff: "called when Winter Hochtarif is set",
     onAddWinterLowTariff: "called when Winter Niedertarif is set",
     onClickSubmitButton: "called when Submit is clicked",
+    onSelectWinterTimes: "called when summer and wintertariffs"
 }
 
 export class View {
@@ -98,22 +100,26 @@ export class View {
             [events.onAddWinterHighTariff]: noop,
             [events.onAddWinterLowTariff]: noop,
             [events.onClickSubmitButton]: noop,
+            [events.onSelectWinterTimes]: noop,
         }
-
         this.bindEvents()
     }
 
-    renderTables(product) {
+    renderTables(product, winterTariffSelected) {
+
         let summerTable = $("summerTable")
-        let winterTable = $("winterTable")
         this.removeAllChildren(summerTable)
-        this.removeAllChildren(winterTable)
         summerTable.appendChild(tableHead())
+
+        let winterTable = $("winterTable")
+        this.removeAllChildren(winterTable)
         winterTable.appendChild(tableHead())
 
         for (let hour = 0; hour < 24; hour ++) {
             summerTable.appendChild(tableBody("summer", hour))
-            winterTable.appendChild(tableBody("winter", hour))
+            if (winterTariffSelected === true) {
+                winterTable.appendChild(tableBody("winter", hour))
+            }
         }
         this.colorTableFields()
 
@@ -255,46 +261,9 @@ export class View {
         }
     }
 
-    add(p1, p2){
-        let result = parseFloat(p1) + parseFloat(p2);
-        return result
+    [onSelectWinterTimes](){
+        return this.eventHandlers[events.onSelectWinterTimes]()
     }
-
-    autoCalculate() {
-        let consumptionRateInputElements = document.getElementsByClassName('consumptionRateInput');
-
-        for (let consumptionRateInputElement = 0; consumptionRateInputElement < consumptionRateInputElements.length; consumptionRateInputElement++) {
-            consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
-
-                // for (var consumptionRateInputElement in consumptionRateInputElements) {
-                //     consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
-
-                let summerEnergyHT = $("summerEnergyHT").value;
-                let summerNetHT = $("summerNetHT").value;
-                let summerEnergyNT = $("summerEnergyNT").value;
-                let summerNetNT = $("summerNetNT").value;
-                let winterEnergyHT = $("winterEnergyHT").value;
-                let winterNetHT = $("winterNetHT").value;
-                let winterEnergyNT = $("winterEnergyNT").value;
-                let winterNetNT = $("winterNetNT").value;
-
-                let additionEnergyNetSummerHTResult = this.add(summerEnergyHT, summerNetHT)
-                let additionEnergyNetSummerNTResult = this.add(summerEnergyNT, summerNetNT)
-                let additionEnergyNetWinterHTResult = this.add(winterEnergyHT, winterNetHT)
-                let additionEnergyNetWinterNTResult = this.add(winterEnergyNT, winterNetNT)
-
-                $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
-                this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
-                $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
-                this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
-                $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
-                this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
-                $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
-                this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
-            })
-        }
-    }
-
     [onAddOperator](operatorId) {
         return this.eventHandlers[events.onAddOperator](operatorId)
     }
@@ -387,7 +356,67 @@ export class View {
         return this.eventHandlers[events.onClickSubmitButton]()
     }
 
+    add(p1, p2){
+        let result = parseFloat(p1) + parseFloat(p2);
+        return result
+    }
+
+    calculateSummerHTTotal() {
+        let summerEnergyHT = $("summerEnergyHT").value;
+        let summerNetHT = $("summerNetHT").value;
+        let additionEnergyNetSummerHTResult = this.add(summerEnergyHT, summerNetHT)
+        $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
+        this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
+    }
+
+    calculateSummerNTTotal() {
+        let summerEnergyNT = $("summerEnergyNT").value;
+        let summerNetNT = $("summerNetNT").value;
+        let additionEnergyNetSummerNTResult = this.add(summerEnergyNT, summerNetNT)
+        $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
+        this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
+    }
+
+    calculateWinterHTTotal() {
+        let winterEnergyHT = $("winterEnergyHT").value;
+        let winterNetHT = $("winterNetHT").value;
+        let additionEnergyNetWinterHTResult = this.add(winterEnergyHT, winterNetHT)
+        $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
+        this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
+    }
+
+    calculateWinterNTTotal() {
+        let winterEnergyNT = $("winterEnergyNT").value;
+        let winterNetNT = $("winterNetNT").value;
+        let additionEnergyNetWinterNTResult = this.add(winterEnergyNT, winterNetNT)
+        $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
+        this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
+    }
+
     bindEvents() {
+        $("summerEnergyHT").addEventListener('change', () => this.calculateSummerHTTotal())
+        $("summerNetHT").addEventListener('change', () => this.calculateSummerHTTotal())
+        $("summerEnergyNT").addEventListener('change', () => this.calculateSummerNTTotal())
+        $("summerNetNT").addEventListener('change', () => this.calculateSummerNTTotal())
+        $("winterEnergyHT").addEventListener('change', () => this.calculateWinterHTTotal())
+        $("winterNetHT").addEventListener('change', () => this.calculateWinterHTTotal())
+        $("winterEnergyNT").addEventListener('change', () => this.calculateWinterNTTotal())
+        $("winterNetNT").addEventListener('change', () => this.calculateWinterNTTotal())
+
+        $("winterTariffsCheck").addEventListener('change', ({target}) => {
+            if (target.checked) {
+                $('yearSpecification').hidden = false
+                $('winterTimes').hidden = false
+                $('winterTariffs').hidden = false
+            }
+            else {
+                $('yearSpecification').hidden = true
+                $('winterTimes').hidden = true
+                $('winterTariffs').hidden = true
+            }
+            this[onSelectWinterTimes]()
+        })
+
         $("submitButton").addEventListener('click', ({tagert}) => {
             this[onClickSubmitButton]()
         })

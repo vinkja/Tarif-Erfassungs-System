@@ -15,7 +15,7 @@ export class Product {
         this.tariff = tariff
     }
 
-    toJSON() {
+    toSwissJSON(winterTariffSelected) {
         let JSON = {
             "operator_elcom_number": this.operator.elcomNumber,
             "basic_fee_monthly": this.tariff.basicFeeMonthly,
@@ -50,7 +50,9 @@ export class Product {
             "months": this.tariff.winter.months
         }
         JSON.summer = summer
-        JSON.winter = winter
+        if (winterTariffSelected === true) {
+            JSON.winter = winter
+        }
         return JSON
     }
 

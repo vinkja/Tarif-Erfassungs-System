@@ -7,6 +7,7 @@ describe('Store', function () {
     let store
     beforeEach(function () {
         store = new Store('test')
+        store.createProduct()
     })
     describe('instantiate', function () {
         it('should create a empty operatorList', function () {
@@ -23,6 +24,7 @@ describe('Store', function () {
     beforeEach(async function () {
         store2 = new Store('https://ep-dev-03.eturnity.ch')
         await store2.loadOperators()
+        store2.createProduct()
         store2.setOperator(2)
     })
     describe('loadOperators', function () {

@@ -2,29 +2,45 @@ import {Operator, Product, SeasonalTariff, Tariff} from "./model.js";
 import {LEASettingsAPI} from "./LEASettingsAPI.js";
 
 export class Store {
+    operators
+    api
+    product
+    winterTariffSelected
     constructor(serverUrl) {
         this.operators = []
         this.api = new LEASettingsAPI(serverUrl)
+        this.winterTariffSelected = false
+    }
+
+    createProduct() {
         this.product = new Product(null,
             new Operator(),
             null,
             this.tariff = new Tariff(new Date().getFullYear(),
                 0,
                 10000,
-                null,
-                null,
-                null,
+                0,
+                0,
+                0,
                 new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24),
                 new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24),
                 1,
                 1,
-                null),
+                0),
             null)
+    }
+
+    setWinterTariffSelected(){
+        if (this.winterTariffSelected === true) {
+            this.winterTariffSelected = false
+        }
+        else {
+            this.winterTariffSelected = true
+        }
     }
 
     async loadOperators() {
         this.operators = await this.api.getOperators()
-        this.product.operator = this.operators[0]
     }
 
     getOperators() {
@@ -102,7 +118,7 @@ export class Store {
     }
 
     setSummerMondayEnd(summerMondayEnd) {
-        this.product.tariff.winter.htMondayEnd = summerMondayEnd
+        this.product.tariff.summer.htMondayEnd = summerMondayEnd
     }
 
     setSummerSaturdayStart(summerSaturdayStart) {
@@ -130,35 +146,34 @@ export class Store {
     }
 
     setWinterMondayStart(winterMondayStart) {
-        this.product.tariff.summer.htMondayStart = winterMondayStart
+        this.product.tariff.winter.htMondayStart = winterMondayStart
     }
 
     setWinterMondayEnd(winterMondayEnd) {
-        this.product.tariff.summer.htMondayEnd = winterMondayEnd
+        this.product.tariff.winter.htMondayEnd = winterMondayEnd
     }
 
     setWinterSaturdayStart(winterSaturdayStart) {
-        this.product.tariff.summer.htSaturdayStart = winterSaturdayStart
+        this.product.tariff.winter.htSaturdayStart = winterSaturdayStart
     }
 
     setWinterSaturdayEnd(winterSaturdayEnd) {
-        this.product.tariff.summer.htSaturdayEnd = winterSaturdayEnd
+        this.product.tariff.winter.htSaturdayEnd = winterSaturdayEnd
     }
 
     setWinterSundayStart(winterSundayStart) {
-        this.product.tariff.summer.htSundayStart = winterSundayStart
+        this.product.tariff.winter.htSundayStart = winterSundayStart
     }
 
     setWinterSundayEnd(winterSundayEnd) {
-        this.product.tariff.summer.htSundayEnd = winterSundayEnd
+        this.product.tariff.winter.htSundayEnd = winterSundayEnd
     }
 
     setWinterHighTariff(winterHighTariff) {
-        this.product.tariff.summer.highTariff = winterHighTariff
+        this.product.tariff.winter.highTariff = winterHighTariff
     }
 
     setWinterLowTariff(winterLowTariff) {
-        this.product.tariff.summer.lowTariff = winterLowTariff
-        console.log(this.product)
+        this.product.tariff.winter.lowTariff = winterLowTariff
     }
 }
