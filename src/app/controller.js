@@ -82,8 +82,8 @@ export class Controller {
                 this.addWinterLowTariff(winterLowTariff)
                 this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
-            [viewEvents.onClickSubmitButton]: () => {
-                this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
+            [viewEvents.onClickSubmitButton]: async () => {
+                await this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
             }
         })
     }
