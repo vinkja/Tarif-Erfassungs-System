@@ -4,6 +4,7 @@ export class Controller {
         this.view = view
 
         view.registerEventHandlers({
+            [viewEvents.onSelectWinterTimes]: () => this.store.setWinterTariffSelected(),
             [viewEvents.onAddOperator]: operatorId => this.addOperator(operatorId),
             [viewEvents.onAddProductName]: productName => this.addProductName(productName),
             [viewEvents.onAddTariffYear]: tariffYear => this.addTariffYear(tariffYear),
@@ -19,70 +20,70 @@ export class Controller {
             [viewEvents.onAddSummerEnd]: summerEnd => this.addSummerEnd(summerEnd),
             [viewEvents.onAddSummerMondayStart]: summerMondayStart => {
                 this.addSummerMondayStart(summerMondayStart)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerMondayEnd]: summerMondayEnd => {
                 this.addSummerMondayEnd(summerMondayEnd)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerSaturdayStart]: summerSaturdayStart => {
                 this.addSummerSaturdayStart(summerSaturdayStart)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerSaturdayEnd]: summerSaturdayEnd => {
                 this.addSummerSaturdayEnd(summerSaturdayEnd)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerSundayStart]: summerSundayStart => {
                 this.addSummerSundayStart(summerSundayStart)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerSundayEnd]: summerSundayEnd => {
                 this.addSummerSundayEnd(summerSundayEnd)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerHighTariff]: summerHighTariff => {
                 this.addSummerHighTariff(summerHighTariff)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddSummerLowTariff]: summerLowTariff => {
                 this.addSummerLowTariff(summerLowTariff)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterMondayStart]: winterMondayStart => {
                 this.addWinterMondayStart(winterMondayStart)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterMondayEnd]: winterMondayEnd => {
                 this.addWinterMondayEnd(winterMondayEnd)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterSaturdayStart]: winterSaturdayStart => {
                 this.addWinterSaturdayStart(winterSaturdayStart)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterSaturdayEnd]: winterSaturdayEnd => {
                 this.addWinterSaturdayEnd(winterSaturdayEnd)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterSundayStart]: winterSundayStart => {
                 this.addWinterSundayStart(winterSundayStart)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterSundayEnd]: winterSundayEnd => {
                 this.addWinterSundayEnd(winterSundayEnd)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterHighTariff]: winterHighTariff => {
                 this.addWinterHighTariff(winterHighTariff)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onAddWinterLowTariff]: winterLowTariff => {
                 this.addWinterLowTariff(winterLowTariff)
-                this.view.renderTables(this.store.product)
+                this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onClickSubmitButton]: () => {
-                this.store.api.sendSwissProducts(this.store.product)
+                this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
             }
         })
     }
@@ -91,11 +92,14 @@ export class Controller {
         await this.store.loadOperators()
         this.view.EnterKeyToNextField();
         this.view.addOperatorsToList(this.store.getOperators())
+        this.view.renderOperator(this.store.operators[0])
         this.view.addMonthsToList('sommerbeginn')
         this.view.addMonthsToList('sommerende')
         this.view.addHoursToList()
         this.view.addYearstoList()
-        this.view.autoCalculate()
+        this.store.createProduct()
+        this.store.setSummerStart(1)
+        this.store.setSummerEnd(12)
     }
 
     addOperator(operatorId){

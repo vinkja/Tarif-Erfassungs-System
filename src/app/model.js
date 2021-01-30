@@ -15,8 +15,9 @@ export class Product {
         this.tariff = tariff
     }
 
-    toJSON() {
+    toSwissJSON(winterTariffSelected) {
         let JSON = {
+            "utility_id": this.operator.id,
             "operator_elcom_number": this.operator.elcomNumber,
             "basic_fee_monthly": this.tariff.basicFeeMonthly,
             "valid_from_kwh": this.tariff.validFromKwh,
@@ -28,8 +29,8 @@ export class Product {
             "year": this.tariff.year,
         }
         let summer = {
-            "ht_end_monday": this.tariff.summer.htMondayStart,
-            "ht_start_monday": this.tariff.summer.htMondayEnd,
+            "ht_start_monday": this.tariff.summer.htMondayStart,
+            "ht_end_monday": this.tariff.summer.htMondayEnd,
             "ht_start_saturday": this.tariff.summer.htSaturdayStart,
             "ht_end_saturday": this.tariff.summer.htSaturdayEnd,
             "ht_start_sunday": this.tariff.summer.htSundayStart,
@@ -50,7 +51,9 @@ export class Product {
             "months": this.tariff.winter.months
         }
         JSON.summer = summer
-        JSON.winter = winter
+        if (winterTariffSelected === true) {
+            JSON.winter = winter
+        }
         return JSON
     }
 

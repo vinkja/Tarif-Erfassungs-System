@@ -48,15 +48,14 @@ export class LEASettingsAPI {
         return product
     }
 
-    sendSwissProducts(product) {
-        console.log("sending the swissproduct to api")
+    sendSwissProducts(product, winterTariffSelected) {
         fetch(this.url + this.apiPostUrl, {
-            method: "post",
-            body: JSON.stringify(product),
+            method: 'POST',
+            body: JSON.stringify(product.toSwissJSON(winterTariffSelected)),
             headers: {'Content-Type': 'application/json'}
         })
-            .then(res => res.json())
+            .then(res => console.log(res.json()))
             .then(json => console.log(json))
-            .catch(err => console.log(err));
+            .catch(console.error);
     }
 }

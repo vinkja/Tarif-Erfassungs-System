@@ -89,13 +89,13 @@ describe('Model', function() {
         })
         describe('toJSON', function () {
             it('should contain a list with 11 fields', function () {
-                assert.equal(Object.keys(product.toJSON()).length, 11);
+                assert.equal(Object.keys(product.toSwissJSON(true)).length, 11);
             })
             it('should contain summer list with 9 fields', function () {
-                assert.equal(Object.keys(product.toJSON().summer).length, 9);
+                assert.equal(Object.keys(product.toSwissJSON(true).summer).length, 9);
             })
             it('should contain winter list with 9 fields', function () {
-                assert.equal(Object.values(product.toJSON().winter).length, 9);
+                assert.equal(Object.values(product.toSwissJSON(true).winter).length, 9);
             })
         })
     })
