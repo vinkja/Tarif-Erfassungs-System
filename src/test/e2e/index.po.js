@@ -42,4 +42,59 @@ export default class Index{
     operatorVSEField(){
         return this.driver.findElement(this.operatorVSESelector())
     }
+    summerEnergyHTSelector(){
+        return By.id('summerEnergyHT')
+    }
+
+    summerEnergyHTField(){
+        return this.driver.findElement(this.summerEnergyHTSelector())
+    }
+
+    summerNetSelector() {
+        return By.id('summerNetHT')
+    }
+
+    summerNetHTField() {
+        return this.driver.findElement(this.summerNetSelector())
+    }
+
+    totalSummerHTSelector(){
+        return By.id('totalSummerHT')
+    }
+
+    totalSummerHTField(){
+        return this.driver.findElement(this.totalSummerHTSelector())
+    }
+
+    winterTariffsCheckBoxSelector() {
+        return By.id('winterTariffsCheck')
+    }
+
+    winterTariffsCheckBoxField(){
+        return this.driver.findElement(this.winterTariffsCheckBoxSelector())
+    }
+
+    winterEnergyHTSelector() {
+        return By.id('winterEnergyHT')
+    }
+
+    winterEnergyHTField() {
+        return this.driver.findElement(this.winterEnergyHTSelector())
+    }
+
+    winterNetSelector(){
+        return By.id('winterNetHT')
+    }
+
+    winterNetHTField() {
+        return this.driver.findElement(this.winterNetSelector())
+    }
+
+    totalWinterHTSelector(){
+        return By.id('totalWinterHT')
+    }
+
+    totalWinterHTField(){
+        return this.driver.findElement(this.totalWinterHTSelector())
+    }
 }
