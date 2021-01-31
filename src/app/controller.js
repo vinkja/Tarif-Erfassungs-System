@@ -82,22 +82,23 @@ export class Controller {
                 this.addWinterLowTariff(winterLowTariff)
                 this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
-            [viewEvents.onClickSubmitButton]: () => {
-                this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
+            [viewEvents.onClickSubmitButton]: async () => {
+                await this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
             }
         })
     }
   
     async start() {
-        await this.store.loadOperators()
         this.view.EnterKeyToNextField();
+        await this.store.loadOperators()
         this.view.addOperatorsToList(this.store.getOperators())
         this.view.renderOperator(this.store.operators[0])
+        this.store.createProduct()
+        this.store.setOperator(this.store.operators[0].id)
         this.view.addMonthsToList('sommerbeginn')
         this.view.addMonthsToList('sommerende')
         this.view.addHoursToList()
         this.view.addYearstoList()
-        this.store.createProduct()
         this.store.setSummerStart(1)
         this.store.setSummerEnd(12)
     }
