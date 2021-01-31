@@ -1,3 +1,4 @@
+import {Helper} from "./helper";
 
 const noop = () => {}
 const $ = (field) => document.getElementById(field)
@@ -356,15 +357,12 @@ export class View {
         return this.eventHandlers[events.onClickSubmitButton]()
     }
 
-    add(p1, p2){
-        let result = parseFloat(p1) + parseFloat(p2);
-        return result
-    }
 
     calculateSummerHTTotal() {
         let summerEnergyHT = $("summerEnergyHT").value;
         let summerNetHT = $("summerNetHT").value;
-        let additionEnergyNetSummerHTResult = this.add(summerEnergyHT, summerNetHT)
+        let helper = new Helper();
+        let additionEnergyNetSummerHTResult = helper.add(summerEnergyHT, summerNetHT)
         $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
         this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
     }
@@ -372,7 +370,8 @@ export class View {
     calculateSummerNTTotal() {
         let summerEnergyNT = $("summerEnergyNT").value;
         let summerNetNT = $("summerNetNT").value;
-        let additionEnergyNetSummerNTResult = this.add(summerEnergyNT, summerNetNT)
+        let helper = new Helper();
+        let additionEnergyNetSummerNTResult = helper.add(summerEnergyNT, summerNetNT)
         $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
         this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
     }
@@ -380,7 +379,8 @@ export class View {
     calculateWinterHTTotal() {
         let winterEnergyHT = $("winterEnergyHT").value;
         let winterNetHT = $("winterNetHT").value;
-        let additionEnergyNetWinterHTResult = this.add(winterEnergyHT, winterNetHT)
+        let helper = new Helper();
+        let additionEnergyNetWinterHTResult = helper.add(winterEnergyHT, winterNetHT)
         $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
         this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
     }
@@ -388,7 +388,8 @@ export class View {
     calculateWinterNTTotal() {
         let winterEnergyNT = $("winterEnergyNT").value;
         let winterNetNT = $("winterNetNT").value;
-        let additionEnergyNetWinterNTResult = this.add(winterEnergyNT, winterNetNT)
+        let helper = new Helper();
+        let additionEnergyNetWinterNTResult = helper.add(winterEnergyNT, winterNetNT)
         $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
         this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
     }
