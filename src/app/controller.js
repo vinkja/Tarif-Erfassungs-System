@@ -4,7 +4,7 @@ export class Controller {
         this.view = view
 
         view.registerEventHandlers({
-            [viewEvents.onSelectWinterTimes]: () => this.store.setWinterTariffSelected(),
+            [viewEvents.onSelectWinterTimes]: winterTariffSelected => this.store.setWinterTariffSelected(winterTariffSelected),
             [viewEvents.onAddOperator]: operatorId => this.addOperator(operatorId),
             [viewEvents.onAddProductName]: productName => this.addProductName(productName),
             [viewEvents.onAddTariffYear]: tariffYear => this.addTariffYear(tariffYear),
@@ -93,9 +93,8 @@ export class Controller {
             }
         })
     }
-  
+
     async start() {
-        this.view.EnterKeyToNextField();
         await this.store.loadOperators()
         this.view.addOperatorsToList(this.store.getOperators())
         this.view.renderOperator(this.store.operators[0])

@@ -123,52 +123,66 @@ export class View {
         }
     }
 
+    tableBody(season, hour) {
+        let tbody = document.createElement("tbody")
+        let tr = document.createElement("tr")
+        let time = document.createElement("th")
+        time.scope = "row"
+        time.innerHTML = hour + ":00"
+        tr.appendChild(time)
+        for (let day = 1; day <= 7; day++) {
+            let td = document.createElement("td")
+            td.innerHTML = product.getTariff(season, day, hour)
+            tr.appendChild(td)
+        }
+        tbody.appendChild(tr)
+        return tbody
+    }
+
+    tableHead() {
+        let thead = document.createElement("thead")
+        let trTitle = document.createElement("tr")
+        let thEmpty = document.createElement("th")
+        trTitle.appendChild(thEmpty)
+        let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+        weekDays.forEach(day => {
+            let th = document.createElement("th")
+            th.innerHTML = day
+            trTitle.appendChild(th)
+        })
+        thead.appendChild(trTitle)
+        return thead
+    }
     renderTables(product, winterTariffSelected) {
 
         let summerTable = $("summerTable")
         this.removeAllChildren(summerTable)
-        summerTable.appendChild(tableHead())
+        summerTable.appendChild(this.tableHead())
 
         let winterTable = $("winterTable")
         this.removeAllChildren(winterTable)
-        winterTable.appendChild(tableHead())
+        winterTable.appendChild(this.tableHead())
 
         for (let hour = 0; hour < 24; hour ++) {
-            summerTable.appendChild(tableBody("summer", hour))
+            summerTable.appendChild(this.tableBody("summer", hour))
             if (winterTariffSelected === true) {
-                winterTable.appendChild(tableBody("winter", hour))
+                winterTable.appendChild(this.tableBody("winter", hour))
             }
         }
         this.colorTableFields()
+    }
 
-        function tableBody(season, hour) {
-            let tbody = document.createElement("tbody")
-            let tr = document.createElement("tr")
-            let time = document.createElement("th")
-            time.scope = "row"
-            time.innerHTML = hour + ":00"
-            tr.appendChild(time)
-            for (let day = 1; day <= 7; day++) {
-                let td = document.createElement("td")
-                td.innerHTML = product.getTariff(season, day, hour)
-                tr.appendChild(td)
+    colorFields(tdElements) {
+        let highTariff = 0
+        for (let tdElement of tdElements) {
+            if (Number(tdElement.innerHTML) > highTariff) {
+                highTariff = Number(tdElement.innerHTML)
             }
-            tbody.appendChild(tr)
-            return tbody
         }
-        function tableHead() {
-            let thead = document.createElement("thead")
-            let trTitle = document.createElement("tr")
-            let thEmpty = document.createElement("th")
-            trTitle.appendChild(thEmpty)
-            let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-            weekDays.forEach(day => {
-                let th = document.createElement("th")
-                th.innerHTML = day
-                trTitle.appendChild(th)
-            })
-            thead.appendChild(trTitle)
-            return thead
+        for (let tdElement of tdElements) {
+            if (Number(tdElement.innerHTML) === highTariff) {
+                tdElement.style.backgroundColor = "white"
+            }
         }
     }
 
@@ -177,22 +191,8 @@ export class View {
         let tdSummerElements = summerTable.getElementsByTagName("td")
         let winterTable = document.querySelector('#winterTable')
         let tdWinterElements = winterTable.getElementsByTagName("td")
-        colorFields(tdSummerElements)
-        colorFields(tdWinterElements)
-
-        function colorFields(tdElements) {
-            let highTariff = 0
-            for (let tdElement of tdElements) {
-                if (Number(tdElement.innerHTML) > highTariff) {
-                    highTariff = Number(tdElement.innerHTML)
-                }
-            }
-            for (let tdElement of tdElements) {
-                if (Number(tdElement.innerHTML) === highTariff) {
-                    tdElement.style.backgroundColor = "white"
-                }
-            }
-        }
+        this.colorFields(tdSummerElements)
+        this.colorFields(tdWinterElements)
     }
 
     removeAllChildren(element) {
@@ -207,19 +207,6 @@ export class View {
                 this.eventHandlers[event] = handlers[event]
             }
         }
-    }
-
-    EnterKeyToNextField() {
-        document.addEventListener('keydown', function (event){
-            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
-            if (event.code === "Enter" && isFormField) {
-                let form = event.target.form;
-                let index = Array.prototype.indexOf.call(form, event.target);
-                form.elements[index + 1].focus();
-                event.preventDefault();
-                return false;
-            }
-        })
     }
 
     renderOperator(operator) {
@@ -250,7 +237,6 @@ export class View {
         }
     }
 
-
     addMonthsToList(element) {
         let month = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         let monthDropdown = $(element)
@@ -279,8 +265,8 @@ export class View {
         }
     }
 
-    [onSelectWinterTimes](){
-        return this.eventHandlers[events.onSelectWinterTimes]()
+    [onSelectWinterTimes](winterTariffSelected){
+        return this.eventHandlers[events.onSelectWinterTimes](winterTariffSelected)
     }
     [onAddOperator](operatorId) {
         return this.eventHandlers[events.onAddOperator](operatorId)
@@ -408,6 +394,17 @@ export class View {
     }
 
     bindEvents() {
+        document.addEventListener('keydown', function (event){
+            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
+            if (event.code === "Enter" && isFormField) {
+                let form = event.target.form;
+                let index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
+                event.preventDefault();
+                return false;
+            }
+        })
+        $("resetButton").addEventListener('click', () => window.location.reload(false))
         $("summerEnergyHT").addEventListener('change', () => this.calculateSummerHTTotal())
         $("summerNetHT").addEventListener('change', () => this.calculateSummerHTTotal())
         $("summerEnergyNT").addEventListener('change', () => this.calculateSummerNTTotal())
@@ -418,17 +415,20 @@ export class View {
         $("winterNetNT").addEventListener('change', () => this.calculateWinterNTTotal())
 
         $("winterTariffsCheck").addEventListener('change', ({target}) => {
+            let winterTariffSelected
             if (target.checked) {
                 $('yearSpecification').hidden = false
                 $('winterTimes').hidden = false
                 $('winterTariffs').hidden = false
+                winterTariffSelected = true
             }
             else {
                 $('yearSpecification').hidden = true
                 $('winterTimes').hidden = true
                 $('winterTariffs').hidden = true
+                winterTariffSelected = false
             }
-            this[onSelectWinterTimes]()
+            this[onSelectWinterTimes](winterTariffSelected)
         })
 
         $("submitButton").addEventListener('click', ({tagert}) => {
