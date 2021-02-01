@@ -49,12 +49,23 @@ export class LEASettingsAPI {
     }
 
     async sendSwissProducts(product, winterTariffSelected) {
+        let status
         await fetch(this.url + this.apiPostUrl, {
             method: 'POST',
             body: JSON.stringify(product.toSwissJSON(winterTariffSelected)),
             headers: {'Content-Type': 'application/json'}
         })
-            .then(res => res.json())
-            .catch(console.error);
+            .then(res => {
+                //TODO: change status as soon API is ready
+                if (res.status === 400) {
+                    status = "ok"
+                } else {
+                    status = "nok"
+                }
+            })
+            .catch(err => {
+                status = err
+            });
+        return status
     }
 }

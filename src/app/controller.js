@@ -83,7 +83,13 @@ export class Controller {
                 this.view.renderTables(this.store.product, this.store.winterTariffSelected)
             },
             [viewEvents.onClickSubmitButton]: async () => {
-                await this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
+                let status = await this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
+                console.log(status)
+                if (status === "ok") {
+                    this.view.renderModal("Das Produkt wurde erfasst.")
+                } else {
+                    this.view.renderModal("Das Produkt konnte nicht erfasst werden.")
+                }
             }
         })
     }
