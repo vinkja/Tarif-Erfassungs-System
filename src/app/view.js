@@ -70,6 +70,7 @@ export const events = {
 
 export class View {
     constructor() {
+        this.helper = new Helper();
         this.eventHandlers = {
             [events.onAddOperator]: noop,
             [events.onAddProductName]: noop,
@@ -104,6 +105,22 @@ export class View {
             [events.onSelectWinterTimes]: noop,
         }
         this.bindEvents()
+    }
+
+    renderModal(message) {
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close")[0];
+        let modalText = document.getElementById("modalText")
+        modalText.innerHTML = message
+        modal.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     }
 
     renderTables(product, winterTariffSelected) {
@@ -361,8 +378,7 @@ export class View {
     calculateSummerHTTotal() {
         let summerEnergyHT = $("summerEnergyHT").value;
         let summerNetHT = $("summerNetHT").value;
-        let helper = new Helper();
-        let additionEnergyNetSummerHTResult = helper.add(summerEnergyHT, summerNetHT)
+        let additionEnergyNetSummerHTResult = this.helper.add(summerEnergyHT, summerNetHT)
         $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
         this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
     }
@@ -370,8 +386,7 @@ export class View {
     calculateSummerNTTotal() {
         let summerEnergyNT = $("summerEnergyNT").value;
         let summerNetNT = $("summerNetNT").value;
-        let helper = new Helper();
-        let additionEnergyNetSummerNTResult = helper.add(summerEnergyNT, summerNetNT)
+        let additionEnergyNetSummerNTResult = this.helper.add(summerEnergyNT, summerNetNT)
         $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
         this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
     }
@@ -379,8 +394,7 @@ export class View {
     calculateWinterHTTotal() {
         let winterEnergyHT = $("winterEnergyHT").value;
         let winterNetHT = $("winterNetHT").value;
-        let helper = new Helper();
-        let additionEnergyNetWinterHTResult = helper.add(winterEnergyHT, winterNetHT)
+        let additionEnergyNetWinterHTResult = this.helper.add(winterEnergyHT, winterNetHT)
         $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
         this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
     }
@@ -388,8 +402,7 @@ export class View {
     calculateWinterNTTotal() {
         let winterEnergyNT = $("winterEnergyNT").value;
         let winterNetNT = $("winterNetNT").value;
-        let helper = new Helper();
-        let additionEnergyNetWinterNTResult = helper.add(winterEnergyNT, winterNetNT)
+        let additionEnergyNetWinterNTResult = this.helper.add(winterEnergyNT, winterNetNT)
         $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
         this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
     }

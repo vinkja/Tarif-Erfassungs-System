@@ -88,8 +88,8 @@ describe('Model', function() {
             product = new Product(1, operator, "whatever", tariff)
         })
         describe('toJSON', function () {
-            it('should contain a list with 11 fields', function () {
-                assert.equal(Object.keys(product.toSwissJSON(true)).length, 11);
+            it('should contain a list with 12 fields', function () {
+                assert.equal(Object.keys(product.toSwissJSON(true)).length, 12);
             })
             it('should contain summer list with 9 fields', function () {
                 assert.equal(Object.keys(product.toSwissJSON(true).summer).length, 9);
