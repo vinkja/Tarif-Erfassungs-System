@@ -209,19 +209,6 @@ export class View {
         }
     }
 
-    EnterKeyToNextField() {
-        document.addEventListener('keydown', function (event){
-            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
-            if (event.code === "Enter" && isFormField) {
-                let form = event.target.form;
-                let index = Array.prototype.indexOf.call(form, event.target);
-                form.elements[index + 1].focus();
-                event.preventDefault();
-                return false;
-            }
-        })
-    }
-
     renderOperator(operator) {
         let elcomNumber = $("operator_elcom_number");
         let vseId = $("vse-id")
@@ -249,7 +236,6 @@ export class View {
             select.appendChild(opt);
         }
     }
-
 
     addMonthsToList(element) {
         let month = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
@@ -408,6 +394,17 @@ export class View {
     }
 
     bindEvents() {
+        document.addEventListener('keydown', function (event){
+            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
+            if (event.code === "Enter" && isFormField) {
+                let form = event.target.form;
+                let index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
+                event.preventDefault();
+                return false;
+            }
+        })
+        $("resetButton").addEventListener('click', () => window.location.reload(false))
         $("summerEnergyHT").addEventListener('change', () => this.calculateSummerHTTotal())
         $("summerNetHT").addEventListener('change', () => this.calculateSummerHTTotal())
         $("summerEnergyNT").addEventListener('change', () => this.calculateSummerNTTotal())

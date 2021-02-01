@@ -95,7 +95,6 @@ export class Controller {
     }
 
     async start() {
-        this.view.EnterKeyToNextField();
         await this.store.loadOperators()
         this.view.addOperatorsToList(this.store.getOperators())
         this.view.renderOperator(this.store.operators[0])
