@@ -17,6 +17,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="./css/modal.css">
 
 </head>
 
@@ -62,7 +63,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="basic_fee_monthly">Grundgebühren/Zähler: (CHF/Monat, exkl. MWST)</label>
-                <input type="number" class="form-control" id="basic_fee_monthly" placeholder="0.00"
+                <input type="number" class="form-control" id="basic_fee_monthly" value=0.00
                        name="basic_fee_monthly">
             </div>
         </div>
@@ -70,17 +71,17 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="gridPeakPowerTariff">Leistungstarif: (CHF/kW, exkl. MWST)</label>
-                <input type="number" class="form-control" id="gridPeakPowerTariff" placeholder="0.00"
+                <input type="number" class="form-control" id="gridPeakPowerTariff" value=0.00
                        name="load_counter_fee_monthly">
             </div>
         </div>
 
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label for="valid_from_kwp">Gültigkeit von kWh:</label>
                 <input type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="valid_from_kwp" value=0 name="valid_from_kwp">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label for="valid_to_kwp">bis kWh:</label>
                 <input type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="valid_to_kwp" value=10000 name="valid_to_kwp">
             </div>
@@ -99,7 +100,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="municipality_fee">Abgaben an Gemeinde: (Rp./kWh, leer lassen falls unbekannt)</label>
-                <input type="number" class="form-control" id="municipality_fee" placeholder="0.00"
+                <input type="number" class="form-control" id="municipality_fee" value=0.00
                        name="abgaben_gemeinde">
             </div>
         </div>
@@ -117,53 +118,45 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="kev">KEV-Abgabe / SDL: (Rp./kWh exkl. MWST)</label>
-                <input type="number" class="form-control" id="kev" placeholder="0.00" name="kev">
+                <input type="number" class="form-control" id="kev" value=0.00 name="kev">
             </div>
         </div>
+
+        <br>
 
         <h3>Jahresspezifikation</h3>
+        <div class="form-check">
+            <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="winterTariffsCheck"
+            />
+            <label class="form-check-label" for="winterTariffsCheck">
+                Aufteilung Sommer und Winterzeiten
+            </label>
+        </div>
+        <p></p>
 
-        <div class="row">
-            <div class="form-group col-sm-6">
-                <label for="sommerbeginn">Sommerbeginn:</label>
-                <select name="month" id="sommerbeginn" class="custom-select">
-                    <option selected>Bitte wählen..</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-6">
-                <label for="sommerende">Sommerende:</label>
-                <select name="month" id="sommerende" class="custom-select">
-                    <option selected>Bitte wählen..</option>
+        <div hidden id="yearSpecification">
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="sommerbeginn">Sommerbeginn:</label>
+                    <select name="month" id="sommerbeginn" class="custom-select">
+                        <option selected>Bitte wählen..</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="sommerende">Sommerende:</label>
+                    <select name="month" id="sommerende" class="custom-select">
+                        <option selected>Bitte wählen..</option>
 
-                </select>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <!--
-        <div class="row">
-            <div class="form-group col-sm-12">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Jan</th>
-                        <th>Feb</th>
-                        <th>Mar</th>
-                        <th>Apr</th>
-                        <th>Mai</th>
-                        <th>Jun</th>
-                        <th>Jul</th>
-                        <th>Aug</th>
-                        <th>Sept</th>
-                        <th>Okt</th>
-                        <th>Nov</th>
-                        <th>Dez</th>
-                    </tr>
-                    </thead>
-                </table>
-
-            </div>
-        </div>
-        -->
+        <br>
 
         <h3>Tarifzeiten</h3>
 
@@ -208,8 +201,8 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="form-group col-sm-6">
+            <br>
+            <div hidden id="winterTimes" class="form-group col-sm-6">
                 <h4>Winter</h4>
                 <table class="table table-bordered">
                     <thead>
@@ -251,6 +244,7 @@
             </div>
         </div>
 
+        <br>
 
         <h3>Verbrauchstarif</h3>
 
@@ -291,14 +285,14 @@
                     </tbody>
                 </table>
 
+                <br>
 
                 <h4>Sommer</h4>
                 <table class="table table-striped" id="summerTable">
                 </table>
             </div>
 
-
-                <div class="form-group col-sm-6">
+                <div hidden id="winterTariffs" class="form-group col-sm-6">
                     <h4>Winter</h4>
                     <table class="table table-bordered">
                         <thead>
@@ -332,6 +326,7 @@
                         </tbody>
                     </table>
 
+                    <br>
 
                     <h4>Winter</h4>
                     <table class="table table-striped" id="winterTable">
@@ -341,12 +336,21 @@
 
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <button type="submit" class="btn btn-info">Submit</button>
+                    <button type="button" class="btn btn-info" id="submitButton">Submit</button>
+                    <button type="button" class="btn btn-info" id="resetButton">Reset</button>
                 </div>
             </div>
-
-
     </form>
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalText">Some text in the Modal..</p>
+        </div>
+
+    </div>
 
 </div>
 

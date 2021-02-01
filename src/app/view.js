@@ -1,6 +1,7 @@
+import {Helper} from "./helper";
 
 const noop = () => {}
-function $(field) {return document.getElementById(field)}
+const $ = (field) => document.getElementById(field)
 const onAddOperator = Symbol()
 const onAddProductName = Symbol()
 const onAddTariffYear = Symbol()
@@ -30,6 +31,8 @@ const onAddWinterSundayStart = Symbol()
 const onAddWinterSundayEnd = Symbol()
 const onAddWinterHighTariff = Symbol()
 const onAddWinterLowTariff = Symbol()
+const onClickSubmitButton = Symbol()
+const onSelectWinterTimes = Symbol()
 
 export const events = {
     onAddOperator: "called when Energieversorger is chosen",
@@ -61,10 +64,13 @@ export const events = {
     onAddWinterSundayEnd: "called when Winter Sonntag Hochtarif Ende is chosen",
     onAddWinterHighTariff: "called when Winter Hochtarif is set",
     onAddWinterLowTariff: "called when Winter Niedertarif is set",
+    onClickSubmitButton: "called when Submit is clicked",
+    onSelectWinterTimes: "called when summer and wintertariffs"
 }
 
 export class View {
     constructor() {
+        this.helper = new Helper();
         this.eventHandlers = {
             [events.onAddOperator]: noop,
             [events.onAddProductName]: noop,
@@ -95,53 +101,88 @@ export class View {
             [events.onAddWinterSundayEnd]: noop,
             [events.onAddWinterHighTariff]: noop,
             [events.onAddWinterLowTariff]: noop,
+            [events.onClickSubmitButton]: noop,
+            [events.onSelectWinterTimes]: noop,
         }
-
         this.bindEvents()
     }
 
-    renderTables(product) {
+    renderModal(message) {
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close")[0];
+        let modalText = document.getElementById("modalText")
+        modalText.innerHTML = message
+        modal.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    tableBody(season, hour) {
+        let tbody = document.createElement("tbody")
+        let tr = document.createElement("tr")
+        let time = document.createElement("th")
+        time.scope = "row"
+        time.innerHTML = hour + ":00"
+        tr.appendChild(time)
+        for (let day = 1; day <= 7; day++) {
+            let td = document.createElement("td")
+            td.innerHTML = product.getTariff(season, day, hour)
+            tr.appendChild(td)
+        }
+        tbody.appendChild(tr)
+        return tbody
+    }
+
+    tableHead() {
+        let thead = document.createElement("thead")
+        let trTitle = document.createElement("tr")
+        let thEmpty = document.createElement("th")
+        trTitle.appendChild(thEmpty)
+        let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+        weekDays.forEach(day => {
+            let th = document.createElement("th")
+            th.innerHTML = day
+            trTitle.appendChild(th)
+        })
+        thead.appendChild(trTitle)
+        return thead
+    }
+    renderTables(product, winterTariffSelected) {
+
         let summerTable = $("summerTable")
-        let winterTable = $("winterTable")
         this.removeAllChildren(summerTable)
+        summerTable.appendChild(this.tableHead())
+
+        let winterTable = $("winterTable")
         this.removeAllChildren(winterTable)
-        summerTable.appendChild(tableHead())
-        winterTable.appendChild(tableHead())
+        winterTable.appendChild(this.tableHead())
 
         for (let hour = 0; hour < 24; hour ++) {
-            summerTable.appendChild(tableBody("summer", hour))
-            winterTable.appendChild(tableBody("winter", hour))
+            summerTable.appendChild(this.tableBody("summer", hour))
+            if (winterTariffSelected === true) {
+                winterTable.appendChild(this.tableBody("winter", hour))
+            }
         }
         this.colorTableFields()
+    }
 
-        function tableBody(season, hour) {
-            let tbody = document.createElement("tbody")
-            let tr = document.createElement("tr")
-            let time = document.createElement("th")
-            time.scope = "row"
-            time.innerHTML = hour + ":00"
-            tr.appendChild(time)
-            for (let day = 1; day <= 7; day++) {
-                let td = document.createElement("td")
-                td.innerHTML = product.getTariff(season, day, hour)
-                tr.appendChild(td)
+    colorFields(tdElements) {
+        let highTariff = 0
+        for (let tdElement of tdElements) {
+            if (Number(tdElement.innerHTML) > highTariff) {
+                highTariff = Number(tdElement.innerHTML)
             }
-            tbody.appendChild(tr)
-            return tbody
         }
-        function tableHead() {
-            let thead = document.createElement("thead")
-            let trTitle = document.createElement("tr")
-            let thEmpty = document.createElement("th")
-            trTitle.appendChild(thEmpty)
-            let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-            weekDays.forEach(day => {
-                let th = document.createElement("th")
-                th.innerHTML = day
-                trTitle.appendChild(th)
-            })
-            thead.appendChild(trTitle)
-            return thead
+        for (let tdElement of tdElements) {
+            if (Number(tdElement.innerHTML) === highTariff) {
+                tdElement.style.backgroundColor = "white"
+            }
         }
     }
 
@@ -150,22 +191,8 @@ export class View {
         let tdSummerElements = summerTable.getElementsByTagName("td")
         let winterTable = document.querySelector('#winterTable')
         let tdWinterElements = winterTable.getElementsByTagName("td")
-        colorFields(tdSummerElements)
-        colorFields(tdWinterElements)
-
-        function colorFields(tdElements) {
-            let highTariff = 0
-            for (let tdElement of tdElements) {
-                if (Number(tdElement.innerHTML) > highTariff) {
-                    highTariff = Number(tdElement.innerHTML)
-                }
-            }
-            for (let tdElement of tdElements) {
-                if (Number(tdElement.innerHTML) === highTariff) {
-                    tdElement.style.backgroundColor = "white"
-                }
-            }
-        }
+        this.colorFields(tdSummerElements)
+        this.colorFields(tdWinterElements)
     }
 
     removeAllChildren(element) {
@@ -180,19 +207,6 @@ export class View {
                 this.eventHandlers[event] = handlers[event]
             }
         }
-    }
-
-    EnterKeyToNextField() {
-        document.addEventListener('keydown', function (event){
-            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
-            if (event.code === "Enter" && isFormField) {
-                let form = event.target.form;
-                let index = Array.prototype.indexOf.call(form, event.target);
-                form.elements[index + 1].focus();
-                event.preventDefault();
-                return false;
-            }
-        })
     }
 
     renderOperator(operator) {
@@ -223,7 +237,6 @@ export class View {
         }
     }
 
-
     addMonthsToList(element) {
         let month = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         let monthDropdown = $(element)
@@ -252,46 +265,9 @@ export class View {
         }
     }
 
-    autoCalculate() {
-        let consumptionRateInputElements = document.getElementsByClassName('consumptionRateInput');
-
-        for (let consumptionRateInputElement = 0; consumptionRateInputElement < consumptionRateInputElements.length; consumptionRateInputElement++) {
-            consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
-
-                // for (var consumptionRateInputElement in consumptionRateInputElements) {
-                //     consumptionRateInputElements[consumptionRateInputElement].addEventListener('change', () => {
-
-                let summerEnergyHT = $("summerEnergyHT").value;
-                let summerNetHT = $("summerNetHT").value;
-                let summerEnergyNT = $("summerEnergyNT").value;
-                let summerNetNT = $("summerNetNT").value;
-                let winterEnergyHT = $("winterEnergyHT").value;
-                let winterNetHT = $("winterNetHT").value;
-                let winterEnergyNT = $("winterEnergyNT").value;
-                let winterNetNT = $("winterNetNT").value;
-
-                function add(p1, p2){
-                    let result = parseFloat(p1) + parseFloat(p2);
-                    return result
-                }
-
-                let additionEnergyNetSummerHTResult = add(summerEnergyHT, summerNetHT)
-                let additionEnergyNetSummerNTResult = add(summerEnergyNT, summerNetNT)
-                let additionEnergyNetWinterHTResult = add(winterEnergyHT, winterNetHT)
-                let additionEnergyNetWinterNTResult = add(winterEnergyNT, winterNetNT)
-
-                $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
-                this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
-                $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
-                this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
-                $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
-                this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
-                $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
-                this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
-            })
-        }
+    [onSelectWinterTimes](winterTariffSelected){
+        return this.eventHandlers[events.onSelectWinterTimes](winterTariffSelected)
     }
-
     [onAddOperator](operatorId) {
         return this.eventHandlers[events.onAddOperator](operatorId)
     }
@@ -301,6 +277,7 @@ export class View {
     [onAddTariffYear](tariffYear) {
         return this.eventHandlers[events.onAddTariffYear](tariffYear)
     }
+
     [onAddBasicFeeMonthly](basicFeeMonthly) {
         return this.eventHandlers[events.onAddBasicFeeMonthly](basicFeeMonthly)
     }
@@ -379,8 +356,85 @@ export class View {
     [onAddWinterLowTariff](WinterLowTariff){
         return this.eventHandlers[events.onAddWinterLowTariff](WinterLowTariff)
     }
+    [onClickSubmitButton](){
+        return this.eventHandlers[events.onClickSubmitButton]()
+    }
+
+
+    calculateSummerHTTotal() {
+        let summerEnergyHT = $("summerEnergyHT").value;
+        let summerNetHT = $("summerNetHT").value;
+        let additionEnergyNetSummerHTResult = this.helper.add(summerEnergyHT, summerNetHT)
+        $("totalSummerHT").innerText = additionEnergyNetSummerHTResult;
+        this[onAddSummerHighTariff](additionEnergyNetSummerHTResult)
+    }
+
+    calculateSummerNTTotal() {
+        let summerEnergyNT = $("summerEnergyNT").value;
+        let summerNetNT = $("summerNetNT").value;
+        let additionEnergyNetSummerNTResult = this.helper.add(summerEnergyNT, summerNetNT)
+        $("totalSummerNT").innerText = additionEnergyNetSummerNTResult;
+        this[onAddSummerLowTariff](additionEnergyNetSummerNTResult)
+    }
+
+    calculateWinterHTTotal() {
+        let winterEnergyHT = $("winterEnergyHT").value;
+        let winterNetHT = $("winterNetHT").value;
+        let additionEnergyNetWinterHTResult = this.helper.add(winterEnergyHT, winterNetHT)
+        $("totalWinterHT").innerText = additionEnergyNetWinterHTResult;
+        this[onAddWinterHighTariff](additionEnergyNetWinterHTResult)
+    }
+
+    calculateWinterNTTotal() {
+        let winterEnergyNT = $("winterEnergyNT").value;
+        let winterNetNT = $("winterNetNT").value;
+        let additionEnergyNetWinterNTResult = this.helper.add(winterEnergyNT, winterNetNT)
+        $("totalWinterNT").innerText = additionEnergyNetWinterNTResult;
+        this[onAddWinterLowTariff](additionEnergyNetWinterNTResult)
+    }
 
     bindEvents() {
+        document.addEventListener('keydown', function (event){
+            let isFormField = event.target.nodeName === 'INPUT' || event.target.nodeName === 'SELECT'
+            if (event.code === "Enter" && isFormField) {
+                let form = event.target.form;
+                let index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
+                event.preventDefault();
+                return false;
+            }
+        })
+        $("resetButton").addEventListener('click', () => window.location.reload(false))
+        $("summerEnergyHT").addEventListener('change', () => this.calculateSummerHTTotal())
+        $("summerNetHT").addEventListener('change', () => this.calculateSummerHTTotal())
+        $("summerEnergyNT").addEventListener('change', () => this.calculateSummerNTTotal())
+        $("summerNetNT").addEventListener('change', () => this.calculateSummerNTTotal())
+        $("winterEnergyHT").addEventListener('change', () => this.calculateWinterHTTotal())
+        $("winterNetHT").addEventListener('change', () => this.calculateWinterHTTotal())
+        $("winterEnergyNT").addEventListener('change', () => this.calculateWinterNTTotal())
+        $("winterNetNT").addEventListener('change', () => this.calculateWinterNTTotal())
+
+        $("winterTariffsCheck").addEventListener('change', ({target}) => {
+            let winterTariffSelected
+            if (target.checked) {
+                $('yearSpecification').hidden = false
+                $('winterTimes').hidden = false
+                $('winterTariffs').hidden = false
+                winterTariffSelected = true
+            }
+            else {
+                $('yearSpecification').hidden = true
+                $('winterTimes').hidden = true
+                $('winterTariffs').hidden = true
+                winterTariffSelected = false
+            }
+            this[onSelectWinterTimes](winterTariffSelected)
+        })
+
+        $("submitButton").addEventListener('click', ({tagert}) => {
+            this[onClickSubmitButton]()
+        })
+      
         $("energieversoger").addEventListener('change', ({target}) => {
             let operatorId = Number(target.options[target.selectedIndex].value)
             this[onAddOperator](operatorId)

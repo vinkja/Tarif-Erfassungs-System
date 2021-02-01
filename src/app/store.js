@@ -2,19 +2,45 @@ import {Operator, Product, SeasonalTariff, Tariff} from "./model.js";
 import {LEASettingsAPI} from "./LEASettingsAPI.js";
 
 export class Store {
+    operators
+    api
+    product
+    winterTariffSelected
     constructor(serverUrl) {
         this.operators = []
         this.api = new LEASettingsAPI(serverUrl)
-        this.operator = new Operator()
-        this.summerTariff = new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24)
-        this.winterTariff = new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24)
-        this.tariff = new Tariff(new Date().getFullYear(), 0, 10000, null, null, null, this.winterTariff, this.summerTariff, 1, 1, null)
-        this.product = new Product(null, this.operator, null, this.tariff, null)
+        this.winterTariffSelected = false
+    }
+
+    createProduct() {
+        this.product = new Product(null,
+            new Operator(),
+            null,
+            this.tariff = new Tariff(new Date().getFullYear(),
+                0,
+                10000,
+                0,
+                0,
+                0,
+                new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24),
+                new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24),
+                1,
+                1,
+                0),
+            null)
+    }
+
+    setWinterTariffSelected(winterTariffSelected){
+        if (winterTariffSelected === false) {
+            this.winterTariffSelected = false
+        }
+        else {
+            this.winterTariffSelected = true
+        }
     }
 
     async loadOperators() {
         this.operators = await this.api.getOperators()
-        this.operator = this.operators[0]
     }
 
     getOperators() {
@@ -24,159 +50,130 @@ export class Store {
     setOperator(operatorId) {
         this.operators.forEach(lookUpOperator => {
             if(lookUpOperator.id === operatorId) {
-                this.operator.id = lookUpOperator.id
-                this.operator.name = lookUpOperator.name
-                this.operator.vseId = lookUpOperator.vseId
-                this.operator.elcomNumber = lookUpOperator.elcomNumber
+                this.product.operator.id = lookUpOperator.id
+                this.product.operator.name = lookUpOperator.name
+                this.product.operator.vseId = lookUpOperator.vseId
+                this.product.operator.elcomNumber = lookUpOperator.elcomNumber
             }
         })
-        console.log(this.product)
-        return this.operator
+        return this.product.operator
     }
 
     setProductName(productName) {
         this.product.name = productName
-        console.log(this.product)
     }
 
     setTariffYear(tariffYear) {
-        this.tariff.year = tariffYear
-        console.log(this.product)
+        this.product.tariff.year = tariffYear
     }
 
     setBasicFeeMonthly(basicFeeMonthly) {
-        this.tariff.basicFeeMonthly = basicFeeMonthly
-        console.log(this.product)
+        this.product.tariff.basicFeeMonthly = basicFeeMonthly
     }
 
     setGridPeakPowerTariff(gridPeakPowerTariff) {
-        this.tariff.gridPeakPowerTariff = gridPeakPowerTariff
-        console.log(this.product)
+        this.product.tariff.gridPeakPowerTariff = gridPeakPowerTariff
     }
 
     setValidFromKwh(validFromKwh) {
-        this.tariff.validFromKwh = validFromKwh
-        console.log(this.product)
+        this.product.tariff.validFromKwh = validFromKwh
     }
 
     setValidToKwh(validToKwh) {
-        this.tariff.validToKwh = validToKwh
-        console.log(this.product)
+        this.product.tariff.validToKwh = validToKwh
     }
 
     setConsumerType(consumerType) {
-        this.tariff.consumerType = consumerType
-        console.log(this.product)
+        this.product.tariff.consumerType = consumerType
     }
 
     setMunicipalityFee(municipalityFee) {
-        this.tariff.municipalityFee = municipalityFee
-        console.log(this.product)
+        this.product.tariff.municipalityFee = municipalityFee
     }
 
     setIsDefault(isDefault) {
-        this.tariff.isDefault= isDefault
-        console.log(this.product)
+        this.product.tariff.isDefault= isDefault
     }
 
     setKevTax(kevTax) {
-        this.tariff.kevTax = kevTax
-        console.log(this.product)
+        this.product.tariff.kevTax = kevTax
     }
 
     setSummerStart(start) {
-        this.summerTariff.start = start
-        this.winterTariff.end = start -1
-        this.summerTariff.setMonths()
-        this.winterTariff.setMonths()
-        console.log(this.product)
+        this.product.tariff.summer.start = start
+        this.product.tariff.winter.end = start -1
+        this.product.tariff.summer.setMonths()
+        this.product.tariff.winter.setMonths()
     }
 
     setSummerEnd(end) {
-        this.summerTariff.end = end
-        this.winterTariff.start = end +1
-        this.summerTariff.setMonths()
-        this.winterTariff.setMonths()
-        console.log(this.product)
+        this.product.tariff.summer.end = end
+        this.product.tariff.winter.start = end +1
+        this.product.tariff.summer.setMonths()
+        this.product.tariff.winter.setMonths()
     }
 
     setSummerMondayStart(summerMondayStart) {
-        this.summerTariff.htMondayStart = summerMondayStart
-        console.log(this.product)
+        this.product.tariff.summer.htMondayStart = summerMondayStart
     }
 
     setSummerMondayEnd(summerMondayEnd) {
-        this.summerTariff.htMondayEnd = summerMondayEnd
-        console.log(this.product)
+        this.product.tariff.summer.htMondayEnd = summerMondayEnd
     }
 
     setSummerSaturdayStart(summerSaturdayStart) {
-        this.summerTariff.htSaturdayStart = summerSaturdayStart
-        console.log(this.product)
+        this.product.tariff.summer.htSaturdayStart = summerSaturdayStart
     }
 
     setSummerSaturdayEnd(summerSaturdayEnd) {
-        this.summerTariff.htSaturdayEnd = summerSaturdayEnd
-        console.log(this.product)
+        this.product.tariff.summer.htSaturdayEnd = summerSaturdayEnd
     }
 
     setSummerSundayStart(summerSundayStart) {
-        this.summerTariff.htSundayStart = summerSundayStart
-        console.log(this.product)
+        this.product.tariff.summer.htSundayStart = summerSundayStart
     }
 
     setSummerSundayEnd(summerSundayEnd) {
-        this.summerTariff.htSundayEnd = summerSundayEnd
-        console.log(this.product)
+        this.product.tariff.summer.htSundayEnd = summerSundayEnd
     }
 
     setSummerHighTariff(summerHighTariff) {
-        this.summerTariff.highTariff = summerHighTariff
-        console.log(this.product)
+        this.product.tariff.summer.highTariff = summerHighTariff
     }
 
     setSummerLowTariff(summerLowTariff) {
-        this.summerTariff.lowTariff = summerLowTariff
-        console.log(this.product)
+        this.product.tariff.summer.lowTariff = summerLowTariff
     }
 
     setWinterMondayStart(winterMondayStart) {
-        this.winterTariff.htMondayStart = winterMondayStart
-        console.log(this.product)
+        this.product.tariff.winter.htMondayStart = winterMondayStart
     }
 
     setWinterMondayEnd(winterMondayEnd) {
-        this.winterTariff.htMondayEnd = winterMondayEnd
-        console.log(this.product)
+        this.product.tariff.winter.htMondayEnd = winterMondayEnd
     }
 
     setWinterSaturdayStart(winterSaturdayStart) {
-        this.winterTariff.htSaturdayStart = winterSaturdayStart
-        console.log(this.product)
+        this.product.tariff.winter.htSaturdayStart = winterSaturdayStart
     }
 
     setWinterSaturdayEnd(winterSaturdayEnd) {
-        this.winterTariff.htSaturdayEnd = winterSaturdayEnd
-        console.log(this.product)
+        this.product.tariff.winter.htSaturdayEnd = winterSaturdayEnd
     }
 
     setWinterSundayStart(winterSundayStart) {
-        this.winterTariff.htSundayStart = winterSundayStart
-        console.log(this.product)
+        this.product.tariff.winter.htSundayStart = winterSundayStart
     }
 
     setWinterSundayEnd(winterSundayEnd) {
-        this.winterTariff.htSundayEnd = winterSundayEnd
-        console.log(this.product)
+        this.product.tariff.winter.htSundayEnd = winterSundayEnd
     }
 
     setWinterHighTariff(winterHighTariff) {
-        this.winterTariff.highTariff = winterHighTariff
-        console.log(this.product)
+        this.product.tariff.winter.highTariff = winterHighTariff
     }
 
     setWinterLowTariff(winterLowTariff) {
-        this.winterTariff.lowTariff = winterLowTariff
-        console.log(this.product)
+        this.product.tariff.winter.lowTariff = winterLowTariff
     }
 }

@@ -15,21 +15,25 @@ export class Product {
         this.tariff = tariff
     }
 
-    toJSON() {
+    toSwissJSON(winterTariffSelected) {
         let JSON = {
+            "utility_id": this.operator.id,
             "operator_elcom_number": this.operator.elcomNumber,
+            "operator_name": this.operator.name,
             "basic_fee_monthly": this.tariff.basicFeeMonthly,
             "valid_from_kwh": this.tariff.validFromKwh,
             "valid_to_kwh": this.tariff.validToKwh,
             "name": this.name,
             "municipality_fee": this.tariff.municipalityFee,
             "is_default": this.tariff.isDefault,
+            "consumer_type": this.tariff.consumerType,
             "grid_peak_power_tariff": this.tariff.gridPeakPowerTariff,
             "year": this.tariff.year,
+            "currency": "CHF",
         }
         let summer = {
-            "ht_end_monday": this.tariff.summer.htMondayStart,
-            "ht_start_monday": this.tariff.summer.htMondayEnd,
+            "ht_start_monday": this.tariff.summer.htMondayStart,
+            "ht_end_monday": this.tariff.summer.htMondayEnd,
             "ht_start_saturday": this.tariff.summer.htSaturdayStart,
             "ht_end_saturday": this.tariff.summer.htSaturdayEnd,
             "ht_start_sunday": this.tariff.summer.htSundayStart,
@@ -50,7 +54,9 @@ export class Product {
             "months": this.tariff.winter.months
         }
         JSON.summer = summer
-        JSON.winter = winter
+        if (winterTariffSelected === true) {
+            JSON.winter = winter
+        }
         return JSON
     }
 
@@ -100,7 +106,7 @@ export class Tariff {
 }
 
 export class SeasonalTariff {
-    constructor(highTariff, lowTariff, htMondayStart, htMondayEnd, htSaturdayStart, htSaturdayEnd, htSundayStart, htSundayEnd) {
+    constructor(highTariff, lowTariff, htMondayStart, htMondayEnd, htSaturdayStart, htSaturdayEnd, htSundayStart, htSundayEnd, start, end) {
         this.highTariff = highTariff
         this.lowTariff = lowTariff
         this.htMondayStart = htMondayStart
@@ -109,8 +115,8 @@ export class SeasonalTariff {
         this.htSaturdayEnd = htSaturdayEnd
         this.htSundayStart = htSundayStart
         this.htSundayEnd = htSundayEnd
-        this.start = null
-        this.end = null
+        this.start = start
+        this.end = end
         this.months = []
     }
     setMonths() {

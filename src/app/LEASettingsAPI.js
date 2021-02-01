@@ -7,6 +7,7 @@ export class LEASettingsAPI {
         this.apiOperators = "/lea_settings/api/operators"
         this.apiProducts = "/lea_settings/api/electricity-products-egt/"
         this.apiProduct = "/lea_settings/api/electricity-product-structure-view/"
+        this.apiPostUrl = "/lea_settings/api/electricity-product"
     }
 
     async getOperators() {
@@ -20,6 +21,27 @@ export class LEASettingsAPI {
                 }
             })
         return operators
+    }
+
+    async sendSwissProducts(product, winterTariffSelected) {
+        let status
+        await fetch(this.url + this.apiPostUrl, {
+            method: 'POST',
+            body: JSON.stringify(product.toSwissJSON(winterTariffSelected)),
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(res => {
+                //TODO: change status as soon API is ready
+                if (res.status === 400) {
+                    status = "ok"
+                } else {
+                    status = "nok"
+                }
+            })
+            .catch(err => {
+                status = err
+            });
+        return status
     }
 
     async getProductsFromOperator(operator) {
@@ -36,7 +58,6 @@ export class LEASettingsAPI {
         return products
     }
 
-    //TODO: implement as soon as API is ready
     async getProductFromProduct(product) {
         await fetch(this.url + this.apiProduct + product)
             .then(res => res.json())
@@ -45,17 +66,5 @@ export class LEASettingsAPI {
             })
             .catch(err => console.log(err))
         return product
-    }
-
-    //TODO: implement as soon as API is ready
-    sendProduct(product) {
-        fetch(this.url + this.apiPostProduct, {
-            method: "post",
-            body: JSON.stringify(product), // new function, should be serialized first
-            headers: { "Content-Type": "application/json" }
-        })
-            .then(res => res.json())
-            .then(json => console.log(json))
-            .catch(err => console.log(err))
     }
 }

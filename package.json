@@ -18,9 +18,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "http-server": "^0.12.3",
-    "node-fetch": "^2.6.1",
-    "parcel": "^1.12.4"
+    "http-server": "0.12.3",
+    "node-fetch": "2.6.1",
+    "parcel": "1.12.4"
   },
   "repository": {
     "type": "git",
@@ -31,13 +31,17 @@
   },
   "homepage": "https://github.com/ibwgr/Tarif-Erfassungs-System#readme",
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/register": "^7.12.10",
-    "assert": "^2.0.0",
-    "chai": "^4.2.0",
-    "mocha": "^8.2.1"
+    "@babel/cli": "7.12.10",
+    "@babel/core": "7.12.10",
+    "@babel/polyfill": "7.12.1",
+    "@babel/preset-env": "7.12.11",
+    "@babel/register": "7.12.10",
+    "assert": "2.0.0",
+    "chai": "4.2.0",
+    "chai-as-promised": "7.1.1",
+    "chromedriver": "88.0.0",
+    "fs": "^0.0.1-security",
+    "mocha": "8.2.1",
+    "selenium-webdriver": "4.0.0-alpha.8"
   }
 }
