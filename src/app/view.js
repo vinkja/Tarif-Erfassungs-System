@@ -279,8 +279,8 @@ export class View {
         }
     }
 
-    [onSelectWinterTimes](){
-        return this.eventHandlers[events.onSelectWinterTimes]()
+    [onSelectWinterTimes](winterTariffSelected){
+        return this.eventHandlers[events.onSelectWinterTimes](winterTariffSelected)
     }
     [onAddOperator](operatorId) {
         return this.eventHandlers[events.onAddOperator](operatorId)
@@ -418,17 +418,20 @@ export class View {
         $("winterNetNT").addEventListener('change', () => this.calculateWinterNTTotal())
 
         $("winterTariffsCheck").addEventListener('change', ({target}) => {
+            let winterTariffSelected
             if (target.checked) {
                 $('yearSpecification').hidden = false
                 $('winterTimes').hidden = false
                 $('winterTariffs').hidden = false
+                winterTariffSelected = true
             }
             else {
                 $('yearSpecification').hidden = true
                 $('winterTimes').hidden = true
                 $('winterTariffs').hidden = true
+                winterTariffSelected = false
             }
-            this[onSelectWinterTimes]()
+            this[onSelectWinterTimes](winterTariffSelected)
         })
 
         $("submitButton").addEventListener('click', ({tagert}) => {

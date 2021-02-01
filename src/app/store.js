@@ -30,8 +30,8 @@ export class Store {
             null)
     }
 
-    setWinterTariffSelected(){
-        if (this.winterTariffSelected === true) {
+    setWinterTariffSelected(winterTariffSelected){
+        if (winterTariffSelected === false) {
             this.winterTariffSelected = false
         }
         else {

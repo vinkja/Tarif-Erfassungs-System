@@ -19,14 +19,17 @@ export class Product {
         let JSON = {
             "utility_id": this.operator.id,
             "operator_elcom_number": this.operator.elcomNumber,
+            "operator_name": this.operator.name,
             "basic_fee_monthly": this.tariff.basicFeeMonthly,
             "valid_from_kwh": this.tariff.validFromKwh,
             "valid_to_kwh": this.tariff.validToKwh,
             "name": this.name,
             "municipality_fee": this.tariff.municipalityFee,
             "is_default": this.tariff.isDefault,
+            "consumer_type": this.tariff.consumerType,
             "grid_peak_power_tariff": this.tariff.gridPeakPowerTariff,
             "year": this.tariff.year,
+            "currency": "CHF",
         }
         let summer = {
             "ht_start_monday": this.tariff.summer.htMondayStart,
