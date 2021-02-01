@@ -123,52 +123,66 @@ export class View {
         }
     }
 
+    tableBody(season, hour) {
+        let tbody = document.createElement("tbody")
+        let tr = document.createElement("tr")
+        let time = document.createElement("th")
+        time.scope = "row"
+        time.innerHTML = hour + ":00"
+        tr.appendChild(time)
+        for (let day = 1; day <= 7; day++) {
+            let td = document.createElement("td")
+            td.innerHTML = product.getTariff(season, day, hour)
+            tr.appendChild(td)
+        }
+        tbody.appendChild(tr)
+        return tbody
+    }
+
+    tableHead() {
+        let thead = document.createElement("thead")
+        let trTitle = document.createElement("tr")
+        let thEmpty = document.createElement("th")
+        trTitle.appendChild(thEmpty)
+        let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+        weekDays.forEach(day => {
+            let th = document.createElement("th")
+            th.innerHTML = day
+            trTitle.appendChild(th)
+        })
+        thead.appendChild(trTitle)
+        return thead
+    }
     renderTables(product, winterTariffSelected) {
 
         let summerTable = $("summerTable")
         this.removeAllChildren(summerTable)
-        summerTable.appendChild(tableHead())
+        summerTable.appendChild(this.tableHead())
 
         let winterTable = $("winterTable")
         this.removeAllChildren(winterTable)
-        winterTable.appendChild(tableHead())
+        winterTable.appendChild(this.tableHead())
 
         for (let hour = 0; hour < 24; hour ++) {
-            summerTable.appendChild(tableBody("summer", hour))
+            summerTable.appendChild(this.tableBody("summer", hour))
             if (winterTariffSelected === true) {
-                winterTable.appendChild(tableBody("winter", hour))
+                winterTable.appendChild(this.tableBody("winter", hour))
             }
         }
         this.colorTableFields()
+    }
 
-        function tableBody(season, hour) {
-            let tbody = document.createElement("tbody")
-            let tr = document.createElement("tr")
-            let time = document.createElement("th")
-            time.scope = "row"
-            time.innerHTML = hour + ":00"
-            tr.appendChild(time)
-            for (let day = 1; day <= 7; day++) {
-                let td = document.createElement("td")
-                td.innerHTML = product.getTariff(season, day, hour)
-                tr.appendChild(td)
+    colorFields(tdElements) {
+        let highTariff = 0
+        for (let tdElement of tdElements) {
+            if (Number(tdElement.innerHTML) > highTariff) {
+                highTariff = Number(tdElement.innerHTML)
             }
-            tbody.appendChild(tr)
-            return tbody
         }
-        function tableHead() {
-            let thead = document.createElement("thead")
-            let trTitle = document.createElement("tr")
-            let thEmpty = document.createElement("th")
-            trTitle.appendChild(thEmpty)
-            let weekDays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-            weekDays.forEach(day => {
-                let th = document.createElement("th")
-                th.innerHTML = day
-                trTitle.appendChild(th)
-            })
-            thead.appendChild(trTitle)
-            return thead
+        for (let tdElement of tdElements) {
+            if (Number(tdElement.innerHTML) === highTariff) {
+                tdElement.style.backgroundColor = "white"
+            }
         }
     }
 
@@ -177,22 +191,8 @@ export class View {
         let tdSummerElements = summerTable.getElementsByTagName("td")
         let winterTable = document.querySelector('#winterTable')
         let tdWinterElements = winterTable.getElementsByTagName("td")
-        colorFields(tdSummerElements)
-        colorFields(tdWinterElements)
-
-        function colorFields(tdElements) {
-            let highTariff = 0
-            for (let tdElement of tdElements) {
-                if (Number(tdElement.innerHTML) > highTariff) {
-                    highTariff = Number(tdElement.innerHTML)
-                }
-            }
-            for (let tdElement of tdElements) {
-                if (Number(tdElement.innerHTML) === highTariff) {
-                    tdElement.style.backgroundColor = "white"
-                }
-            }
-        }
+        this.colorFields(tdSummerElements)
+        this.colorFields(tdWinterElements)
     }
 
     removeAllChildren(element) {
