@@ -2,10 +2,6 @@ import {Operator, Product, SeasonalTariff, Tariff} from "./model.js";
 import {LEASettingsAPI} from "./LEASettingsAPI.js";
 
 export class Store {
-    operators
-    api
-    product
-    winterTariffSelected
     constructor(serverUrl) {
         this.operators = []
         this.api = new LEASettingsAPI(serverUrl)
@@ -13,10 +9,13 @@ export class Store {
     }
 
     createProduct() {
-        this.product = new Product(null,
-            new Operator(),
+        let operator = new Operator()
+        this.product = new Product(
             null,
-            this.tariff = new Tariff(new Date().getFullYear(),
+            operator,
+            null,
+            new Tariff(
+                new Date().getFullYear(),
                 0,
                 10000,
                 0,
@@ -26,15 +25,15 @@ export class Store {
                 new SeasonalTariff(null, null, 0, 24, 0, 24, 0, 24),
                 1,
                 1,
-                0),
-            null)
+                0
+            )
+        )
     }
 
-    setWinterTariffSelected(winterTariffSelected){
+    setWinterTariffSelected(winterTariffSelected) {
         if (winterTariffSelected === false) {
             this.winterTariffSelected = false
-        }
-        else {
+        } else {
             this.winterTariffSelected = true
         }
     }
@@ -49,7 +48,7 @@ export class Store {
 
     setOperator(operatorId) {
         this.operators.forEach(lookUpOperator => {
-            if(lookUpOperator.id === operatorId) {
+            if (lookUpOperator.id === operatorId) {
                 this.product.operator.id = lookUpOperator.id
                 this.product.operator.name = lookUpOperator.name
                 this.product.operator.vseId = lookUpOperator.vseId
@@ -92,7 +91,7 @@ export class Store {
     }
 
     setIsDefault(isDefault) {
-        this.product.tariff.isDefault= isDefault
+        this.product.tariff.isDefault = isDefault
     }
 
     setKevTax(kevTax) {
@@ -101,14 +100,14 @@ export class Store {
 
     setSummerStart(start) {
         this.product.tariff.summer.start = start
-        this.product.tariff.winter.end = start -1
+        this.product.tariff.winter.end = start - 1
         this.product.tariff.summer.setMonths()
         this.product.tariff.winter.setMonths()
     }
 
     setSummerEnd(end) {
         this.product.tariff.summer.end = end
-        this.product.tariff.winter.start = end +1
+        this.product.tariff.winter.start = end + 1
         this.product.tariff.summer.setMonths()
         this.product.tariff.winter.setMonths()
     }
