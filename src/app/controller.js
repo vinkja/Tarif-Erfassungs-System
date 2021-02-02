@@ -84,7 +84,6 @@ export class Controller {
             },
             [viewEvents.onClickSubmitButton]: async () => {
                 let status = await this.store.api.sendSwissProducts(this.store.product, this.store.winterTariffSelected)
-                console.log(status)
                 if (status === "ok") {
                     this.view.renderModal("Das Produkt wurde erfasst.")
                 } else {

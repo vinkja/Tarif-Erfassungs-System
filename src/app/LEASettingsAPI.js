@@ -32,7 +32,7 @@ export class LEASettingsAPI {
         })
             .then(res => {
                 //TODO: change status as soon API is ready
-                if (res.status === 400) {
+                if (res.status === 201) {
                     status = "ok"
                 } else {
                     status = "nok"
