@@ -123,7 +123,7 @@ export class View {
         }
     }
 
-    tableBody(season, hour) {
+    tableBody(product, season, hour) {
         let tbody = document.createElement("tbody")
         let tr = document.createElement("tr")
         let time = document.createElement("th")
@@ -164,9 +164,9 @@ export class View {
         winterTable.appendChild(this.tableHead())
 
         for (let hour = 0; hour < 24; hour ++) {
-            summerTable.appendChild(this.tableBody("summer", hour))
+            summerTable.appendChild(this.tableBody(product, "summer", hour))
             if (winterTariffSelected === true) {
-                winterTable.appendChild(this.tableBody("winter", hour))
+                winterTable.appendChild(this.tableBody(product,"winter", hour))
             }
         }
         this.colorTableFields()
